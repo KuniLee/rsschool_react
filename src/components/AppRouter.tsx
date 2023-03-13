@@ -28,7 +28,9 @@ class AppRouter extends Component<unknown, AppRouterState> {
           element={
             <header>
               <Navigation setRoute={this.setRoute} route={this.state.route} />
-              <Outlet />
+              <main className="container">
+                <Outlet />
+              </main>
             </header>
           }
         >

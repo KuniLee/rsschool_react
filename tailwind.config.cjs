@@ -6,7 +6,11 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    container: {
+      padding: '1rem',
+      center: true,
+    },
+    extend: {   },
   },
   plugins: [
     function ({ addComponents }) {
@@ -14,10 +18,10 @@ module.exports = {
         '.container': {
           maxWidth: '100%',
           '@screen xl': {
-            maxWidth: '1140px',
+            maxWidth: '1280px',
           },
           '@screen 2xl': {
-            maxWidth: '1320px',
+            maxWidth: '1280px',
           },
         },
       })

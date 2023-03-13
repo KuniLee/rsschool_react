@@ -7,25 +7,40 @@ const navbarLinks = [
   { name: 'About Us', route: ERoutes.About },
 ]
 
+const LinkClasses = {
+  base: 'block px-2 md:px-4 rounded p-0',
+  active: 'bg-transparent text-green-700',
+  nonActive: 'text-gray-700 p-0 hover:bg-transparent border-0 hover:text-green-700',
+}
+
+const pageNames: Record<ERoutes, string> = {
+  [ERoutes.About]: 'About Us',
+  [ERoutes.Main]: 'Main Page',
+  [ERoutes.Root]: '',
+  [ERoutes.NotFound]: 'Not Found',
+}
+
 class Navigation extends Component<RouterProps> {
   render() {
+    const { route } = this.props
+
+    function getLinkClass(linkRoute: ERoutes) {
+      return `${LinkClasses.base} ${
+        linkRoute === route ? LinkClasses.active : LinkClasses.nonActive
+      }`
+    }
+
     return (
-      <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+      <nav className="bg-green-200 border-gray-200 rounded">
         <div className="container flex flex-wrap items-center justify-between mx-auto">
-          <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-            {this.props.route}
+          <span className="self-center text-xl font-semibold whitespace-nowrap">
+            {pageNames[route as ERoutes]}
           </span>
-          <div className="w-full md:w-auto">
-            <ul
-              className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row
-            md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
-            >
+          <div className="w-auto">
+            <ul className="flex p-4 rounded-lg text-sm font-medium">
               {navbarLinks.map((link, idx) => (
                 <li key={idx}>
-                  <Link
-                    className="block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 dark:text-white"
-                    to={link.route}
-                  >
+                  <Link className={getLinkClass(link.route)} to={link.route}>
                     {link.name}
                   </Link>
                 </li>
