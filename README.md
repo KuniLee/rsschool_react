@@ -1,1 +1,0 @@
-# rsschool_react
