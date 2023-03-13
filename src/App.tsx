@@ -1,9 +1,10 @@
-function App() {
-  return (
-    <div className="App">
-      <h1 className="text-blue-600">Hello</h1>
-    </div>
-  )
+import React, { Component } from 'react'
+import AppRouter from './components/AppRouter'
+
+class App extends Component {
+  render() {
+    return <AppRouter />
+  }
 }
 
 export default App
