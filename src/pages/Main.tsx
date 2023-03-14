@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { ERoutes, RouterProps } from '@/types'
 import Search from '@components/Search'
+import MyButton from '@components/UI/button/MyButton'
 
 class Main extends Component<Pick<RouterProps, 'setRoute'>> {
   componentDidMount() {
@@ -11,6 +12,7 @@ class Main extends Component<Pick<RouterProps, 'setRoute'>> {
     return (
       <div className="p-3">
         <Search />
+        <MyButton>BTN</MyButton>
       </div>
     )
   }
