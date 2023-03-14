@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { ERoutes, ICard, RouterProps } from '@/types'
 import Search from '@components/Search'
-import Catalog from '@components/Catalog'
+import Catalog from '@components/Catalog/Catalog'
 import axios from 'axios'
 
 class Main extends Component<Pick<RouterProps, 'setRoute'>, { cards: Array<ICard> }> {
