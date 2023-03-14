@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { ERoutes, ICard, RouterProps } from '@/types'
 import Search from '@components/Search'
 import Catalog from '@components/Catalog'
+import axios from 'axios'
 
 class Main extends Component<Pick<RouterProps, 'setRoute'>, { cards: Array<ICard> }> {
   state = {
@@ -14,8 +15,12 @@ class Main extends Component<Pick<RouterProps, 'setRoute'>, { cards: Array<ICard
   }
 
   async getProducts() {
-    const response = await fetch('https://fakestoreapi.com/products?limit=10')
-    this.setState({ cards: await response.json() })
+    try {
+      const response = await axios('https://fakestoreapi.com/products?limit=10')
+      this.setState({ cards: await response.data })
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   render() {
