@@ -19,11 +19,11 @@ class Card extends Component<CardProps> {
     } = this.props
     return (
       <div className="p-5 w-full flex flex-col justify-between max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <a className="self-center" href="#">
+        <a className="self-center" href="@components/Card/Card#">
           <img className="max-h-[200px] rounded-t-lg" src={image} alt="product image" />
         </a>
         <div className="">
-          <a href="#">
+          <a href="@components/Card/Card#">
             <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
               {title}
             </h5>

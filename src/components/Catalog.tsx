@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ICard } from '@/types'
-import Card from '@components/Card'
+import Card from '@components/Card/Card'
 
 export type CatalogProps = {
   cards: Array<ICard>
