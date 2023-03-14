@@ -26,12 +26,14 @@ class AppRouter extends Component<unknown, AppRouterState> {
         <Route
           path={ERoutes.Root}
           element={
-            <header>
-              <Navigation setRoute={this.setRoute} route={this.state.route} />
+            <>
+              <header>
+                <Navigation setRoute={this.setRoute} route={this.state.route} />
+              </header>
               <main className="container">
                 <Outlet />
               </main>
-            </header>
+            </>
           }
         >
           <Route path={ERoutes.Main} element={<Main setRoute={this.setRoute} />} />
