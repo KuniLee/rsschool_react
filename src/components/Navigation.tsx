@@ -31,7 +31,7 @@ class Navigation extends Component<RouterProps> {
     }
 
     return (
-      <nav className="border-gray-200 border-b-2 border-emerald-800">
+      <nav className="border-b-2 border-emerald-600">
         <div className="container flex flex-wrap items-center justify-between mx-auto">
           <span className="self-center text-xl font-semibold whitespace-nowrap">
             {pageNames[route as ERoutes]}
