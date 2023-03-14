@@ -28,9 +28,9 @@ class Card extends Component<CardProps> {
               {title}
             </h5>
           </a>
-          <Rating rate={rate} className="md-2" />
+          <Rating rate={rate} className="my-2" />
           <div className="flex items-center justify-between">
-            <span className="text-3xl font-bold text-gray-900 dark:text-white">${price}</span>
+            <span className="text-2xl font-bold text-gray-900 dark:text-white">${price}</span>
             <MyButton>Add to Cart</MyButton>
           </div>
         </div>

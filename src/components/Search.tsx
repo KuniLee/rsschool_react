@@ -11,7 +11,7 @@ class Search extends Component<SearchProps, SearchState> {
   constructor(props: SearchProps) {
     super(props)
     this.state = {
-      input: localStorage.searchInput,
+      input: localStorage.searchInput || '',
     }
   }
 
