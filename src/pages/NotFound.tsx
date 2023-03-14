@@ -8,7 +8,7 @@ class NotFound extends Component<Pick<RouterProps, 'setRoute'>> {
   render() {
     return (
       <div>
-        <h1>Not Found</h1>
+        <h1 className="mx-auto mt-2 text-center text-4xl">Not Found</h1>
       </div>
     )
   }

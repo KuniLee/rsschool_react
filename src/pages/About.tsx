@@ -8,7 +8,7 @@ class About extends Component<Pick<RouterProps, 'setRoute'>> {
   render() {
     return (
       <div>
-        <h1>About Page</h1>
+        <h1 className="mx-auto mt-2 text-center text-4xl">About Page</h1>
       </div>
     )
   }
