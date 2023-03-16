@@ -2,6 +2,7 @@ export enum ERoutes {
   About = 'about',
   Main = 'main',
   Root = '/',
+  Form = 'form',
   NotFound = 'Not found',
 }
 

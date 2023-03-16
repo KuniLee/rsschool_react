@@ -4,6 +4,7 @@ import { ERoutes, RouterProps } from '@/types'
 
 const navbarLinks = [
   { name: 'Main', route: ERoutes.Main },
+  { name: 'Form', route: ERoutes.Form },
   { name: 'About Us', route: ERoutes.About },
 ]
 
@@ -14,6 +15,7 @@ const LinkClasses = {
 }
 
 const pageNames: Record<ERoutes, string> = {
+  [ERoutes.Form]: 'Form',
   [ERoutes.About]: 'About Us',
   [ERoutes.Main]: 'Main Page',
   [ERoutes.Root]: '',

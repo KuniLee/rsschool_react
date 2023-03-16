@@ -11,7 +11,7 @@ describe('App', () => {
         <App />
       </BrowserRouter>
     )
-    expect(screen.getByPlaceholderText('Search something..')).toBeInTheDocument()
+    expect(screen.getByTestId('main')).toBeInTheDocument()
   })
   it('renders not fount if invalid path', () => {
     render(
