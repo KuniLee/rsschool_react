@@ -22,15 +22,11 @@ class Card extends Component<CardProps> {
         data-testid="card"
         className="p-5 w-full flex flex-col justify-between max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
       >
-        <a className="self-center" href="@components/Card/Card#">
-          <img className="max-h-[200px] rounded-t-lg" src={image} alt="product image" />
-        </a>
+        <img className="self-center max-h-[200px] rounded-t-lg" src={image} alt="product image" />
         <div className="">
-          <a href="@components/Card/Card#">
-            <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-              {title}
-            </h5>
-          </a>
+          <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+            {title}
+          </h5>
           <Rating rate={rate} className="my-2" />
           <div className="flex items-center justify-between">
             <span className="text-2xl font-bold text-gray-900 dark:text-white">${price}</span>
