@@ -14,9 +14,7 @@ describe('Test Card Component:', () => {
     render(<Card card={product} />)
     expect(screen.getByAltText(/product image/i)).toBeInTheDocument()
     expect(screen.getByRole('heading', { level: 5 })).toHaveTextContent(product.title)
-    expect(
-      screen.getByText(new RegExp(`${product.rating.rate.toString()}`, 'i'))
-    ).toBeInTheDocument()
+    expect(screen.getByText(new RegExp(`${product.rating.rate.toString()}`, 'i'))).toBeInTheDocument()
     expect(screen.getByText(new RegExp(`${product.price}`, 'i'))).toBeInTheDocument()
   })
 })

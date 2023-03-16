@@ -27,17 +27,13 @@ class Navigation extends Component<RouterProps> {
     const { route } = this.props
 
     function getLinkClass(linkRoute: ERoutes) {
-      return `${LinkClasses.base} ${
-        linkRoute === route ? LinkClasses.active : LinkClasses.nonActive
-      }`
+      return `${LinkClasses.base} ${linkRoute === route ? LinkClasses.active : LinkClasses.nonActive}`
     }
 
     return (
       <nav className="border-b-2 border-emerald-600">
         <div className="container flex flex-wrap items-center justify-between mx-auto">
-          <span className="self-center text-xl font-semibold whitespace-nowrap">
-            {pageNames[route as ERoutes]}
-          </span>
+          <span className="self-center text-xl font-semibold whitespace-nowrap">{pageNames[route as ERoutes]}</span>
           <div className="w-auto">
             <ul className="flex p-4 rounded-lg text-sm font-medium">
               {navbarLinks.map((link, idx) => (
