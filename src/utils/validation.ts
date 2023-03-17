@@ -12,7 +12,7 @@ const validateFunctions: Record<keyof FormInputs, (value: string) => string> = {
     return ''
   },
   select: (value: string) => {
-    if (!value) return 'Choose something'
+    if (value === 'default') return 'Choose something'
     return ''
   },
 }

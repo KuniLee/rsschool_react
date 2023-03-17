@@ -12,11 +12,13 @@ export type FormInputs = {
 }
 
 export type FormState = {
+  submitDisable: boolean
   errors: Record<keyof FormInputs, string>
 }
 
 class MyForm extends Component<never, FormState> {
   state = {
+    submitDisable: true,
     errors: {
       title: '',
       date: '',
@@ -33,15 +35,24 @@ class MyForm extends Component<never, FormState> {
     ev.preventDefault()
     for (const key in this.inputs) {
       const errorMsg = validate(key, this.inputs[key as keyof FormInputs].current?.value || '')
-      this.setState((prev) => ({ errors: { ...prev.errors, [key]: errorMsg } }))
+      this.setState((prev) => ({
+        errors: { ...prev.errors, [key]: errorMsg },
+      }))
     }
+    this.setState((prev) => ({
+      submitDisable: Object.values(prev.errors).some((el) => el),
+    }))
   }
   private handleChange = (target: string) => {
-    this.setState({ errors: { ...this.state.errors, [target]: '' } })
+    this.setState((prev) => ({
+      submitDisable: Object.values(prev.errors).some((el) => el),
+      errors: { ...prev.errors, [target]: '' },
+    }))
   }
 
   render() {
     const {
+      submitDisable,
       errors: { title: titleError, date: dateError, select: selectError },
     } = this.state
     const { title, date, select } = this.inputs
@@ -64,7 +75,9 @@ class MyForm extends Component<never, FormState> {
           ]}
           ref={select}
         />
-        <MyButton onClick={this.handleSubmit}>Create</MyButton>
+        <MyButton disabled={submitDisable} onClick={this.handleSubmit}>
+          Create
+        </MyButton>
       </form>
     )
   }

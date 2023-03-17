@@ -21,6 +21,7 @@ class MyInput extends Component<MyInputProps> {
           ${eMessage ? 'border-red-500 text-red-900 bg-red-50' : 'bg-gray-50 text-gray-900 focus:ring-green-500 focus:border-green-500 border-gray-300'}`}
           ref={innerref}
           {...props}
+          autoComplete="off"
         />
         {eMessage && <p className="absolute bottom-0 text-sm text-red-600 dark:text-red-500">{eMessage}</p>}
       </div>
