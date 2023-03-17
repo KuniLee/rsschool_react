@@ -12,10 +12,10 @@ class MyForm extends Component {
   render() {
     return (
       <form className="mt-1 max-w-[400px]">
-        <MyInput onChange={this.handler} placeholder="Insert title..." ref={this.input1} type="text">
+        <MyInput eMessage="cec" onChange={this.handler} placeholder="Insert title..." ref={this.input1} type="text">
           Title
         </MyInput>
-        <MyInput onChange={this.handler} ref={this.input2} type="date">
+        <MyInput eMessage="" onChange={this.handler} ref={this.input2} type="date">
           Date
         </MyInput>
         {/*<select id="countries" className={classes.input}>*/}
