@@ -1,5 +1,5 @@
 import React, { MouseEvent, Component, createRef, RefObject } from 'react'
-import validate from '@/utils/validation'
+import validate, { getCleanMessages, resetInputs } from '@/utils/validation'
 
 import MyInput from '@components/UI/MyInput'
 import MySelect from '@components/UI/MySelect'
@@ -33,21 +33,23 @@ class MyForm extends Component<never, FormState> {
 
   private handleSubmit = (ev: MouseEvent) => {
     ev.preventDefault()
-    for (const key in this.inputs) {
-      const errorMsg = validate(key, this.inputs[key as keyof FormInputs].current?.value || '')
-      this.setState((prev) => ({
-        errors: { ...prev.errors, [key]: errorMsg },
-      }))
-    }
-    this.setState((prev) => ({
-      submitDisable: Object.values(prev.errors).some((el) => el),
-    }))
+    const { isValid, errors } = validate(this.inputs)
+    if (isValid) this.createNewCard()
+    else this.setState({ submitDisable: !isValid, errors })
   }
+
+  private createNewCard() {
+    this.setState({ submitDisable: true, errors: getCleanMessages(this.state.errors) })
+    alert('created')
+    resetInputs(this.inputs)
+  }
+
   private handleChange = (target: string) => {
-    this.setState((prev) => ({
-      submitDisable: Object.values(prev.errors).some((el) => el),
-      errors: { ...prev.errors, [target]: '' },
-    }))
+    this.setState((prev) => {
+      const errors = { ...prev.errors, [target]: '' }
+      const submitDisable = Object.values(errors).some((el) => el)
+      return { submitDisable, errors }
+    })
   }
 
   render() {

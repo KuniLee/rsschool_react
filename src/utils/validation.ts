@@ -1,4 +1,4 @@
-import { FormInputs } from '@components/MyForm'
+import { FormInputs, FormState } from '@components/MyForm'
 
 const validateFunctions: Record<keyof FormInputs, (value: string) => string> = {
   title: (value: string) => {
@@ -16,6 +16,32 @@ const validateFunctions: Record<keyof FormInputs, (value: string) => string> = {
     return ''
   },
 }
-export default function (type: string, value: string) {
-  return validateFunctions[type as keyof FormInputs](value)
+export default function (refs: FormInputs) {
+  const errors = Object.entries(refs).reduce((acc: Partial<FormState['errors']>, [key, { current }]) => {
+    acc[key as keyof FormInputs] = validateFunctions[key as keyof FormInputs](current?.value || '')
+    return acc
+  }, {}) as FormState['errors']
+  return { isValid: Object.values(errors).every((el) => !el), errors }
+}
+
+export function getCleanMessages(errors: FormState['errors']) {
+  const newErrors = { ...errors }
+  for (const newErrorsKey in newErrors) {
+    newErrors[newErrorsKey as keyof FormState['errors']] = ''
+  }
+  return newErrors
+}
+
+export function resetInputs(refs: FormInputs) {
+  for (const newErrorsKey in refs) {
+    const target = refs[newErrorsKey as keyof FormInputs].current
+    if (!target) continue
+    switch (target.tagName) {
+      case 'INPUT':
+        target.value = ''
+        break
+      case 'SELECT':
+        target.value = 'default'
+    }
+  }
 }
