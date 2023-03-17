@@ -11,7 +11,7 @@ class MyInput extends Component<MyInputProps> {
   render() {
     const { children, innerref, eMessage, ...props } = this.props
     return (
-      <div className="relative pb-5">
+      <div className="relative pb-5 mb-2">
         <label htmlFor={this.id} className="block mb-1 text-sm font-medium text-gray-900">
           {children}
         </label>

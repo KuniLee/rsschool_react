@@ -1,34 +1,70 @@
-import React, { ChangeEvent, Component, createRef } from 'react'
+import React, { MouseEvent, Component, createRef, RefObject } from 'react'
+import validate from '@/utils/validation'
 
 import MyInput from '@components/UI/MyInput'
 import MySelect from '@components/UI/MySelect'
+import MyButton from '@components/UI/MyButton'
 
-class MyForm extends Component {
-  input1 = createRef<HTMLInputElement>()
-  input2 = createRef<HTMLInputElement>()
-  input3 = createRef<HTMLSelectElement>()
-  handler = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    console.log(e.target.value)
+export type FormInputs = {
+  title: RefObject<HTMLInputElement>
+  date: RefObject<HTMLInputElement>
+  select: RefObject<HTMLSelectElement>
+}
+
+export type FormState = {
+  errors: Record<keyof FormInputs, string>
+}
+
+class MyForm extends Component<never, FormState> {
+  state = {
+    errors: {
+      title: '',
+      date: '',
+      select: '',
+    },
+  }
+  inputs: FormInputs = {
+    title: createRef<HTMLInputElement>(),
+    date: createRef<HTMLInputElement>(),
+    select: createRef<HTMLSelectElement>(),
+  }
+
+  private handleSubmit = (ev: MouseEvent) => {
+    ev.preventDefault()
+    for (const key in this.inputs) {
+      const errorMsg = validate(key, this.inputs[key as keyof FormInputs].current?.value || '')
+      this.setState((prev) => ({ errors: { ...prev.errors, [key]: errorMsg } }))
+    }
+  }
+  private handleChange = (target: string) => {
+    this.setState({ errors: { ...this.state.errors, [target]: '' } })
   }
 
   render() {
+    const {
+      errors: { title: titleError, date: dateError, select: selectError },
+    } = this.state
+    const { title, date, select } = this.inputs
+
     return (
-      <form className="mt-1 max-w-[400px]">
-        <MyInput eMessage="cec" placeholder="Insert title..." ref={this.input1} type="text">
+      <form className="bg-green-100 p-4 rounded mt-1 max-w-[400px]">
+        <MyInput onChange={() => this.handleChange('title')} eMessage={titleError} placeholder="Insert title..." ref={title} type="text">
           Title
         </MyInput>
-        <MyInput eMessage="" ref={this.input2} type="date">
+        <MyInput onChange={() => this.handleChange('date')} eMessage={dateError} ref={date} type="date">
           Date
         </MyInput>
         <MySelect
-          eMessage="f"
-          defaultName="Choose"
+          onChange={() => this.handleChange('select')}
+          eMessage={selectError}
+          defaultName="Choose something"
           options={[
             { name: '123', value: 'gg' },
             { name: '234', value: 'second' },
           ]}
-          ref={this.input3}
+          ref={select}
         />
+        <MyButton onClick={this.handleSubmit}>Create</MyButton>
       </form>
     )
   }
