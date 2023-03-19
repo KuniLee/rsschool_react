@@ -15,6 +15,10 @@ const validateFunctions: Record<keyof FormInputs, (value: string) => string> = {
     if (value === 'default') return 'Choose something'
     return ''
   },
+  sex: (value: string) => {
+    if (value === 'default') return 'Choose one of the options'
+    return ''
+  },
 }
 export default function (refs: FormInputs) {
   const errors = Object.entries(refs).reduce((acc: Partial<FormState['errors']>, [key, { current }]) => {

@@ -4,11 +4,13 @@ import validate, { getCleanMessages, resetInputs } from '@/utils/validation'
 import MyInput from '@components/UI/MyInput'
 import MySelect from '@components/UI/MySelect'
 import MyButton from '@components/UI/MyButton'
+import MyRadioList from '@components/UI/MyRadioList'
 
 export type FormInputs = {
   title: RefObject<HTMLInputElement>
   date: RefObject<HTMLInputElement>
   select: RefObject<HTMLSelectElement>
+  sex: RefObject<HTMLInputElement>
 }
 
 export type FormState = {
@@ -16,19 +18,21 @@ export type FormState = {
   errors: Record<keyof FormInputs, string>
 }
 
-class MyForm extends Component<never, FormState> {
+class MyForm extends Component<unknown, FormState> {
   state = {
     submitDisable: true,
     errors: {
       title: '',
       date: '',
       select: '',
+      sex: '',
     },
   }
   inputs: FormInputs = {
     title: createRef<HTMLInputElement>(),
     date: createRef<HTMLInputElement>(),
     select: createRef<HTMLSelectElement>(),
+    sex: createRef<HTMLInputElement>(),
   }
 
   private handleSubmit = (ev: MouseEvent) => {
@@ -55,9 +59,9 @@ class MyForm extends Component<never, FormState> {
   render() {
     const {
       submitDisable,
-      errors: { title: titleError, date: dateError, select: selectError },
+      errors: { title: titleError, date: dateError, select: selectError, sex: sexError },
     } = this.state
-    const { title, date, select } = this.inputs
+    const { title, date, select, sex } = this.inputs
 
     return (
       <form className="bg-green-100 p-4 rounded mt-1 max-w-[400px]">
@@ -76,6 +80,16 @@ class MyForm extends Component<never, FormState> {
             { name: '234', value: 'second' },
           ]}
           ref={select}
+        />
+        <MyRadioList
+          onChange={() => this.handleChange('sex')}
+          ref={sex}
+          defaultValue="default"
+          options={[
+            { name: 'Male', value: 'male' },
+            { name: 'Female', value: 'female' },
+          ]}
+          eMessage={sexError}
         />
         <MyButton disabled={submitDisable} onClick={this.handleSubmit}>
           Create
