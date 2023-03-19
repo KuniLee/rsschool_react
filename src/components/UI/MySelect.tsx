@@ -13,7 +13,7 @@ class MySelect extends Component<MySelectProps> {
   render() {
     const { children, innerref, defaultName, eMessage, options, ...props } = this.props
     return (
-      <div className="relative pb-5 mb-2">
+      <div className="relative pb-5">
         {children && (
           <label htmlFor={this.id} className="block mb-1 text-sm font-medium text-gray-900">
             {children}

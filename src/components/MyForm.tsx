@@ -5,17 +5,19 @@ import MyInput from '@components/UI/MyInput'
 import MySelect from '@components/UI/MySelect'
 import MyButton from '@components/UI/MyButton'
 import MyRadioList from '@components/UI/MyRadioList'
+import MyCheckbox from '@components/UI/MyCheckbox'
 
 export type FormInputs = {
   title: RefObject<HTMLInputElement>
   date: RefObject<HTMLInputElement>
   select: RefObject<HTMLSelectElement>
   sex: RefObject<HTMLInputElement>
+  notifications: RefObject<HTMLInputElement>
 }
 
 export type FormState = {
   submitDisable: boolean
-  errors: Record<keyof FormInputs, string>
+  errors: Record<keyof Omit<FormInputs, 'notifications'>, string>
 }
 
 class MyForm extends Component<unknown, FormState> {
@@ -33,6 +35,7 @@ class MyForm extends Component<unknown, FormState> {
     date: createRef<HTMLInputElement>(),
     select: createRef<HTMLSelectElement>(),
     sex: createRef<HTMLInputElement>(),
+    notifications: createRef<HTMLInputElement>(),
   }
 
   private handleSubmit = (ev: MouseEvent) => {
@@ -61,7 +64,7 @@ class MyForm extends Component<unknown, FormState> {
       submitDisable,
       errors: { title: titleError, date: dateError, select: selectError, sex: sexError },
     } = this.state
-    const { title, date, select, sex } = this.inputs
+    const { title, date, select, sex, notifications } = this.inputs
 
     return (
       <form className="bg-green-100 p-4 rounded mt-1 max-w-[400px]">
@@ -88,9 +91,13 @@ class MyForm extends Component<unknown, FormState> {
           options={[
             { name: 'Male', value: 'male' },
             { name: 'Female', value: 'female' },
+            { name: 'Other', value: 'other' },
           ]}
           eMessage={sexError}
-        />
+        >
+          Sex
+        </MyRadioList>
+        <MyCheckbox ref={notifications}>I want to get notifications</MyCheckbox>
         <MyButton disabled={submitDisable} onClick={this.handleSubmit}>
           Create
         </MyButton>

@@ -14,9 +14,10 @@ class MyRadioList extends Component<MyRadioListProps> {
   }
 
   render() {
-    const { options, eMessage, defaultValue, ...props } = this.props
+    const { options, eMessage, defaultValue, children, ...props } = this.props
     return (
-      <div className={'pb-5 mb-2'}>
+      <div className="pb-5">
+        <p className="block mb-1 text-sm font-medium text-gray-900">{children}</p>
         <input defaultValue={defaultValue} ref={this.props.innerref} className="hidden"></input>
         <div className={eMessage && 'rounded border border-red-300'} {...props}>
           {options.map((radio) => (

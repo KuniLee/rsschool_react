@@ -1,6 +1,8 @@
 import { FormInputs, FormState } from '@components/MyForm'
 
-const validateFunctions: Record<keyof FormInputs, (value: string) => string> = {
+type ValidatingInputs = Omit<FormInputs, 'notifications'>
+
+const validateFunctions: Record<keyof ValidatingInputs, (value: string) => string> = {
   title: (value: string) => {
     if (value.length < 3) return 'Title must be more then 3 symbols'
     else if (value.length > 20) return 'Title must not be longer then 20 symbols'
@@ -22,7 +24,8 @@ const validateFunctions: Record<keyof FormInputs, (value: string) => string> = {
 }
 export default function (refs: FormInputs) {
   const errors = Object.entries(refs).reduce((acc: Partial<FormState['errors']>, [key, { current }]) => {
-    acc[key as keyof FormInputs] = validateFunctions[key as keyof FormInputs](current?.value || '')
+    if (!(key in validateFunctions)) return acc
+    acc[key as keyof ValidatingInputs] = validateFunctions[key as keyof ValidatingInputs](current?.value || '')
     return acc
   }, {}) as FormState['errors']
   return { isValid: Object.values(errors).every((el) => !el), errors }
