@@ -9,17 +9,21 @@ import MyCheckbox from '@components/UI/MyCheckbox'
 import MyFileInput from '@components/UI/MyFileInput'
 import countries from '@/utils/countries'
 import Popup from '@components/Popup'
+import MyRadio from '@components/UI/MyRadio'
+
+const genders = ['male', 'female', 'other'] as const
 
 export type FormInputs = {
   name: RefObject<HTMLInputElement>
   date: RefObject<HTMLInputElement>
   select: RefObject<HTMLSelectElement>
-  sex: RefObject<HTMLInputElement>
+  sex: RefObject<HTMLInputElement>[]
   notifications: RefObject<HTMLInputElement>
   avatar: RefObject<HTMLInputElement>
 }
 
 export type FormState = {
+  popup: boolean
   submitDisable: boolean
   errors: Record<keyof Omit<FormInputs, 'notifications'>, string>
 }
@@ -40,7 +44,7 @@ class MyForm extends Component<unknown, FormState> {
     name: createRef<HTMLInputElement>(),
     date: createRef<HTMLInputElement>(),
     select: createRef<HTMLSelectElement>(),
-    sex: createRef<HTMLInputElement>(),
+    sex: genders.map(() => createRef<HTMLInputElement>()),
     notifications: createRef<HTMLInputElement>(),
     avatar: createRef<HTMLInputElement>(),
   }
@@ -49,12 +53,11 @@ class MyForm extends Component<unknown, FormState> {
     ev.preventDefault()
     const { isValid, errors } = validate(this.inputs)
     if (isValid) this.createNewCard()
-    else this.setState({ submitDisable: !isValid, errors })
+    else this.setState((prev) => ({ ...prev, submitDisable: !isValid, errors }))
   }
 
   private createNewCard() {
-    this.setState({ submitDisable: true, errors: getCleanMessages(this.state.errors) })
-    alert('created')
+    this.setState({ submitDisable: true, errors: getCleanMessages(this.state.errors), popup: true })
     resetInputs(this.inputs)
   }
 
@@ -103,18 +106,12 @@ class MyForm extends Component<unknown, FormState> {
         >
           Country
         </MySelect>
-        <MyRadioList
-          onChange={() => this.handleChange('sex')}
-          ref={sex}
-          defaultValue="default"
-          options={[
-            { name: 'Male', value: 'male' },
-            { name: 'Female', value: 'female' },
-            { name: 'Other', value: 'other' },
-          ]}
-          eMessage={sexError}
-        >
-          Sex
+        <MyRadioList title="Sex" eMessage={sexError}>
+          {['male', 'female', 'other'].map((radio, idx) => (
+            <MyRadio onChange={() => this.handleChange('sex')} ref={sex[idx]} key={radio} value={radio} name="sex">
+              {radio}
+            </MyRadio>
+          ))}
         </MyRadioList>
         <MyCheckbox ref={notifications}>I want to get notifications</MyCheckbox>
         <MyButton disabled={submitDisable} onClick={this.handleSubmit}>

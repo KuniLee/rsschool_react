@@ -1,11 +1,12 @@
 import { FormInputs, FormState } from '@components/MyForm'
 
-type ValidatingInputs = Omit<FormInputs, 'notifications'>
+type ValidatingInputs = Omit<FormInputs, 'notifications' | 'sex'>
+type ValidatingInputsArray = Pick<FormInputs, 'sex'>
+type ValidateFunctionsType = Record<keyof ValidatingInputs, (el: HTMLInputElement | HTMLSelectElement) => string> & Record<keyof ValidatingInputsArray, (elArr: HTMLInputElement[]) => string>
 
-const validateFunctions: Record<keyof ValidatingInputs, (el: HTMLInputElement | HTMLSelectElement) => string> = {
+const validateFunctions: ValidateFunctionsType = {
   name: ({ value }) => {
-    if (!/^[a-zA-Z][a-zA-Z0-9-_.]{1,20}$/.test(value)) return 'Name must consist of 2-20 Latin letters and numbers'
-
+    if (!/^[a-zA-Z][a-zA-Z0-9-_.\s]{1,20}$/.test(value)) return 'Name must consist of 2-20 Latin letters and numbers'
     return ''
   },
   date: ({ value: date }) => {
@@ -17,8 +18,8 @@ const validateFunctions: Record<keyof ValidatingInputs, (el: HTMLInputElement | 
     if (value === 'default') return 'Choose something'
     return ''
   },
-  sex: ({ value }) => {
-    if (value === 'default') return 'Choose one of the options'
+  sex: (elArr) => {
+    if (elArr.every((el) => !el.checked)) return 'Choose one of the options'
     return ''
   },
   avatar: (el) => {
@@ -29,11 +30,13 @@ const validateFunctions: Record<keyof ValidatingInputs, (el: HTMLInputElement | 
   },
 }
 export default function (refs: FormInputs) {
-  const errors = Object.entries(refs).reduce((acc: Partial<FormState['errors']>, [key, { current }]) => {
-    if (!(key in validateFunctions && current)) return acc
-    acc[key as keyof ValidatingInputs] = validateFunctions[key as keyof ValidatingInputs](current)
+  const errors = Object.entries(refs).reduce((acc: Partial<FormState['errors']>, [key, ref]) => {
+    if (!(key in validateFunctions)) return acc
+    if (Array.isArray(ref)) {
+      acc[key as keyof ValidatingInputsArray] = validateFunctions[key as keyof ValidatingInputsArray](ref.map((el) => el.current as HTMLInputElement))
+    } else acc[key as keyof ValidatingInputs] = validateFunctions[key as keyof ValidatingInputs](ref.current as HTMLInputElement | HTMLSelectElement)
     return acc
-  }, {}) as FormState['errors']
+  }, {}) as unknown as FormState['errors']
   return { isValid: Object.values(errors).every((el) => !el), errors }
 }
 
@@ -47,14 +50,17 @@ export function getCleanMessages(errors: FormState['errors']) {
 
 export function resetInputs(refs: FormInputs) {
   for (const newErrorsKey in refs) {
-    const target = refs[newErrorsKey as keyof FormInputs].current
-    if (!target) continue
-    switch (target.tagName) {
-      case 'INPUT':
-        target.value = ''
-        break
-      case 'SELECT':
-        target.value = 'default'
-    }
+    const ref = refs[newErrorsKey as keyof FormInputs]
+    if (Array.isArray(ref)) {
+      ref.forEach((el) => ((el.current as HTMLInputElement).checked = false))
+    } else if (ref.current)
+      switch (ref.current.tagName) {
+        case 'INPUT':
+          ;(ref.current as HTMLInputElement).value = ''
+          ;(ref.current as HTMLInputElement).checked = false
+          break
+        case 'SELECT':
+          ref.current.value = 'default'
+      }
   }
 }
