@@ -21,3 +21,12 @@ export interface ICard {
   price: number
   image: string
 }
+
+export interface IUser {
+  id: number
+  name: string
+  country: string
+  notifications: boolean
+  sex: 'male' | 'female' | 'other'
+  avatar: Blob
+}

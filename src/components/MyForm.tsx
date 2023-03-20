@@ -8,6 +8,7 @@ import MyRadioList from '@components/UI/MyRadioList'
 import MyCheckbox from '@components/UI/MyCheckbox'
 import MyFileInput from '@components/UI/MyFileInput'
 import countries from '@/utils/countries'
+import Popup from '@components/Popup'
 
 export type FormInputs = {
   name: RefObject<HTMLInputElement>
@@ -25,6 +26,7 @@ export type FormState = {
 
 class MyForm extends Component<unknown, FormState> {
   state = {
+    popup: false,
     submitDisable: true,
     errors: {
       name: '',
@@ -64,8 +66,14 @@ class MyForm extends Component<unknown, FormState> {
     })
   }
 
+  private closePopup = (ev: MouseEvent) => {
+    ev.preventDefault()
+    this.setState((prev) => ({ ...prev, popup: false }))
+  }
+
   render() {
     const {
+      popup,
       submitDisable,
       errors: { name: titleError, date: dateError, select: selectError, sex: sexError, avatar: avatarError },
     } = this.state
@@ -73,6 +81,7 @@ class MyForm extends Component<unknown, FormState> {
 
     return (
       <form className="bg-green-100 p-4 rounded mt-1 max-w-[400px]">
+        <Popup onOk={this.closePopup} msg={'User created!'} open={popup} />
         <MyInput onChange={() => this.handleChange('name')} eMessage={titleError} placeholder="Insert name..." ref={name} type="text">
           Name
         </MyInput>
@@ -85,13 +94,15 @@ class MyForm extends Component<unknown, FormState> {
         <MySelect
           onChange={() => this.handleChange('select')}
           eMessage={selectError}
-          defaultName="Choose country"
+          defaultName="Choose country..."
           options={countries.map(({ code, name }) => ({
             name,
             value: code,
           }))}
           ref={select}
-        />
+        >
+          Country
+        </MySelect>
         <MyRadioList
           onChange={() => this.handleChange('sex')}
           ref={sex}
