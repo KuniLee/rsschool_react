@@ -11,21 +11,21 @@ describe('Test Card Component:', () => {
     const cards = [
       {
         image: 'link1',
-        title: 'TestName1',
+        name: 'TestName1',
         rating: { rate: 4.3, count: 0 },
         id: 1,
         price: 500,
       },
       {
         image: 'link2',
-        title: 'TestName2',
+        name: 'TestName2',
         rating: { rate: 4.2, count: 0 },
         id: 2,
         price: 600,
       },
       {
         image: 'link3',
-        title: 'TestName3',
+        name: 'TestName3',
         rating: { rate: 4.1, count: 0 },
         id: 3,
         price: 700,

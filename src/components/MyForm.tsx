@@ -6,13 +6,16 @@ import MySelect from '@components/UI/MySelect'
 import MyButton from '@components/UI/MyButton'
 import MyRadioList from '@components/UI/MyRadioList'
 import MyCheckbox from '@components/UI/MyCheckbox'
+import MyFileInput from '@components/UI/MyFileInput'
+import countries from '@/utils/countries'
 
 export type FormInputs = {
-  title: RefObject<HTMLInputElement>
+  name: RefObject<HTMLInputElement>
   date: RefObject<HTMLInputElement>
   select: RefObject<HTMLSelectElement>
   sex: RefObject<HTMLInputElement>
   notifications: RefObject<HTMLInputElement>
+  avatar: RefObject<HTMLInputElement>
 }
 
 export type FormState = {
@@ -24,18 +27,20 @@ class MyForm extends Component<unknown, FormState> {
   state = {
     submitDisable: true,
     errors: {
-      title: '',
+      name: '',
       date: '',
       select: '',
       sex: '',
+      avatar: '',
     },
   }
   inputs: FormInputs = {
-    title: createRef<HTMLInputElement>(),
+    name: createRef<HTMLInputElement>(),
     date: createRef<HTMLInputElement>(),
     select: createRef<HTMLSelectElement>(),
     sex: createRef<HTMLInputElement>(),
     notifications: createRef<HTMLInputElement>(),
+    avatar: createRef<HTMLInputElement>(),
   }
 
   private handleSubmit = (ev: MouseEvent) => {
@@ -62,26 +67,29 @@ class MyForm extends Component<unknown, FormState> {
   render() {
     const {
       submitDisable,
-      errors: { title: titleError, date: dateError, select: selectError, sex: sexError },
+      errors: { name: titleError, date: dateError, select: selectError, sex: sexError, avatar: avatarError },
     } = this.state
-    const { title, date, select, sex, notifications } = this.inputs
+    const { name, avatar, date, select, sex, notifications } = this.inputs
 
     return (
       <form className="bg-green-100 p-4 rounded mt-1 max-w-[400px]">
-        <MyInput onChange={() => this.handleChange('title')} eMessage={titleError} placeholder="Insert title..." ref={title} type="text">
-          Title
+        <MyInput onChange={() => this.handleChange('name')} eMessage={titleError} placeholder="Insert name..." ref={name} type="text">
+          Name
         </MyInput>
+        <MyFileInput onChange={() => this.handleChange('avatar')} desc="PNG or JPG. (MAX 1Mb)" accept="image/png, image/jpeg" eMessage={avatarError} ref={avatar}>
+          Avatar
+        </MyFileInput>
         <MyInput onChange={() => this.handleChange('date')} eMessage={dateError} ref={date} type="date">
-          Date
+          Date of Birth
         </MyInput>
         <MySelect
           onChange={() => this.handleChange('select')}
           eMessage={selectError}
-          defaultName="Choose something"
-          options={[
-            { name: '123', value: 'gg' },
-            { name: '234', value: 'second' },
-          ]}
+          defaultName="Choose country"
+          options={countries.map(({ code, name }) => ({
+            name,
+            value: code,
+          }))}
           ref={select}
         />
         <MyRadioList
