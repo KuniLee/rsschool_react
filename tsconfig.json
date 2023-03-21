@@ -24,5 +24,10 @@
       "@assets/*": ["./assets/*"]
     }
   },
-  "include": ["./src/**/*", "styled.d.ts", "vite.config.ts"]
+  "include": [
+    "./src/**/*",
+    "styled.d.ts",
+    "vite.config.ts",
+    "node_modules/vitest/globals.d.ts"
+  ]
 }

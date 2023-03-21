@@ -62,7 +62,12 @@ class MyForm extends Component<FormProps, FormState> {
 
   private async createNewCard() {
     this.props.addUser(await getUser(this.inputs))
-    this.setState((prev) => ({ ...prev, submitDisable: true, errors: getCleanMessages(this.state.errors), popup: true }))
+    this.setState((prev) => ({
+      ...prev,
+      submitDisable: true,
+      errors: getCleanMessages(this.state.errors),
+      popup: true,
+    }))
     resetInputs(this.inputs)
   }
 
