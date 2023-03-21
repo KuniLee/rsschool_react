@@ -1,4 +1,4 @@
-import { FormInputs, FormState } from '@components/MyForm'
+import { FormInputs, FormState } from '@components/MyForm/MyForm'
 
 type ValidatingInputs = Omit<FormInputs, 'notifications' | 'sex'>
 type ValidatingInputsArray = Pick<FormInputs, 'sex'>

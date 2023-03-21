@@ -35,8 +35,7 @@ class AppRouter extends Component<unknown, AppRouterState> {
                 <Outlet />
               </main>
             </>
-          }
-        >
+          }>
           <Route path={ERoutes.Main} element={<Main setRoute={this.setRoute} />} />
           <Route path={ERoutes.About} element={<About setRoute={this.setRoute} />} />
           <Route path={ERoutes.Form} element={<FormPage setRoute={this.setRoute} />} />

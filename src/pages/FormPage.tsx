@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ERoutes, IUser, RouterProps } from '@/types'
-import MyForm from '@components/MyForm'
+import MyForm from '@components/MyForm/MyForm'
 import UserCard from '@components/Card/UserCard'
 
 type FormPageState = {

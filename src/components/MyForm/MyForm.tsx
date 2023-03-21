@@ -107,8 +107,7 @@ class MyForm extends Component<FormProps, FormState> {
             name,
             value: code,
           }))}
-          ref={select}
-        >
+          ref={select}>
           Country
         </MySelect>
         <MyRadioList title="Sex" eMessage={sexError}>

@@ -20,7 +20,7 @@ class MyFileInput extends Component<MyFileInputProps> {
           id={this.id}
           type="file"
           className={`block w-full text-sm border rounded-lg
-          file:mr-4 file:py-2 file:px-4
+          file:mr-4 file:py-2.5 file:px-2
       file:rounded-l-lg file:border-0
       file:text-sm file:font-semibold
       file:bg-violet-50 file:text-green-700

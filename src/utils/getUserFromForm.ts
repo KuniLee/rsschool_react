@@ -1,5 +1,5 @@
 import { genders, Genders, IUser } from '@/types'
-import { FormInputs } from '@components/MyForm'
+import { FormInputs } from '@components/MyForm/MyForm'
 
 export default async function (inputs: FormInputs): Promise<IUser> {
   function isOfGendersType(value: string): value is Genders {
