@@ -88,7 +88,7 @@ class MyForm extends Component<FormProps, FormState> {
     const { name, avatar, date, select, sex, notifications } = this.inputs
 
     return (
-      <form className="bg-green-100 p-4 rounded mt-1 max-w-[400px]">
+      <form className="bg-green-100 p-4 rounded mt-1 grid md:grid-cols-2 gap-x-2 items-start">
         <Popup onOk={this.closePopup} msg={'User created!'} open={popup} />
         <MyInput onChange={() => this.handleChange('name')} eMessage={titleError} placeholder="Insert name..." ref={name} type="text">
           Name
@@ -121,7 +121,7 @@ class MyForm extends Component<FormProps, FormState> {
         <MyCheckbox onChange={() => this.handleChange('notifications')} ref={notifications}>
           I want to get notifications
         </MyCheckbox>
-        <MyButton disabled={submitDisable} onClick={this.handleSubmit}>
+        <MyButton className="justify-self-start" disabled={submitDisable} onClick={this.handleSubmit}>
           Create
         </MyButton>
       </form>
