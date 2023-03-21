@@ -18,8 +18,8 @@ export default async function (inputs: FormInputs): Promise<IUser> {
   }
 }
 
-function readFile(input: HTMLInputElement | null): Promise<string | ArrayBuffer | null> {
-  if (!input || !input.files) return Promise.resolve(null)
+function readFile(input: HTMLInputElement | null): Promise<string | null> {
+  if (!input || !input.files || input.files.length === 0) return Promise.resolve(null)
   const file = input.files[0]
   return new Promise((resolve, reject) => {
     const fr = new FileReader()
@@ -28,9 +28,9 @@ function readFile(input: HTMLInputElement | null): Promise<string | ArrayBuffer 
         reject()
         return
       }
-      resolve(fr.result)
+      resolve(fr.result as string)
     }
     fr.onerror = reject
-    fr.readAsText(file)
+    fr.readAsDataURL(file)
   })
 }

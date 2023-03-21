@@ -16,7 +16,8 @@ export type RouterProps = {
 
 export interface ICard {
   id: number
-  title: string
+  name: string
+  description: string
   rating: {
     rate: number
     count: number
@@ -32,5 +33,5 @@ export interface IUser {
   country: string
   notifications: boolean
   sex: Genders
-  avatar: string | ArrayBuffer | null
+  avatar: string | null
 }
