@@ -33,4 +33,12 @@ describe('App', () => {
     expect(screen.getByRole('link', { name: 'About Us' })).toHaveClass('text-green-700')
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/about/i)
   })
+  it('test render main page', () => {
+    render(
+      <MemoryRouter initialEntries={['/main']}>
+        <App />
+      </MemoryRouter>
+    )
+    expect(screen.getByPlaceholderText(/Search something../i)).toBeInTheDocument()
+  })
 })
