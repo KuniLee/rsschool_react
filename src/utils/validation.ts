@@ -2,7 +2,8 @@ import { FormInputs, FormState } from '@components/MyForm/MyForm'
 
 type ValidatingInputs = Omit<FormInputs, 'notifications' | 'sex'>
 type ValidatingInputsArray = Pick<FormInputs, 'sex'>
-type ValidateFunctionsType = Record<keyof ValidatingInputs, (el: HTMLInputElement | HTMLSelectElement) => string> & Record<keyof ValidatingInputsArray, (elArr: HTMLInputElement[]) => string>
+type ValidateFunctionsType = Record<keyof ValidatingInputs, (el: HTMLInputElement | HTMLSelectElement) => string> &
+  Record<keyof ValidatingInputsArray, (elArr: HTMLInputElement[]) => string>
 
 const validateFunctions: ValidateFunctionsType = {
   name: ({ value }) => {
@@ -33,8 +34,13 @@ export default function (refs: FormInputs) {
   const errors = Object.entries(refs).reduce((acc: Partial<FormState['errors']>, [key, ref]) => {
     if (!(key in validateFunctions)) return acc
     if (Array.isArray(ref)) {
-      acc[key as keyof ValidatingInputsArray] = validateFunctions[key as keyof ValidatingInputsArray](ref.map((el) => el.current as HTMLInputElement))
-    } else acc[key as keyof ValidatingInputs] = validateFunctions[key as keyof ValidatingInputs](ref.current as HTMLInputElement | HTMLSelectElement)
+      acc[key as keyof ValidatingInputsArray] = validateFunctions[key as keyof ValidatingInputsArray](
+        ref.map((el) => el.current as HTMLInputElement)
+      )
+    } else
+      acc[key as keyof ValidatingInputs] = validateFunctions[key as keyof ValidatingInputs](
+        ref.current as HTMLInputElement | HTMLSelectElement
+      )
     return acc
   }, {}) as unknown as FormState['errors']
   return { isValid: Object.values(errors).every((el) => !el), errors }

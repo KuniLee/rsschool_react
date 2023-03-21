@@ -34,7 +34,13 @@ class Search extends Component<SearchProps, SearchState> {
           <div className="grid place-items-center h-full w-12 text-gray-300">
             <Logo className="w-6 h-6"></Logo>
           </div>
-          <input value={input} onChange={this.inputHandle} className="peer h-full w-full outline-none text-sm text-gray-700 pr-2" type="text" placeholder="Search something.." />
+          <input
+            value={input}
+            onChange={this.inputHandle}
+            className="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
+            type="text"
+            placeholder="Search something.."
+          />
         </div>
       </div>
     )

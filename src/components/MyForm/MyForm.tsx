@@ -95,10 +95,20 @@ class MyForm extends Component<FormProps, FormState> {
     return (
       <form className="bg-green-100 p-4 rounded mt-1 grid md:grid-cols-2 gap-x-2 items-start">
         <Popup onOk={this.closePopup} msg={'User created!'} open={popup} />
-        <MyInput onChange={() => this.handleChange('name')} eMessage={titleError} placeholder="Insert name..." ref={name} type="text">
+        <MyInput
+          onChange={() => this.handleChange('name')}
+          eMessage={titleError}
+          placeholder="Insert name..."
+          ref={name}
+          type="text">
           Name
         </MyInput>
-        <MyFileInput onChange={() => this.handleChange('avatar')} desc="PNG or JPG. (MAX 1Mb)" accept="image/png, image/jpeg" eMessage={avatarError} ref={avatar}>
+        <MyFileInput
+          desc="PNG or JPG. (MAX 1Mb)"
+          accept="image/png, image/jpeg"
+          eMessage={avatarError}
+          ref={avatar}
+          onChange={() => this.handleChange('avatar')}>
           Avatar
         </MyFileInput>
         <MyInput onChange={() => this.handleChange('date')} eMessage={dateError} ref={date} type="date">
@@ -108,10 +118,7 @@ class MyForm extends Component<FormProps, FormState> {
           onChange={() => this.handleChange('select')}
           eMessage={selectError}
           defaultName="Choose country..."
-          options={countries.map(({ code, name }) => ({
-            name,
-            value: code,
-          }))}
+          options={countries.map(({ code, name }) => ({ name, value: code }))}
           ref={select}>
           Country
         </MySelect>

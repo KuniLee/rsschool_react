@@ -18,7 +18,11 @@ class MyInput extends Component<MyInputProps> {
         <input
           id={this.id}
           className={`border text-sm rounded-lg block w-full p-2.5
-          ${eMessage ? 'border-red-500 text-red-900 bg-red-50' : 'bg-gray-50 text-gray-900 focus:ring-green-500 focus:border-green-500 border-gray-300'}`}
+          ${
+            eMessage
+              ? 'border-red-500 text-red-900 bg-red-50'
+              : 'bg-gray-50 text-gray-900 focus:ring-green-500 focus:border-green-500 border-gray-300'
+          }`}
           ref={innerref}
           {...props}
           autoComplete="off"
@@ -29,4 +33,6 @@ class MyInput extends Component<MyInputProps> {
   }
 }
 
-export default React.forwardRef<HTMLInputElement, Omit<MyInputProps, 'innerref'>>((props, ref) => <MyInput innerref={ref} {...props} />)
+export default React.forwardRef<HTMLInputElement, Omit<MyInputProps, 'innerref'>>((props, ref) => (
+  <MyInput innerref={ref} {...props} />
+))

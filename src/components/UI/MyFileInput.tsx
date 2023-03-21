@@ -25,14 +25,24 @@ class MyFileInput extends Component<MyFileInputProps> {
       file:text-sm file:font-semibold
       file:bg-violet-50 file:text-green-700
       hover:file:bg-violet-100
-          ${eMessage ? 'border-red-500 text-red-900 bg-red-50' : 'bg-gray-50 text-gray-900 focus:ring-green-500 focus:border-green-500 border-gray-300'}`}
+          ${
+            eMessage
+              ? 'border-red-500 text-red-900 bg-red-50'
+              : 'bg-gray-50 text-gray-900 focus:ring-green-500 focus:border-green-500 border-gray-300'
+          }`}
           ref={innerref}
           {...props}
         />
-        {!eMessage ? <p className="text-sm text-gray-500">{desc}</p> : <p className="bottom-0 text-sm text-red-600 dark:text-red-500">{eMessage}</p>}
+        {!eMessage ? (
+          <p className="text-sm text-gray-500">{desc}</p>
+        ) : (
+          <p className="bottom-0 text-sm text-red-600 dark:text-red-500">{eMessage}</p>
+        )}
       </div>
     )
   }
 }
 
-export default React.forwardRef<HTMLInputElement, Omit<MyFileInputProps, 'innerref'>>((props, ref) => <MyFileInput innerref={ref} {...props} />)
+export default React.forwardRef<HTMLInputElement, Omit<MyFileInputProps, 'innerref'>>((props, ref) => (
+  <MyFileInput innerref={ref} {...props} />
+))
