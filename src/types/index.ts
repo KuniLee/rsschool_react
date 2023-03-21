@@ -6,6 +6,9 @@ export enum ERoutes {
   NotFound = 'Not found',
 }
 
+export const genders = ['male', 'female', 'other']
+export type Genders = (typeof genders)[number]
+
 export type RouterProps = {
   route: ERoutes | null
   setRoute: (route: ERoutes) => void
@@ -25,8 +28,9 @@ export interface ICard {
 export interface IUser {
   id: number
   name: string
+  date: Date
   country: string
   notifications: boolean
-  sex: 'male' | 'female' | 'other'
-  avatar: Blob
+  sex: Genders
+  avatar: string | ArrayBuffer | null
 }

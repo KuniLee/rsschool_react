@@ -10,8 +10,8 @@ import MyFileInput from '@components/UI/MyFileInput'
 import countries from '@/utils/countries'
 import Popup from '@components/Popup'
 import MyRadio from '@components/UI/MyRadio'
-
-const genders = ['male', 'female', 'other'] as const
+import { genders, IUser } from '@/types'
+import getUser from '@/utils/getUserFromForm'
 
 export type FormInputs = {
   name: RefObject<HTMLInputElement>
@@ -28,7 +28,11 @@ export type FormState = {
   errors: Record<keyof Omit<FormInputs, 'notifications'>, string>
 }
 
-class MyForm extends Component<unknown, FormState> {
+type FormProps = {
+  addUser: (user: IUser) => void
+}
+
+class MyForm extends Component<FormProps, FormState> {
   state = {
     popup: false,
     submitDisable: true,
@@ -56,8 +60,9 @@ class MyForm extends Component<unknown, FormState> {
     else this.setState((prev) => ({ ...prev, submitDisable: !isValid, errors }))
   }
 
-  private createNewCard() {
-    this.setState({ submitDisable: true, errors: getCleanMessages(this.state.errors), popup: true })
+  private async createNewCard() {
+    this.props.addUser(await getUser(this.inputs))
+    this.setState((prev) => ({ ...prev, submitDisable: true, errors: getCleanMessages(this.state.errors), popup: true }))
     resetInputs(this.inputs)
   }
 
@@ -113,7 +118,9 @@ class MyForm extends Component<unknown, FormState> {
             </MyRadio>
           ))}
         </MyRadioList>
-        <MyCheckbox ref={notifications}>I want to get notifications</MyCheckbox>
+        <MyCheckbox onChange={() => this.handleChange('notifications')} ref={notifications}>
+          I want to get notifications
+        </MyCheckbox>
         <MyButton disabled={submitDisable} onClick={this.handleSubmit}>
           Create
         </MyButton>
