@@ -57,17 +57,12 @@ class MyForm extends Component<FormProps, FormState> {
     ev.preventDefault()
     const { isValid, errors } = validate(this.inputs)
     if (isValid) this.createNewCard()
-    else this.setState((prev) => ({ ...prev, submitDisable: !isValid, errors }))
+    else this.setState({ submitDisable: !isValid, errors })
   }
 
   private async createNewCard() {
     this.props.addUser(await getUser(this.inputs))
-    this.setState((prev) => ({
-      ...prev,
-      submitDisable: true,
-      errors: getCleanMessages(this.state.errors),
-      popup: true,
-    }))
+    this.setState({ submitDisable: true, errors: getCleanMessages(this.state.errors), popup: true })
     resetInputs(this.inputs)
   }
 
@@ -81,7 +76,7 @@ class MyForm extends Component<FormProps, FormState> {
 
   private closePopup = (ev: MouseEvent) => {
     ev.preventDefault()
-    this.setState((prev) => ({ ...prev, popup: false }))
+    this.setState({ popup: false })
   }
 
   render() {
@@ -123,7 +118,7 @@ class MyForm extends Component<FormProps, FormState> {
           Country
         </MySelect>
         <MyRadioList title="Sex" eMessage={sexError}>
-          {['male', 'female', 'other'].map((radio, idx) => (
+          {genders.map((radio, idx) => (
             <MyRadio onChange={() => this.handleChange('sex')} ref={sex[idx]} key={radio} value={radio} name="sex">
               {radio}
             </MyRadio>

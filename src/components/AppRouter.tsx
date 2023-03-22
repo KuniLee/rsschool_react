@@ -18,7 +18,7 @@ class AppRouter extends Component<unknown, AppRouterState> {
   }
 
   setRoute = (route: ERoutes) => {
-    this.setState({ ...this.state, route })
+    this.setState({ route })
   }
 
   render() {

@@ -13,7 +13,7 @@ class FormPage extends Component<Pick<RouterProps, 'setRoute'>, FormPageState> {
   }
 
   private addUser = (user: IUser) => {
-    this.setState((s) => ({ ...s, users: [...s.users, user] }))
+    this.setState((s) => ({ users: [...s.users, user] }))
   }
 
   componentDidMount() {
