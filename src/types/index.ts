@@ -29,6 +29,7 @@ export interface ICard {
 export interface IUser {
   id: number
   name: string
+  surname: string
   date: Date
   country: string
   notifications: boolean

@@ -9,6 +9,7 @@ export default async function (inputs: FormInputs): Promise<IUser> {
   if (!isOfGendersType(sex)) throw Error('parse form problem')
   return {
     id: Date.now(),
+    surname: inputs.surname.current?.value || '',
     name: inputs.name.current?.value || '',
     date: new Date(inputs.date.current?.value || 0),
     country: inputs.select.current?.value || '',

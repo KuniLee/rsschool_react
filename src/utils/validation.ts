@@ -7,12 +7,21 @@ type ValidateFunctionsType = Record<keyof ValidatingInputs, (el: HTMLInputElemen
 
 const validateFunctions: ValidateFunctionsType = {
   name: ({ value }) => {
-    if (!/^[a-zA-Z][a-zA-Z0-9-_.\s]{1,20}$/.test(value)) return 'Name must consist of 2-20 Latin letters and numbers'
+    if (!/^[a-zA-Z][a-zA-Z0-9-_.]{1,20}$/.test(value)) return 'Firstname must consist of 2-20 Latin letters and numbers'
+    return ''
+  },
+  surname: ({ value }) => {
+    if (!/^[a-zA-Z][a-zA-Z0-9-_.]{1,20}$/.test(value)) return 'Surname must consist of 2-20 Latin letters and numbers'
     return ''
   },
   date: ({ value: date }) => {
     if (!date) return 'Set the date'
     else if (new Date(date) > new Date()) return "Date of Birth cannot be more than today's date"
+    return ''
+  },
+  agreement: (el) => {
+    if (!(el instanceof HTMLInputElement)) return ''
+    if (!el.checked) return 'You should agree!'
     return ''
   },
   select: ({ value }) => {

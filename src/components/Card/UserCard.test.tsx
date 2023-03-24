@@ -7,6 +7,7 @@ describe('Test UserCard Component:', () => {
     const testUser = {
       id: 1,
       name: 'Test Name',
+      surname: 'Test Name',
       date: new Date('2000-01-01'),
       sex: 'other',
       country: 'FR',

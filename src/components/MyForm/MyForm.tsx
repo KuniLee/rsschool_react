@@ -4,7 +4,7 @@ import validate, { getCleanMessages, resetInputs } from '@/utils/validation'
 import MyInput from '@components/UI/MyInput'
 import MySelect from '@components/UI/MySelect'
 import MyButton from '@components/UI/MyButton'
-import MyRadioList from '@components/UI/MyRadioList'
+import MsgBox from '@components/UI/MsgBox'
 import MyCheckbox from '@components/UI/MyCheckbox'
 import MyFileInput from '@components/UI/MyFileInput'
 import countries from '@/utils/countries'
@@ -15,11 +15,13 @@ import getUser from '@/utils/getUserFromForm'
 
 export type FormInputs = {
   name: RefObject<HTMLInputElement>
+  surname: RefObject<HTMLInputElement>
   date: RefObject<HTMLInputElement>
   select: RefObject<HTMLSelectElement>
   sex: RefObject<HTMLInputElement>[]
   notifications: RefObject<HTMLInputElement>
   avatar: RefObject<HTMLInputElement>
+  agreement: RefObject<HTMLInputElement>
 }
 
 export type FormState = {
@@ -37,20 +39,24 @@ class MyForm extends Component<FormProps, FormState> {
     popup: false,
     submitDisable: true,
     errors: {
+      surname: '',
       name: '',
       date: '',
       select: '',
       sex: '',
       avatar: '',
+      agreement: '',
     },
   }
   inputs: FormInputs = {
     name: createRef<HTMLInputElement>(),
+    surname: createRef<HTMLInputElement>(),
     date: createRef<HTMLInputElement>(),
     select: createRef<HTMLSelectElement>(),
     sex: genders.map(() => createRef<HTMLInputElement>()),
     notifications: createRef<HTMLInputElement>(),
     avatar: createRef<HTMLInputElement>(),
+    agreement: createRef<HTMLInputElement>(),
   }
 
   private handleSubmit = (ev: MouseEvent) => {
@@ -83,50 +89,73 @@ class MyForm extends Component<FormProps, FormState> {
     const {
       popup,
       submitDisable,
-      errors: { name: titleError, date: dateError, select: selectError, sex: sexError, avatar: avatarError },
+      errors: {
+        name: nameError,
+        surname: surnameError,
+        date: dateError,
+        select: selectError,
+        sex: sexError,
+        avatar: avatarError,
+        agreement: agreeError,
+      },
     } = this.state
-    const { name, avatar, date, select, sex, notifications } = this.inputs
+    const { name, avatar, date, select, sex, notifications, agreement, surname } = this.inputs
 
     return (
-      <form className="bg-green-100 p-4 rounded mt-1 grid md:grid-cols-2 gap-x-2 items-start">
+      <form className="bg-green-100 p-4 rounded mt-1">
         <Popup onOk={this.closePopup} msg={'User created!'} open={popup} />
-        <MyInput
-          onChange={() => this.handleChange('name')}
-          eMessage={titleError}
-          placeholder="Insert name..."
-          ref={name}
-          type="text">
-          Name
-        </MyInput>
-        <MyFileInput
-          desc="PNG or JPG. (MAX 1Mb)"
-          accept="image/png, image/jpeg"
-          eMessage={avatarError}
-          ref={avatar}
-          onChange={() => this.handleChange('avatar')}>
-          Avatar
-        </MyFileInput>
-        <MyInput onChange={() => this.handleChange('date')} eMessage={dateError} ref={date} type="date">
-          Date of Birth
-        </MyInput>
-        <MySelect
-          onChange={() => this.handleChange('select')}
-          eMessage={selectError}
-          defaultName="Choose country..."
-          options={countries.map(({ code, name }) => ({ name, value: code }))}
-          ref={select}>
-          Country
-        </MySelect>
-        <MyRadioList title="Sex" eMessage={sexError}>
-          {genders.map((radio, idx) => (
-            <MyRadio onChange={() => this.handleChange('sex')} ref={sex[idx]} key={radio} value={radio} name="sex">
-              {radio}
-            </MyRadio>
-          ))}
-        </MyRadioList>
-        <MyCheckbox onChange={() => this.handleChange('notifications')} ref={notifications}>
-          I want to get notifications
-        </MyCheckbox>
+        <div className="grid md:grid-cols-2 gap-x-2 items-start mb-2">
+          <MyInput
+            onChange={() => this.handleChange('name')}
+            eMessage={nameError}
+            placeholder="Insert firstname..."
+            ref={name}
+            type="text">
+            Firstname
+          </MyInput>
+          <MyInput
+            onChange={() => this.handleChange('surname')}
+            eMessage={surnameError}
+            placeholder="Insert surname..."
+            ref={surname}
+            type="text">
+            Surname
+          </MyInput>
+          <MyFileInput
+            desc="PNG or JPG. (MAX 1Mb)"
+            accept="image/png, image/jpeg"
+            eMessage={avatarError}
+            ref={avatar}
+            onChange={() => this.handleChange('avatar')}>
+            Avatar
+          </MyFileInput>
+          <MyInput onChange={() => this.handleChange('date')} eMessage={dateError} ref={date} type="date">
+            Date of Birth
+          </MyInput>
+          <MySelect
+            onChange={() => this.handleChange('select')}
+            eMessage={selectError}
+            defaultName="Choose country..."
+            options={countries.map(({ code, name }) => ({ name, value: code }))}
+            ref={select}>
+            Country
+          </MySelect>
+          <MsgBox title="Sex" eMessage={sexError}>
+            {genders.map((radio, idx) => (
+              <MyRadio onChange={() => this.handleChange('sex')} ref={sex[idx]} key={radio} value={radio} name="sex">
+                {radio}
+              </MyRadio>
+            ))}
+          </MsgBox>
+          <MyCheckbox onChange={() => this.handleChange('notifications')} ref={notifications}>
+            I want to get notifications
+          </MyCheckbox>
+          <MsgBox eMessage={agreeError}>
+            <MyCheckbox onChange={() => this.handleChange('agreement')} ref={agreement}>
+              Agree with license agreement
+            </MyCheckbox>
+          </MsgBox>
+        </div>
         <MyButton className="justify-self-start" disabled={submitDisable} onClick={this.handleSubmit}>
           Create
         </MyButton>
