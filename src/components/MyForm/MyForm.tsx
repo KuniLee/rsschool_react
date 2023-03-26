@@ -1,28 +1,22 @@
-import React, { MouseEvent, Component, createRef, RefObject, FC, FormEventHandler, FormEvent } from 'react'
-import validate, { getCleanMessages } from '@/utils/validation'
+import React, { FC } from 'react'
 
 import MyInput from '@components/UI/MyInput'
-import MySelect from '@components/UI/MySelect'
 import MyButton from '@components/UI/MyButton'
-import MsgBox from '@components/UI/MsgBox'
-import MyCheckbox from '@components/UI/MyCheckbox'
 import MyFileInput from '@components/UI/MyFileInput'
-import countries from '@/utils/countries'
-import Popup from '@components/Popup'
-import MyRadio from '@components/UI/MyRadio'
-import { genders, IUser } from '@/types'
-import getUser from '@/utils/getUserFromForm'
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
+import validateOptions from '@components/MyForm/validateOptions'
 
-type FormData = {
+export type FormData = {
   firstName: string
+  surName: string
+  avatar: string
 }
 
 const MyForm: FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     reset,
   } = useForm<FormData>({ reValidateMode: 'onSubmit' })
 
@@ -35,34 +29,26 @@ const MyForm: FC = () => {
     <form onSubmit={onSubmit} className="bg-green-100 p-4 rounded mt-1">
       <div className="grid md:grid-cols-2 gap-x-2 items-start mb-2">
         <MyInput
-          {...register('firstName', {
-            required: 'This field is required',
-            pattern: {
-              value: /^[a-zA-Z][a-zA-Z0-9-_.]{1,20}$/,
-              message: 'Firstname must consist of 2-20 Latin letters and numbers',
-            },
-          })}
-          eMessage={errors.firstName?.message || ''}
+          {...register('firstName', validateOptions.firstName)}
+          eMessage={errors.firstName?.message}
           placeholder="Insert firstname..."
           type="text">
           Firstname
         </MyInput>
-        {/*  <MyInput*/}
-        {/*    onChange={() => this.handleChange('surname')}*/}
-        {/*    eMessage={surnameError}*/}
-        {/*    placeholder="Insert surname..."*/}
-        {/*    ref={surname}*/}
-        {/*    type="text">*/}
-        {/*    Surname*/}
-        {/*  </MyInput>*/}
-        {/*  <MyFileInput*/}
-        {/*    desc="PNG or JPG. (MAX 5Mb)"*/}
-        {/*    accept="image/png, image/jpeg"*/}
-        {/*    eMessage={avatarError}*/}
-        {/*    ref={avatar}*/}
-        {/*    onChange={() => this.handleChange('avatar')}>*/}
-        {/*    Avatar*/}
-        {/*  </MyFileInput>*/}
+        <MyInput
+          {...register('surName', validateOptions.surName)}
+          eMessage={errors.surName?.message}
+          placeholder="Insert surname..."
+          type="text">
+          Surname
+        </MyInput>
+        <MyFileInput
+          {...register('avatar', validateOptions.avatar)}
+          desc="PNG or JPG. (MAX 5Mb)"
+          accept="image/png, image/jpeg"
+          eMessage={errors.avatar?.message}>
+          Avatar
+        </MyFileInput>
         {/*  <MyInput onChange={() => this.handleChange('date')} eMessage={dateError} ref={date} type="date">*/}
         {/*    Date of Birth*/}
         {/*  </MyInput>*/}
@@ -90,9 +76,7 @@ const MyForm: FC = () => {
         {/*    </MyCheckbox>*/}
         {/*  </MsgBox>*/}
       </div>
-      <MyButton disabled={!isValid} className="justify-self-start">
-        Create
-      </MyButton>
+      <MyButton className="justify-self-start">Create</MyButton>
     </form>
   )
 }

@@ -2,7 +2,7 @@ import React, { Component, ComponentPropsWithoutRef } from 'react'
 
 type MyFileInputProps = ComponentPropsWithoutRef<'input'> & {
   innerref: React.ForwardedRef<HTMLInputElement>
-  eMessage: string
+  eMessage?: string
   desc: string
 }
 

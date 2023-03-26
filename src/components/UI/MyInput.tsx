@@ -2,7 +2,7 @@ import React, { Component, ComponentPropsWithoutRef } from 'react'
 
 type MyInputProps = ComponentPropsWithoutRef<'input'> & {
   innerref: React.ForwardedRef<HTMLInputElement>
-  eMessage: string
+  eMessage?: string
 }
 
 class MyInput extends Component<MyInputProps> {
