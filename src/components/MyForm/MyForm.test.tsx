@@ -18,6 +18,7 @@ describe('MyForm', () => {
     await user.type(screen.getByRole('textbox', { name: /firstname/i }), '1')
     await user.click(screen.getByRole('button', { name: /Create/i }))
     expect(screen.getAllByText(/Latin letters and numbers/i).length).toBe(2)
+    expect(screen.getByText(/upload an image/i)).toBeInTheDocument()
     expect(screen.getByText(/set the date/i)).toBeInTheDocument()
     expect(screen.getByText(/Choose something/i)).toBeInTheDocument()
     expect(screen.getByText(/Choose one of the options/i)).toBeInTheDocument()
@@ -30,34 +31,6 @@ describe('MyForm', () => {
 })
 
 describe('User create', () => {
-  it('User creating testing without image', async () => {
-    const testUser = {
-      name: 'Name',
-      surname: 'Surname',
-      date: new Date('2000-01-01'),
-      sex: 'other',
-      country: 'FR',
-      notifications: true,
-      avatar: null,
-    }
-    const user = userEvent.setup()
-    const addUser = vi.fn()
-    render(<MyForm addUser={addUser} />)
-    await user.type(screen.getByRole('textbox', { name: /firstname/i }), testUser.name)
-    await user.type(screen.getByRole('textbox', { name: /surname/i }), testUser.surname)
-    fireEvent.change(screen.getByLabelText(/date of birth/i), { target: { value: '2000-01-01' } })
-    await userEvent.selectOptions(screen.getByRole('combobox', { name: /country/i }), [testUser.country])
-    await userEvent.click(screen.getByLabelText(new RegExp(testUser.sex, 'i')))
-    await userEvent.click(screen.getByLabelText(/get notifications/i))
-    await userEvent.click(screen.getByLabelText(/Agree with license/i))
-    await user.click(screen.getByRole('button', { name: /Create/i }))
-    await waitFor(() => {
-      expect(addUser).toBeCalled()
-    })
-    const argument = addUser.mock.calls[0][0]
-    Reflect.deleteProperty(argument, 'id')
-    expect(argument).toEqual(testUser)
-  })
   it('User creating testing with image', async () => {
     const testUser = {
       name: 'Name',

@@ -122,7 +122,7 @@ class MyForm extends Component<FormProps, FormState> {
             Surname
           </MyInput>
           <MyFileInput
-            desc="PNG or JPG. (MAX 1Mb)"
+            desc="PNG or JPG. (MAX 5Mb)"
             accept="image/png, image/jpeg"
             eMessage={avatarError}
             ref={avatar}
