@@ -26,7 +26,6 @@ export type FormInputs = {
 
 export type FormState = {
   popup: boolean
-  submitDisable: boolean
   errors: Record<keyof Omit<FormInputs, 'notifications'>, string>
 }
 
@@ -37,7 +36,6 @@ type FormProps = {
 class MyForm extends Component<FormProps, FormState> {
   state = {
     popup: false,
-    submitDisable: true,
     errors: {
       surname: '',
       name: '',
@@ -64,21 +62,13 @@ class MyForm extends Component<FormProps, FormState> {
     ev.preventDefault()
     const { isValid, errors } = validate(this.inputs)
     if (isValid) this.createNewCard()
-    else this.setState({ submitDisable: !isValid, errors })
+    else this.setState({ errors })
   }
 
   private async createNewCard() {
     this.props.addUser(await getUser(this.inputs))
-    this.setState({ submitDisable: true, errors: getCleanMessages(this.state.errors), popup: true })
+    this.setState({ errors: getCleanMessages(this.state.errors), popup: true })
     if (this.formRef.current) this.formRef.current.reset()
-  }
-
-  private handleChange = (target: string) => {
-    this.setState((prev) => {
-      const errors = { ...prev.errors, [target]: '' }
-      const submitDisable = Object.values(errors).some((el) => el)
-      return { submitDisable, errors }
-    })
   }
 
   private closePopup = (ev: MouseEvent) => {
@@ -89,7 +79,6 @@ class MyForm extends Component<FormProps, FormState> {
   render() {
     const {
       popup,
-      submitDisable,
       errors: {
         name: nameError,
         surname: surnameError,
@@ -105,35 +94,19 @@ class MyForm extends Component<FormProps, FormState> {
       <form ref={this.formRef} className="bg-green-100 p-4 rounded mt-1">
         <Popup onOk={this.closePopup} msg={'User created!'} open={popup} />
         <div className="grid md:grid-cols-2 gap-x-2 items-start mb-2">
-          <MyInput
-            onChange={() => this.handleChange('name')}
-            eMessage={nameError}
-            placeholder="Insert firstname..."
-            ref={name}
-            type="text">
+          <MyInput eMessage={nameError} placeholder="Insert firstname..." ref={name} type="text">
             Firstname
           </MyInput>
-          <MyInput
-            onChange={() => this.handleChange('surname')}
-            eMessage={surnameError}
-            placeholder="Insert surname..."
-            ref={surname}
-            type="text">
+          <MyInput eMessage={surnameError} placeholder="Insert surname..." ref={surname} type="text">
             Surname
           </MyInput>
-          <MyFileInput
-            desc="PNG or JPG. (MAX 5Mb)"
-            accept="image/png, image/jpeg"
-            eMessage={avatarError}
-            ref={avatar}
-            onChange={() => this.handleChange('avatar')}>
+          <MyFileInput desc="PNG or JPG. (MAX 5Mb)" accept="image/png, image/jpeg" eMessage={avatarError} ref={avatar}>
             Avatar
           </MyFileInput>
-          <MyInput onChange={() => this.handleChange('date')} eMessage={dateError} ref={date} type="date">
+          <MyInput eMessage={dateError} ref={date} type="date">
             Date of Birth
           </MyInput>
           <MySelect
-            onChange={() => this.handleChange('select')}
             eMessage={selectError}
             defaultName="Choose country..."
             options={countries.map(({ code, name }) => ({ name, value: code }))}
@@ -142,21 +115,17 @@ class MyForm extends Component<FormProps, FormState> {
           </MySelect>
           <MsgBox title="Sex" eMessage={sexError}>
             {genders.map((radio, idx) => (
-              <MyRadio onChange={() => this.handleChange('sex')} ref={sex[idx]} key={radio} value={radio} name="sex">
+              <MyRadio ref={sex[idx]} key={radio} value={radio} name="sex">
                 {radio}
               </MyRadio>
             ))}
           </MsgBox>
-          <MyCheckbox onChange={() => this.handleChange('notifications')} ref={notifications}>
-            I want to get notifications
-          </MyCheckbox>
+          <MyCheckbox ref={notifications}>I want to get notifications</MyCheckbox>
           <MsgBox eMessage={agreeError}>
-            <MyCheckbox onChange={() => this.handleChange('agreement')} ref={agreement}>
-              Agree with license agreement
-            </MyCheckbox>
+            <MyCheckbox ref={agreement}>Agree with license agreement</MyCheckbox>
           </MsgBox>
         </div>
-        <MyButton className="justify-self-start" disabled={submitDisable} onClick={this.handleSubmit}>
+        <MyButton className="justify-self-start" onClick={this.handleSubmit}>
           Create
         </MyButton>
       </form>
