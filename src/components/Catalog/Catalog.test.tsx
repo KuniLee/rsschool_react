@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import Catalog from '@components/Catalog/Catalog'
 import { ICard } from '@/types'
 
-describe('Test Card Component:', () => {
+describe('Test Cards Component:', () => {
   it('render Catalog with no cards', function () {
     render(<Catalog cards={[]} />)
     expect(screen.queryByTestId('card')).toBeNull()

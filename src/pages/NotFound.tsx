@@ -1,10 +1,5 @@
 import React, { Component } from 'react'
-import { ERoutes, RouterProps } from '@/types'
-
-class NotFound extends Component<Pick<RouterProps, 'setRoute'>> {
-  componentDidMount() {
-    this.props.setRoute(ERoutes.NotFound)
-  }
+class NotFound extends Component {
   render() {
     return (
       <div>

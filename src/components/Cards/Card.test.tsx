@@ -1,8 +1,8 @@
 import { describe, it } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import Card from '@components/Card/Card'
+import Card from '@components/Cards/Card'
 
-describe('Test Card Component:', () => {
+describe('Test Cards Component:', () => {
   it('render card', function () {
     const product = {
       image: 'link',

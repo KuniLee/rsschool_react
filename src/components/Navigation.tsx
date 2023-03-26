@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom'
-import React, { Component } from 'react'
-import { ERoutes, RouterProps } from '@/types'
+import { NavLink, useLocation } from 'react-router-dom'
+import React, { FC } from 'react'
+import { ERoutes } from '@/types'
+import { usePageTitle } from '@/hooks/usePageTitle'
 
 const navbarLinks = [
   { name: 'Main', route: ERoutes.Main },
@@ -14,41 +15,30 @@ const LinkClasses = {
   nonActive: 'text-gray-700 p-0 hover:bg-transparent border-0 hover:text-green-700',
 }
 
-const pageNames: Record<ERoutes, string> = {
-  [ERoutes.Form]: 'Form',
-  [ERoutes.About]: 'About Us',
-  [ERoutes.Main]: 'Main Page',
-  [ERoutes.Root]: '',
-  [ERoutes.NotFound]: 'Not Found',
+function getLinkClass({ isActive }: { isActive: boolean }) {
+  return `${LinkClasses.base} ${isActive ? LinkClasses.active : LinkClasses.nonActive}`
 }
 
-class Navigation extends Component<RouterProps> {
-  render() {
-    const { route } = this.props
-
-    function getLinkClass(linkRoute: ERoutes) {
-      return `${LinkClasses.base} ${linkRoute === route ? LinkClasses.active : LinkClasses.nonActive}`
-    }
-
-    return (
-      <nav className="border-b-2 border-emerald-600">
-        <div className="container flex flex-wrap items-center justify-between mx-auto">
-          <span className="self-center text-xl font-semibold whitespace-nowrap">{pageNames[route as ERoutes]}</span>
-          <div className="w-auto">
-            <ul className="flex p-4 rounded-lg text-sm font-medium">
-              {navbarLinks.map((link, idx) => (
-                <li key={idx}>
-                  <Link className={getLinkClass(link.route)} to={link.route}>
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+const Navigation: FC = () => {
+  const { pathname } = useLocation()
+  return (
+    <nav className="border-b-2 border-emerald-600">
+      <div className="container flex flex-wrap items-center justify-between mx-auto">
+        <span className="self-center text-xl font-semibold whitespace-nowrap">{usePageTitle(pathname)}</span>
+        <div className="w-auto">
+          <ul className="flex p-4 rounded-lg text-sm font-medium">
+            {navbarLinks.map((link, idx) => (
+              <li key={idx}>
+                <NavLink className={getLinkClass} to={link.route}>
+                  {link.name}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
         </div>
-      </nav>
-    )
-  }
+      </div>
+    </nav>
+  )
 }
 
 export default Navigation

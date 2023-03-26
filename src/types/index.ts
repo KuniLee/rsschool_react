@@ -3,16 +3,10 @@ export enum ERoutes {
   Main = 'main',
   Root = '/',
   Form = 'form',
-  NotFound = 'Not found',
 }
 
 export const genders = ['male', 'female', 'other']
 export type Genders = (typeof genders)[number]
-
-export type RouterProps = {
-  route: ERoutes | null
-  setRoute: (route: ERoutes) => void
-}
 
 export interface ICard {
   id: number

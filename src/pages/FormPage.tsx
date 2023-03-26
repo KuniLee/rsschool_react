@@ -1,23 +1,19 @@
 import React, { Component } from 'react'
-import { ERoutes, IUser, RouterProps } from '@/types'
+import { IUser } from '@/types'
 import MyForm from '@components/MyForm/MyForm'
-import UserCard from '@components/Card/UserCard'
+import UserCard from '@components/Cards/UserCard'
 
 type FormPageState = {
   users: IUser[]
 }
 
-class FormPage extends Component<Pick<RouterProps, 'setRoute'>, FormPageState> {
+class FormPage extends Component<unknown, FormPageState> {
   state: FormPageState = {
     users: [],
   }
 
   private addUser = (user: IUser) => {
     this.setState((s) => ({ users: [...s.users, user] }))
-  }
-
-  componentDidMount() {
-    this.props.setRoute(ERoutes.Form)
   }
 
   render() {

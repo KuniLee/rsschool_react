@@ -8,19 +8,7 @@ import { ERoutes } from '@/types'
 import Navigation from '@components/Navigation'
 import FormPage from '@/pages/FormPage'
 
-type AppRouterState = {
-  route: ERoutes | null
-}
-
-class AppRouter extends Component<unknown, AppRouterState> {
-  state: AppRouterState = {
-    route: null,
-  }
-
-  setRoute = (route: ERoutes) => {
-    this.setState({ route })
-  }
-
+class AppRouter extends Component<unknown> {
   render() {
     return (
       <Routes>
@@ -29,18 +17,18 @@ class AppRouter extends Component<unknown, AppRouterState> {
           element={
             <>
               <header>
-                <Navigation setRoute={this.setRoute} route={this.state.route} />
+                <Navigation />
               </header>
               <main data-testid="main" className="container">
                 <Outlet />
               </main>
             </>
           }>
-          <Route path={ERoutes.Main} element={<Main setRoute={this.setRoute} />} />
-          <Route path={ERoutes.About} element={<About setRoute={this.setRoute} />} />
-          <Route path={ERoutes.Form} element={<FormPage setRoute={this.setRoute} />} />
+          <Route path={ERoutes.Main} element={<Main />} />
+          <Route path={ERoutes.About} element={<About />} />
+          <Route path={ERoutes.Form} element={<FormPage />} />
           <Route path={ERoutes.Root} element={<Navigate to={ERoutes.Form} replace={true} />} />
-          <Route path="*" element={<NotFound setRoute={this.setRoute} />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     )
