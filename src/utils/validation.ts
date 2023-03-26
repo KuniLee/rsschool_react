@@ -62,20 +62,3 @@ export function getCleanMessages(errors: FormState['errors']) {
   }
   return newErrors
 }
-
-export function resetInputs(refs: FormInputs) {
-  for (const newErrorsKey in refs) {
-    const ref = refs[newErrorsKey as keyof FormInputs]
-    if (Array.isArray(ref)) {
-      ref.forEach((el) => ((el.current as HTMLInputElement).checked = false))
-    } else if (ref.current)
-      switch (ref.current.tagName) {
-        case 'INPUT':
-          ;(ref.current as HTMLInputElement).value = ''
-          ;(ref.current as HTMLInputElement).checked = false
-          break
-        case 'SELECT':
-          ref.current.value = 'default'
-      }
-  }
-}

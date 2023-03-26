@@ -1,5 +1,5 @@
 import React, { MouseEvent, Component, createRef, RefObject } from 'react'
-import validate, { getCleanMessages, resetInputs } from '@/utils/validation'
+import validate, { getCleanMessages } from '@/utils/validation'
 
 import MyInput from '@components/UI/MyInput'
 import MySelect from '@components/UI/MySelect'
@@ -48,6 +48,7 @@ class MyForm extends Component<FormProps, FormState> {
       agreement: '',
     },
   }
+  formRef = createRef<HTMLFormElement>()
   inputs: FormInputs = {
     name: createRef<HTMLInputElement>(),
     surname: createRef<HTMLInputElement>(),
@@ -69,7 +70,7 @@ class MyForm extends Component<FormProps, FormState> {
   private async createNewCard() {
     this.props.addUser(await getUser(this.inputs))
     this.setState({ submitDisable: true, errors: getCleanMessages(this.state.errors), popup: true })
-    resetInputs(this.inputs)
+    if (this.formRef.current) this.formRef.current.reset()
   }
 
   private handleChange = (target: string) => {
@@ -100,9 +101,8 @@ class MyForm extends Component<FormProps, FormState> {
       },
     } = this.state
     const { name, avatar, date, select, sex, notifications, agreement, surname } = this.inputs
-
     return (
-      <form className="bg-green-100 p-4 rounded mt-1">
+      <form ref={this.formRef} className="bg-green-100 p-4 rounded mt-1">
         <Popup onOk={this.closePopup} msg={'User created!'} open={popup} />
         <div className="grid md:grid-cols-2 gap-x-2 items-start mb-2">
           <MyInput
