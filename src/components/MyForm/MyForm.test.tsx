@@ -30,6 +30,13 @@ describe('MyForm', () => {
     await user.click(screen.getByRole('button', { name: /Create/i }))
     expect(screen.queryByText(/Latin letters and numbers/i)).toBeNull()
   })
+  it('Testing validation with the wrong image', async () => {
+    render(<MyForm addUser={() => undefined} />)
+    const testImage = [new File(['hello'], 'hello.dwg', { type: 'image/x-dwg' })]
+    fireEvent.change(screen.getByLabelText(/avatar/i), { target: { files: [testImage] } })
+    fireEvent.click(screen.getByRole('button', { name: /Create/i }))
+    expect(screen.getByText(/The file should be an image/i)).toBeInTheDocument()
+  })
 })
 
 describe('User create', () => {
@@ -50,10 +57,10 @@ describe('User create', () => {
     await user.type(screen.getByRole('textbox', { name: /firstname/i }), testUser.name)
     await user.type(screen.getByRole('textbox', { name: /surname/i }), testUser.surname)
     fireEvent.change(screen.getByLabelText(/date of birth/i), { target: { value: '2000-01-01' } })
-    await userEvent.upload(screen.getByLabelText(/avatar/i), testImage)
-    await userEvent.selectOptions(screen.getByRole('combobox', { name: /country/i }), [testUser.country])
-    await userEvent.click(screen.getByLabelText(new RegExp(`^${testUser.sex}$`, 'i')))
-    await userEvent.click(screen.getByLabelText(/Agree with license/i))
+    await user.upload(screen.getByLabelText(/avatar/i), testImage)
+    await user.selectOptions(screen.getByRole('combobox', { name: /country/i }), [testUser.country])
+    await user.click(screen.getByLabelText(new RegExp(`^${testUser.sex}$`, 'i')))
+    await user.click(screen.getByLabelText(/Agree with license/i))
     await user.click(screen.getByRole('button', { name: /Create/i }))
     await waitFor(() => {
       const argument = addUser.mock.calls[0][0]

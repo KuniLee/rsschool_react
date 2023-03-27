@@ -100,7 +100,7 @@ class MyForm extends Component<FormProps, FormState> {
           <MyInput eMessage={surnameError} placeholder="Insert surname..." ref={surname} type="text">
             Surname
           </MyInput>
-          <MyFileInput desc="PNG or JPG. (MAX 5Mb)" accept="image/png, image/jpeg" eMessage={avatarError} ref={avatar}>
+          <MyFileInput desc="PNG or JPG. (MAX 5Mb)" accept="image/png,image/jpeg" eMessage={avatarError} ref={avatar}>
             Avatar
           </MyFileInput>
           <MyInput eMessage={dateError} ref={date} type="date">

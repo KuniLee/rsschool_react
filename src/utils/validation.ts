@@ -34,7 +34,9 @@ const validateFunctions: ValidateFunctionsType = {
   },
   avatar: (el) => {
     if ('files' in el && el.files && el.files.length === 1) {
-      if (el.files[0].size > 5 * 1024 * 1024) return 'Image size shouldn`t be more then 5Mb'
+      const [img] = el.files
+      if (!['image/png', 'image/jpeg'].includes(img.type)) return 'The file should be an image (png, jpeg)'
+      if (img.size > 5 * 1024 * 1024) return 'Image size should not exceed 5 MB.'
     } else return 'You should upload an image'
     return ''
   },

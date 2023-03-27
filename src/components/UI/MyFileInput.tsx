@@ -17,6 +17,7 @@ class MyFileInput extends Component<MyFileInputProps> {
           {children}
         </label>
         <input
+          {...props}
           id={this.id}
           type="file"
           className={`block w-full text-sm border rounded-lg
@@ -31,7 +32,6 @@ class MyFileInput extends Component<MyFileInputProps> {
               : 'bg-gray-50 text-gray-900 focus:ring-green-500 focus:border-green-500 border-gray-300'
           }`}
           ref={innerref}
-          {...props}
         />
         {!eMessage ? (
           <p className="text-sm text-gray-500">{desc}</p>
