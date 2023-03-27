@@ -24,7 +24,13 @@ class Popup extends Component<PopupProps> {
           className={`transition-opacity duration-500 flex -z-10 fixed opacity-0 items-center justify-center top-0 left-0 right-0 w-screen h-screen backdrop-blur-sm`}>
           <div className="bg-green-100 p-4 rounded-lg border-4 border-green-600 max-w-[300px] flex flex-col justify-center">
             <p className="mb-2">{msg}</p>
-            <MyButton onClick={onOk}>Ок</MyButton>
+            <MyButton
+              onClick={(event) => {
+                event.preventDefault()
+                onOk(event)
+              }}>
+              Ок
+            </MyButton>
           </div>
         </div>
       </CSSTransition>
