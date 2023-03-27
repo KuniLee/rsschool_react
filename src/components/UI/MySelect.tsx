@@ -3,7 +3,7 @@ import React, { Component, ComponentPropsWithoutRef } from 'react'
 type MySelectProps = ComponentPropsWithoutRef<'select'> & {
   innerref: React.ForwardedRef<HTMLSelectElement>
   options: Array<{ name: string; value: string }>
-  eMessage: string
+  eMessage?: string
   defaultName: string
 }
 

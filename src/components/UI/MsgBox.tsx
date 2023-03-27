@@ -1,7 +1,7 @@
 import React, { Component, ReactNode } from 'react'
 
 type MyRadioListProps = {
-  eMessage: string
+  eMessage?: string
   children: ReactNode
   title?: string
 }

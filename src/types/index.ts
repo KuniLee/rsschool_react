@@ -1,3 +1,5 @@
+import type { FormData } from '@components/MyForm/MyForm'
+
 export enum ERoutes {
   About = 'about',
   Main = 'main',
@@ -20,13 +22,7 @@ export interface ICard {
   image: string
 }
 
-export interface IUser {
+export type IUser = Omit<FormData, 'avatar' | 'agreement'> & {
+  avatar: string
   id: number
-  name: string
-  surname: string
-  date: Date
-  country: string
-  notifications: boolean
-  sex: Genders
-  avatar: string | null
 }

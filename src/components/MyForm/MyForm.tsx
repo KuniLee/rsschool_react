@@ -5,14 +5,31 @@ import MyButton from '@components/UI/MyButton'
 import MyFileInput from '@components/UI/MyFileInput'
 import { useForm } from 'react-hook-form'
 import validateOptions from '@components/MyForm/validateOptions'
+import countries from '@/utils/countries'
+import MySelect from '@components/UI/MySelect'
+import type { Genders, IUser } from '@/types'
+import MsgBox from '@components/UI/MsgBox'
+import { genders } from '@/types'
+import MyRadio from '@components/UI/MyRadio'
+import MyCheckbox from '@components/UI/MyCheckbox'
+import createUser from '@components/MyForm/createUser'
+
+type FormProps = {
+  addUser: (user: IUser) => void
+}
 
 export type FormData = {
   firstName: string
   surName: string
-  avatar: string
+  avatar: FileList
+  date: Date
+  country: string
+  sex: Genders
+  notifications: boolean
+  agreement: boolean
 }
 
-const MyForm: FC = () => {
+const MyForm: FC<FormProps> = ({ addUser }) => {
   const {
     register,
     handleSubmit,
@@ -20,8 +37,8 @@ const MyForm: FC = () => {
     reset,
   } = useForm<FormData>({ reValidateMode: 'onSubmit' })
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data)
+  const onSubmit = handleSubmit(async (data) => {
+    addUser(await createUser(data))
     reset()
   })
 
@@ -49,32 +66,27 @@ const MyForm: FC = () => {
           eMessage={errors.avatar?.message}>
           Avatar
         </MyFileInput>
-        {/*  <MyInput onChange={() => this.handleChange('date')} eMessage={dateError} ref={date} type="date">*/}
-        {/*    Date of Birth*/}
-        {/*  </MyInput>*/}
-        {/*  <MySelect*/}
-        {/*    onChange={() => this.handleChange('select')}*/}
-        {/*    eMessage={selectError}*/}
-        {/*    defaultName="Choose country..."*/}
-        {/*    options={countries.map(({ code, name }) => ({ name, value: code }))}*/}
-        {/*    ref={select}>*/}
-        {/*    Country*/}
-        {/*  </MySelect>*/}
-        {/*  <MsgBox title="Sex" eMessage={sexError}>*/}
-        {/*    {genders.map((radio, idx) => (*/}
-        {/*      <MyRadio onChange={() => this.handleChange('sex')} ref={sex[idx]} key={radio} value={radio} name="sex">*/}
-        {/*        {radio}*/}
-        {/*      </MyRadio>*/}
-        {/*    ))}*/}
-        {/*  </MsgBox>*/}
-        {/*  <MyCheckbox onChange={() => this.handleChange('notifications')} ref={notifications}>*/}
-        {/*    I want to get notifications*/}
-        {/*  </MyCheckbox>*/}
-        {/*  <MsgBox eMessage={agreeError}>*/}
-        {/*    <MyCheckbox onChange={() => this.handleChange('agreement')} ref={agreement}>*/}
-        {/*      Agree with license agreement*/}
-        {/*    </MyCheckbox>*/}
-        {/*  </MsgBox>*/}
+        <MyInput {...register('date', validateOptions.date)} eMessage={errors.date?.message} type="date">
+          Date of Birth
+        </MyInput>
+        <MySelect
+          {...register('country', validateOptions.country)}
+          eMessage={errors.country?.message}
+          defaultName="Choose country..."
+          options={countries.map(({ code, name }) => ({ name, value: code }))}>
+          Country
+        </MySelect>
+        <MsgBox title="Sex" eMessage={errors.sex?.message}>
+          {genders.map((radio) => (
+            <MyRadio {...register('sex', validateOptions.sex)} key={radio} value={radio} name="sex">
+              {radio}
+            </MyRadio>
+          ))}
+        </MsgBox>
+        <MyCheckbox {...register('notifications')}>I want to get notifications</MyCheckbox>
+        <MsgBox eMessage={errors.agreement?.message}>
+          <MyCheckbox {...register('agreement', validateOptions.agreement)}>Agree with license agreement</MyCheckbox>
+        </MsgBox>
       </div>
       <MyButton className="justify-self-start">Create</MyButton>
     </form>
