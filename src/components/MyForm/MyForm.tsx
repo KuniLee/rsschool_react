@@ -92,7 +92,7 @@ class MyForm extends Component<FormProps, FormState> {
     const { name, avatar, date, select, sex, notifications, agreement, surname } = this.inputs
     return (
       <form ref={this.formRef} className="bg-green-100 p-4 rounded mt-1">
-        <Popup onOk={this.closePopup} msg={'User created!'} open={popup} />
+        <Popup onOk={this.closePopup} msg={'User created! Data saved!!!'} open={popup} />
         <div className="grid md:grid-cols-2 gap-x-2 items-start mb-2">
           <MyInput eMessage={nameError} placeholder="Insert firstname..." ref={name} type="text">
             Firstname
