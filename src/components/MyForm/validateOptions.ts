@@ -19,9 +19,9 @@ const validateOptions: Partial<Record<keyof FormData, RegisterOptions>> = {
   avatar: {
     required: 'You should upload an image',
     validate: {
-      size: ([img]) => (img.size > 5 * 1024 * 1024 ? 'Image size should not exceed 5 MB.' : true),
       type: ([img]) =>
         !['image/png', 'image/jpeg'].includes(img.type) ? 'The file should be an image (png, jpeg)' : true,
+      size: ([img]) => (img.size > 5 * 1024 * 1024 ? 'Image size should not exceed 5 MB.' : true),
     },
   },
   date: {
