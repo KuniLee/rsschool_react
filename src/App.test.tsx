@@ -11,7 +11,7 @@ describe('App', () => {
         <App />
       </BrowserRouter>
     )
-    expect(screen.getByPlaceholderText('Search something..')).toBeInTheDocument()
+    expect(screen.getByTestId('main')).toBeInTheDocument()
   })
   it('renders not fount if invalid path', () => {
     render(
@@ -32,5 +32,13 @@ describe('App', () => {
     await user.click(screen.getByRole('link', { name: 'About Us' }))
     expect(screen.getByRole('link', { name: 'About Us' })).toHaveClass('text-green-700')
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/about/i)
+  })
+  it('test render main page', () => {
+    render(
+      <MemoryRouter initialEntries={['/main']}>
+        <App />
+      </MemoryRouter>
+    )
+    expect(screen.getByPlaceholderText(/Search something../i)).toBeInTheDocument()
   })
 })
