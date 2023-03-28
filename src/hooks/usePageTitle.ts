@@ -1,5 +1,5 @@
-import { ERoutes } from '@/types'
 import { matchPath } from 'react-router-dom'
+import { ERoutes } from '@/router/routes'
 
 const pageNames: Record<ERoutes, string> = {
   [ERoutes.Form]: 'Form',
