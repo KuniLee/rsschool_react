@@ -1,6 +1,6 @@
 import React, { FC, MouseEventHandler, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
-import MyButton from '@components/UI/MyButton'
+import MyButton from '@/UI/MyButton'
 
 type PopupProps = {
   open: boolean

@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import Navigation from '@components/Navigation'
+import Navigation from '@/router/Navigation'
 import { Outlet } from 'react-router-dom'
 
 const Layout: FC = () => {

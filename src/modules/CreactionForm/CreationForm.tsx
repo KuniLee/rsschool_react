@@ -1,23 +1,19 @@
 import React, { FC, useState } from 'react'
 
-import MyInput from '@components/UI/MyInput'
-import MyButton from '@components/UI/MyButton'
-import MyFileInput from '@components/UI/MyFileInput'
+import MyInput from '@/UI/MyInput'
+import MyButton from '@/UI/MyButton'
+import MyFileInput from '@/UI/MyFileInput'
 import { useForm } from 'react-hook-form'
-import validateOptions from '@components/MyForm/validateOptions'
-import countries from '@/utils/countries'
-import MySelect from '@components/UI/MySelect'
-import type { Genders, IUser } from '@/types'
-import MsgBox from '@components/UI/MsgBox'
-import { genders } from '@/types'
-import MyRadio from '@components/UI/MyRadio'
-import MyCheckbox from '@components/UI/MyCheckbox'
-import createUser from '@components/MyForm/createUser'
+import validateOptions from './helpers/validateOptions'
+import countries from './constants/countries'
+import MySelect from '@/UI/MySelect'
+import type { Genders } from './types'
+import MsgBox from '@/UI/MsgBox'
+import { genders } from './types'
+import MyRadio from '@/UI/MyRadio'
+import MyCheckbox from '@/UI/MyCheckbox'
+import createUser from './helpers/createUser'
 import Popup from '@components/Popup'
-
-type FormProps = {
-  addUser: (user: IUser) => void
-}
 
 export type FormData = {
   firstName: string
@@ -30,7 +26,16 @@ export type FormData = {
   agreement: boolean
 }
 
-const MyForm: FC<FormProps> = ({ addUser }) => {
+export type IUser = Omit<FormData, 'avatar' | 'agreement'> & {
+  avatar: string
+  id: number
+}
+
+type FormProps = {
+  addUser: (user: IUser) => void
+}
+
+const CreationForm: FC<FormProps> = ({ addUser }) => {
   const [popup, setPopup] = useState(false)
   const {
     register,
@@ -97,4 +102,4 @@ const MyForm: FC<FormProps> = ({ addUser }) => {
   )
 }
 
-export default MyForm
+export default CreationForm

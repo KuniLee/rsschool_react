@@ -1,8 +1,8 @@
 import { Route, Routes } from 'react-router-dom'
 
 import React, { FC } from 'react'
-import { ERoutes, routes } from '@/router/routes'
-import Layout from '@components/Layout'
+import { ERoutes, routes } from './routes'
+import Layout from './Layout'
 
 const AppRouter: FC = () => {
   return (

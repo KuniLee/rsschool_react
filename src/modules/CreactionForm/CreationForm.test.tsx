@@ -1,12 +1,11 @@
 import { vi, describe, it } from 'vitest'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import MyForm from '@components/MyForm/MyForm'
-import { IUser } from '@/types'
+import CreationForm, { IUser } from './CreationForm'
 
-describe('MyForm', () => {
+describe('CreationForm', () => {
   it('Test render form', () => {
-    render(<MyForm addUser={() => undefined} />)
+    render(<CreationForm addUser={() => undefined} />)
     expect(screen.getByRole('textbox', { name: /firstname/i })).toBeInTheDocument()
     expect(screen.getByRole('textbox', { name: /surname/i })).toBeInTheDocument()
     expect(screen.getByLabelText(/date of birth/i)).toBeInTheDocument()
@@ -15,7 +14,7 @@ describe('MyForm', () => {
   })
   it('Testing validation', async () => {
     const user = userEvent.setup()
-    render(<MyForm addUser={() => undefined} />)
+    render(<CreationForm addUser={() => undefined} />)
     await user.type(screen.getByRole('textbox', { name: /firstname/i }), '1')
     await user.type(screen.getByRole('textbox', { name: /surname/i }), '1')
     await user.click(screen.getByRole('button', { name: /Create/i }))
@@ -34,7 +33,7 @@ describe('MyForm', () => {
   })
   it('Testing validation with the wrong image', async () => {
     const testImage = [new File(['hello'], 'hello.svg', { type: 'image/svg' })]
-    render(<MyForm addUser={() => undefined} />)
+    render(<CreationForm addUser={() => undefined} />)
     await userEvent.upload(screen.getByLabelText(/avatar/i), testImage, { applyAccept: false })
     await userEvent.click(screen.getByRole('button', { name: /Create/i }))
     expect(screen.getByText(/The file should be an image/i)).toBeInTheDocument()
@@ -57,7 +56,7 @@ describe('User create', () => {
     const testImage = [new File(['hello'], 'hello.png', { type: 'image/png' })]
     const user = userEvent.setup()
     const addUser = vi.fn()
-    render(<MyForm addUser={addUser} />)
+    render(<CreationForm addUser={addUser} />)
     await user.type(screen.getByRole('textbox', { name: /firstname/i }), testUser.firstName)
     await user.type(screen.getByRole('textbox', { name: /surname/i }), testUser.surName)
     fireEvent.change(screen.getByLabelText(/date of birth/i), { target: { value: '2000-01-01' } })

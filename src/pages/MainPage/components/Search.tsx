@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react'
-import { ReactComponent as Logo } from '@/assets/icons/search.svg'
+import { ReactComponent as Logo } from '@assets/icons/search.svg'
 
 type SearchProps = Record<string, never>
 

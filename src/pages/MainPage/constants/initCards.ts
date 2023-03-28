@@ -1,9 +1,6 @@
-import React, { useState } from 'react'
-import { ICard } from '@/types'
-import Search from '@components/Search'
-import Catalog from '@components/Catalog/Catalog'
+import { ICard } from '../MainPage'
 
-const initCards = [
+const initCards: ICard[] = [
   {
     id: 1,
     name: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
@@ -135,13 +132,4 @@ const initCards = [
   },
 ]
 
-const Main: React.FC = () => {
-  const [cards] = useState<ICard[]>(initCards)
-  return (
-    <div className="py-4">
-      <Search />
-      <Catalog cards={cards} />
-    </div>
-  )
-}
-export default Main
+export default initCards

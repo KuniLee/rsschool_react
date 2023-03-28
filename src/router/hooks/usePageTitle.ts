@@ -4,7 +4,7 @@ import { ERoutes } from '@/router/routes'
 const pageNames: Record<ERoutes, string> = {
   [ERoutes.Form]: 'Form',
   [ERoutes.About]: 'About Us',
-  [ERoutes.Main]: 'Main Page',
+  [ERoutes.Main]: 'MainPage Page',
   [ERoutes.Root]: '',
 }
 

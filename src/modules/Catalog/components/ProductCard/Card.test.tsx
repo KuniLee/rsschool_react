@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import Card from '@components/Cards/Card'
+import Card from '@/modules/Catalog/components/ProductCard/Card'
 
 describe('Test Cards Component:', () => {
   it('render card', function () {

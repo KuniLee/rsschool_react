@@ -1,5 +1,5 @@
 import { RegisterOptions } from 'react-hook-form'
-import { FormData } from '@/components/MyForm/MyForm'
+import { FormData } from '../CreationForm'
 
 const validateOptions: Partial<Record<keyof FormData, RegisterOptions>> = {
   firstName: {

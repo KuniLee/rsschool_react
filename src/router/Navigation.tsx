@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import React, { FC } from 'react'
-import { usePageTitle } from '@/hooks/usePageTitle'
-import { ERoutes } from '@/router/routes'
+import { usePageTitle } from './hooks/usePageTitle'
+import { ERoutes } from './routes'
 
 const navbarLinks = [
   { name: 'Main', route: ERoutes.Main },

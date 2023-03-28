@@ -1,7 +1,7 @@
 import { describe, it } from 'vitest'
 import { render, screen } from '@testing-library/react'
-import Catalog from '@components/Catalog/Catalog'
-import { ICard } from '@/types'
+import Catalog from '../Catalog'
+import { ICard } from '../components/ProductCard/Card'
 
 describe('Test Cards Component:', () => {
   it('render Catalog with no cards', function () {

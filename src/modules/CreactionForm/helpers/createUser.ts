@@ -1,5 +1,4 @@
-import type { IUser } from '@/types'
-import type { FormData } from '@components/MyForm/MyForm'
+import type { FormData, IUser } from '../CreationForm'
 
 export default async function (data: FormData): Promise<IUser> {
   const newUser: IUser = {
