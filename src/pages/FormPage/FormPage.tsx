@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import CreationForm, { IUser } from '@/modules/CreactionForm'
+import CreationForm, { IUser } from '@/modules/CreationForm'
 import UserCard from './components/Cards/UserCard'
 
 const FormPage: FC = () => {
