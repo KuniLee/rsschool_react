@@ -2,9 +2,9 @@ import { matchPath } from 'react-router-dom'
 import { ERoutes } from '@/router/routes'
 
 const pageNames: Record<ERoutes, string> = {
-  [ERoutes.Form]: 'Form',
+  [ERoutes.Form]: 'Form Page',
   [ERoutes.About]: 'About Us',
-  [ERoutes.Main]: 'MainPage Page',
+  [ERoutes.Main]: 'Main Page',
   [ERoutes.Root]: '',
 }
 
