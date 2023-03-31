@@ -1,13 +1,16 @@
 import React, { FC, useEffect, useRef } from 'react'
 import { ReactComponent as Logo } from '@assets/icons/search.svg'
+import MyButton from '@/UI/MyButton'
 
-type SearchProps = Record<string, never>
+type SearchProps = {
+  onSearch: (value: string) => void
+}
 
-const Search: FC<SearchProps> = () => {
-  const inputRef = useRef<HTMLInputElement>(null)
+const Search: FC<SearchProps> = ({ onSearch }) => {
+  const ref = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    const input = inputRef.current
+    const input = ref.current
     if (input) input.value = localStorage.searchInput || ''
     return () => {
       localStorage.searchInput = input?.value || ''
@@ -21,12 +24,18 @@ const Search: FC<SearchProps> = () => {
           <Logo className="w-6 h-6"></Logo>
         </div>
         <input
-          ref={inputRef}
+          ref={ref}
           className="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
           type="text"
           placeholder="Search something.."
         />
       </div>
+      <MyButton
+        onClick={() => {
+          onSearch(ref.current?.value || '')
+        }}>
+        Go
+      </MyButton>
     </div>
   )
 }

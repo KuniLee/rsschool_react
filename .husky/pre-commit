@@ -9,5 +9,4 @@ if [ "$branch" = "main" ]; then
 fi
 
 npm run lint
-git add .
 npm run test -- --run
