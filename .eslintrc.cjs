@@ -55,7 +55,8 @@ module.exports = {
         'testing-library/await-async-query': 'error',
         'testing-library/no-await-sync-query': 'error',
         'testing-library/no-debugging-utils': 'warn',
-        'testing-library/no-dom-import': 'off'
+        'testing-library/no-dom-import': 'off',
+        'eol-last': 'error'
     },
     'settings': {
         'react': {
