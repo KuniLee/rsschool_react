@@ -1,18 +1,7 @@
 import React, { Component } from 'react'
 import Rating from '@/UI/Rating'
 import MyButton from '@/UI/MyButton'
-
-export interface ICard {
-  id: number
-  name: string
-  description: string
-  rating: {
-    rate: number
-    count: number
-  }
-  price: number
-  image: string
-}
+import { ICard } from '../../Catalog'
 
 export type CardProps = {
   card: ICard
