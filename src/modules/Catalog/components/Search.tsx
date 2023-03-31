@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from 'react'
+import React, { FC, KeyboardEventHandler, useEffect, useRef } from 'react'
 import { ReactComponent as Logo } from '@assets/icons/search.svg'
 import MyButton from '@/UI/MyButton'
 
@@ -16,6 +16,9 @@ const Search: FC<SearchProps> = ({ onSearch }) => {
       localStorage.searchInput = input?.value || ''
     }
   }, [])
+  const onKeyDown: KeyboardEventHandler = (ev) => {
+    if (ev.key === 'Enter') onSearch(ref.current?.value || '')
+  }
 
   return (
     <div className="max-w-md mx-auto">
@@ -24,18 +27,16 @@ const Search: FC<SearchProps> = ({ onSearch }) => {
           <Logo className="w-6 h-6"></Logo>
         </div>
         <input
+          onKeyDown={onKeyDown}
           ref={ref}
           className="peer h-full w-full outline-none text-sm text-gray-700 pr-2"
           type="text"
           placeholder="Search something.."
         />
+        <MyButton className="h-full rounded-l-none" onClick={() => onSearch(ref.current?.value || '')}>
+          Go
+        </MyButton>
       </div>
-      <MyButton
-        onClick={() => {
-          onSearch(ref.current?.value || '')
-        }}>
-        Go
-      </MyButton>
     </div>
   )
 }

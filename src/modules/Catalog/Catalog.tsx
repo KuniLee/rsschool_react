@@ -1,47 +1,39 @@
-import React, { useEffect, useState } from 'react'
-import Card from './components/ProductCard/Card'
+import React, { useCallback, useEffect, useState } from 'react'
+import AnimeCard from './components/AnimeCard/AnimeCard'
 import Search from './components/Search'
 import { useFetching } from './hooks/useFetching'
 import PostService from './api/CardService'
-
-export interface ICard {
-  id: number
-  name: string
-  description: string
-  rating: {
-    rate: number
-    count: number
-  }
-  price: number
-  image: string
-  category: string
-}
+import { AnimeInfo } from '@/modules/Catalog/types'
+import Loader from '@components/Loader/Loader'
 
 const Catalog: React.FC = () => {
-  const [cards] = useState<ICard[]>([])
-  const [fetchCards, isCardsLoading, cardsError] = useFetching(async (search: string, limit: number, page: number) => {
-    const response = await PostService.getAnimeWithSearch(search, limit, page)
-    console.log(response.data.data.map((el) => el.title))
-    // setPosts([...posts, ...response.data])
-    // setTotalPages(getPageCount(response.headers['x-total-count'] as number, limit as number))
-  })
+  const [search, setSearch] = useState('')
+  const [cards, setCards] = useState<AnimeInfo[]>([])
+  const [fetchCards, isCardsLoading, cardsError] = useFetching(
+    useCallback(async (search: string, limit: number, page: number) => {
+      const response = await PostService.getAnimeWithSearch(search, limit, page)
+      setCards(response.data.data)
+      console.log(response.data.data)
+      // setTotalPages(getPageCount(response.headers['x-total-count'] as number, limit as number))
+    }, [])
+  )
 
   useEffect(() => {
-    fetchCards('naruto')
-  }, [])
+    fetchCards(search)
+  }, [search, fetchCards])
 
   return (
     <>
-      <Search
-        onSearch={(value) => {
-          console.log(value)
-        }}
-      />
-      <div className="my-4 grid grid-cols-1 justify-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-4">
-        {cards.map((card, idx) => (
-          <Card key={idx} card={card} />
-        ))}
-      </div>
+      <Search onSearch={(value) => setSearch(value)} />
+      {isCardsLoading ? (
+        <Loader className="h-12 w-12 mx-auto my-4" />
+      ) : (
+        <div className="my-4 grid grid-cols-1 justify-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-4">
+          {cards.map((card) => (
+            <AnimeCard key={card.mal_id} card={card} />
+          ))}
+        </div>
+      )}
     </>
   )
 }
