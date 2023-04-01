@@ -6,6 +6,7 @@ type MyInputProps = ComponentPropsWithoutRef<'input'> & {
 
 export const MyInput = forwardRef<HTMLInputElement, MyInputProps>(({ children, eMessage, ...props }, ref) => {
   const id = `${props.type}-${useId()}`
+
   return (
     <div className="relative pb-5">
       <label htmlFor={id} className="block mb-1 text-sm font-medium text-gray-900">

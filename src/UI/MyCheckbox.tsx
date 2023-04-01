@@ -4,6 +4,7 @@ type MyCheckboxProps = ComponentPropsWithoutRef<'input'>
 
 export const MyCheckbox = forwardRef<HTMLInputElement, MyCheckboxProps>(({ children, ...props }, ref) => {
   const id = `${props.type}-${children}`
+
   return (
     <div className="flex items-center relative mb-1">
       <input

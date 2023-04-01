@@ -8,4 +8,5 @@ const MainPage: React.FC = () => {
     </div>
   )
 }
+
 export default MainPage

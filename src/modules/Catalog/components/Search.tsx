@@ -11,11 +11,14 @@ const Search: FC<SearchProps> = ({ onSearch }) => {
 
   useEffect(() => {
     const input = ref.current
+
     if (input) input.value = localStorage.searchInput || ''
+
     return () => {
       localStorage.searchInput = input?.value || ''
     }
   }, [])
+
   const onKeyDown: KeyboardEventHandler = (ev) => {
     if (ev.key === 'Enter') onSearch(ref.current?.value || '')
   }

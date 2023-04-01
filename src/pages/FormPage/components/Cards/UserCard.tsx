@@ -10,6 +10,7 @@ export type UserCardProps = {
 class UserCard extends Component<UserCardProps> {
   render() {
     const { avatar, firstName, surName, date, id, sex, country, notifications } = this.props.user
+
     return (
       <div
         data-testid="card"

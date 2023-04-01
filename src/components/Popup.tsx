@@ -11,6 +11,7 @@ type PopupProps = {
 
 const Popup: FC<PopupProps> = ({ msg, onOk, open }) => {
   const nodeRef = useRef<HTMLDivElement>(null)
+
   return createPortal(
     <CSSTransition
       timeout={500}

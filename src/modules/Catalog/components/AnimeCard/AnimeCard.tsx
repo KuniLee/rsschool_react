@@ -8,6 +8,7 @@ export type CardProps = {
 
 const AnimeCard: FC<CardProps> = ({ card: { title, images } }) => {
   const [loadingImg, setLoadingImg] = useState(true)
+
   return (
     <div
       data-testid="card"

@@ -12,6 +12,7 @@ class MySelect extends Component<MySelectProps> {
 
   render() {
     const { children, innerref, defaultName, eMessage, options, ...props } = this.props
+
     return (
       <div className="relative pb-5">
         {children && (

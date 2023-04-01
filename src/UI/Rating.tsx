@@ -8,6 +8,7 @@ class Rating extends Component<RatingProps> {
   drawStars(rate: number) {
     const stars = []
     const roundedRate = Math.round(rate)
+
     for (let i = 1; i <= 5; i++) {
       stars.push(
         <svg
@@ -22,12 +23,14 @@ class Rating extends Component<RatingProps> {
         </svg>
       )
     }
+
     return stars
   }
 
   render() {
     const { className } = this.props
     const { rate } = this.props
+
     return (
       <div className={'flex items-center' + ' ' + className}>
         {this.drawStars(rate)}

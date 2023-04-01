@@ -9,6 +9,7 @@ class MyRadio extends Component<MyRadioProps> {
 
   render() {
     const { children, innerref, ...props } = this.props
+
     return (
       <div className="flex items-center mb-1">
         <input

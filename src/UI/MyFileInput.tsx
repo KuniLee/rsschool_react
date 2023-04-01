@@ -11,6 +11,7 @@ class MyFileInput extends Component<MyFileInputProps> {
 
   render() {
     const { children, innerref, desc, eMessage, ...props } = this.props
+
     return (
       <div className="mb-1">
         <label htmlFor={this.id} className="block mb-1 text-sm font-medium text-gray-900">

@@ -9,9 +9,11 @@ import Loader from '@components/Loader/Loader'
 const Catalog: React.FC = () => {
   const [search, setSearch] = useState('')
   const [cards, setCards] = useState<AnimeInfo[]>([])
+
   const [fetchCards, isCardsLoading, cardsError] = useFetching(
     useCallback(async (search: string, limit: number, page: number) => {
       const response = await PostService.getAnimeWithSearch(search, limit, page)
+
       setCards(response.data.data)
       console.log(response.data.data)
       // setTotalPages(getPageCount(response.headers['x-total-count'] as number, limit as number))

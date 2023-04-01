@@ -4,6 +4,7 @@ import { useCallback, useState } from 'react'
 export const useFetching = (callback: Function): [(...args: unknown[]) => Promise<void>, boolean, string] => {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+
   const fetching = useCallback(
     async (...args: unknown[]) => {
       try {
@@ -17,5 +18,6 @@ export const useFetching = (callback: Function): [(...args: unknown[]) => Promis
     },
     [callback]
   )
+
   return [fetching, isLoading, error]
 }

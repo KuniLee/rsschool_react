@@ -23,6 +23,7 @@ describe('App', () => {
   })
   it('test going to about page', async () => {
     const user = userEvent.setup()
+
     render(
       <MemoryRouter>
         <App />

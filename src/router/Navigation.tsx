@@ -21,6 +21,7 @@ function getLinkClass({ isActive }: { isActive: boolean }) {
 
 const Navigation: FC = () => {
   const { pathname } = useLocation()
+
   return (
     <nav className="border-b-2 border-emerald-600">
       <div className="container flex flex-wrap items-center justify-between mx-auto">

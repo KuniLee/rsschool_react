@@ -14,6 +14,7 @@ describe('Test UserCard Component:', () => {
       notifications: true,
       avatar: '',
     }
+
     render(<UserCard user={testUser} />)
     expect(screen.getByAltText(`avatar:${testUser.id}`)).toBeInTheDocument()
     expect(screen.getByRole('heading', { level: 5 })).toHaveTextContent(testUser.firstName)

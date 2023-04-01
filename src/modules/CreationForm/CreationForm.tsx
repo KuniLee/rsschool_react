@@ -37,6 +37,7 @@ type FormProps = {
 
 const CreationForm: FC<FormProps> = ({ addUser }) => {
   const [popup, setPopup] = useState(false)
+
   const {
     register,
     handleSubmit,

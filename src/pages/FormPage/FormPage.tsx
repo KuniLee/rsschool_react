@@ -4,9 +4,11 @@ import UserCard from './components/Cards/UserCard'
 
 const FormPage: FC = () => {
   const [users, setUsers] = useState<IUser[]>([])
+
   const addUser = (user: IUser) => {
     setUsers((s) => [...s, user])
   }
+
   return (
     <>
       <CreationForm addUser={addUser} />
