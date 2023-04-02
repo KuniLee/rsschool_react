@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
-import { ERoutes, RouterProps } from '@/types'
 
-class About extends Component<Pick<RouterProps, 'setRoute'>> {
-  componentDidMount() {
-    this.props.setRoute(ERoutes.About)
-  }
+class About extends Component {
   render() {
     return (
       <div>
