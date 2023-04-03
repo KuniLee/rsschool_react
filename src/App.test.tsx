@@ -29,9 +29,9 @@ describe('App', () => {
         <App />
       </MemoryRouter>
     )
-    expect(screen.getByRole('link', { name: 'About Us' })).toHaveClass('text-gray-700')
+    expect(screen.getByRole('link', { name: 'About Us' })).toHaveClass('text-gray-200')
     await user.click(screen.getByRole('link', { name: 'About Us' }))
-    expect(screen.getByRole('link', { name: 'About Us' })).toHaveClass('text-green-700')
+    expect(screen.getByRole('link', { name: 'About Us' })).toHaveClass('text-blue-400')
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/about/i)
   })
   it('test render main page', () => {

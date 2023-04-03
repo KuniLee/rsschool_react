@@ -12,8 +12,8 @@ class MsgBox extends Component<MyRadioListProps> {
 
     return (
       <div className="pb-5">
-        {title && <p className="mb-1 block text-sm font-medium text-gray-900">{title}</p>}
-        <div className={eMessage && 'rounded border border-red-300'}>{children}</div>
+        {title && <p className="mb-1 block text-sm font-medium">{title}</p>}
+        <div className={eMessage && 'rounded border border-red-600'}>{children}</div>
         {eMessage && <p className="absolute text-sm text-red-600">{eMessage}</p>}
       </div>
     )

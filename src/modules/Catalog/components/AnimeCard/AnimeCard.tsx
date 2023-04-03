@@ -10,17 +10,15 @@ const AnimeCard: FC<CardProps> = ({ card: { title, images } }) => {
   const [loadingImg, setLoadingImg] = useState(true)
 
   return (
-    <div
-      data-testid="card"
-      className="flex w-full max-w-sm flex-col rounded-lg border border-gray-200 bg-white p-5 shadow dark:border-gray-700 dark:bg-gray-800">
-      <div className="h-[300px] w-full self-center overflow-hidden rounded-t-lg">
+    <div data-testid="card" className="flex w-full max-w-sm flex-col rounded-lg bg-gray-700 p-2 shadow">
+      <div className="h-[300px] w-full self-center overflow-hidden rounded border border-gray-300">
         {loadingImg && (
-          <div className="flex h-full animate-pulse items-center justify-around bg-green-200">
+          <div className="flex h-full animate-pulse items-center justify-around bg-blue-200">
             <Loader className="h-1/3" />
           </div>
         )}
         <img
-          className={`mx-auto h-full bg-black object-contain ${loadingImg ? 'hidden' : 'block'}`}
+          className={`mx-auto h-full object-contain ${loadingImg ? 'hidden' : 'block'}`}
           onLoad={() => {
             setLoadingImg(false)
           }}
@@ -28,7 +26,7 @@ const AnimeCard: FC<CardProps> = ({ card: { title, images } }) => {
           alt="product image"
         />
       </div>
-      <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{title}</h5>
+      <h5 className="mt-1 text-xl font-semibold tracking-tight">{title}</h5>
     </div>
   )
 }

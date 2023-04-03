@@ -25,14 +25,14 @@ const Search: FC<SearchProps> = ({ onSearch }) => {
 
   return (
     <div className="mx-auto max-w-md">
-      <div className="relative flex h-12 w-full items-center overflow-hidden rounded-lg bg-white focus-within:shadow-lg">
-        <div className="grid h-full w-12 place-items-center text-gray-300">
+      <div className="relative flex h-12 w-full items-center overflow-hidden rounded-lg bg-gray-700 focus-within:shadow-lg">
+        <div className="grid h-full w-12 place-items-center text-gray-300 backdrop-blur-sm">
           <Logo className="h-6 w-6"></Logo>
         </div>
         <input
           onKeyDown={onKeyDown}
           ref={ref}
-          className="peer h-full w-full pr-2 text-sm text-gray-700 outline-none"
+          className="peer h-full w-full bg-inherit pr-2 text-gray-200 outline-none"
           type="text"
           placeholder="Search something.."
         />
