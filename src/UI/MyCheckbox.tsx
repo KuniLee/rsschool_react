@@ -6,13 +6,13 @@ export const MyCheckbox = forwardRef<HTMLInputElement, MyCheckboxProps>(({ child
   const id = `${props.type}-${children}`
 
   return (
-    <div className="flex items-center relative mb-1">
+    <div className="relative mb-1 flex items-center">
       <input
         {...props}
         id={id}
         type="checkbox"
         ref={ref}
-        className="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded"
+        className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-green-600"
       />
       <label htmlFor={id} className="ml-2 text-sm font-medium text-gray-900">
         {children}

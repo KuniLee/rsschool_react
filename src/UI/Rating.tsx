@@ -14,7 +14,7 @@ class Rating extends Component<RatingProps> {
         <svg
           key={i}
           aria-hidden="true"
-          className={`w-5 h-5 ${roundedRate >= i ? 'text-yellow-400' : 'text-gray-300'}`}
+          className={`h-5 w-5 ${roundedRate >= i ? 'text-yellow-400' : 'text-gray-300'}`}
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg">
@@ -34,7 +34,7 @@ class Rating extends Component<RatingProps> {
     return (
       <div className={'flex items-center' + ' ' + className}>
         {this.drawStars(rate)}
-        <span className="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
+        <span className="ml-3 mr-2 rounded bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-800 dark:bg-blue-200 dark:text-blue-800">
           {rate}
         </span>
       </div>

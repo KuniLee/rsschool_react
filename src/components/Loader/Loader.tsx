@@ -4,7 +4,7 @@ import { ReactComponent as Spinner } from './assets/circles.svg'
 const Loader: FC<ComponentPropsWithoutRef<'div'>> = (props) => {
   return (
     <div {...props}>
-      <Spinner className="fill-green-700 w-full h-full"></Spinner>
+      <Spinner className="h-full w-full fill-green-700"></Spinner>
     </div>
   )
 }

@@ -9,16 +9,16 @@ export const MyInput = forwardRef<HTMLInputElement, MyInputProps>(({ children, e
 
   return (
     <div className="relative pb-5">
-      <label htmlFor={id} className="block mb-1 text-sm font-medium text-gray-900">
+      <label htmlFor={id} className="mb-1 block text-sm font-medium text-gray-900">
         {children}
       </label>
       <input
         id={id}
-        className={`border text-sm rounded-lg block w-full p-2.5
+        className={`block w-full rounded-lg border p-2.5 text-sm
           ${
             eMessage
-              ? 'border-red-500 text-red-900 bg-red-50'
-              : 'bg-gray-50 text-gray-900 focus:ring-green-500 focus:border-green-500 border-gray-300'
+              ? 'border-red-500 bg-red-50 text-red-900'
+              : 'border-gray-300 bg-gray-50 text-gray-900 focus:border-green-500 focus:ring-green-500'
           }`}
         ref={ref}
         {...props}

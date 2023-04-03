@@ -14,8 +14,8 @@ class UserCard extends Component<UserCardProps> {
     return (
       <div
         data-testid="card"
-        className="p-5 w-full flex flex-col justify-between max-w-sm bg-white border border-gray-200 rounded-lg shadow">
-        <img className="self-center max-h-[200px] rounded-t-lg" src={avatar || noImage} alt={`avatar:${id}`} />
+        className="flex w-full max-w-sm flex-col justify-between rounded-lg border border-gray-200 bg-white p-5 shadow">
+        <img className="max-h-[200px] self-center rounded-t-lg" src={avatar || noImage} alt={`avatar:${id}`} />
         <h5 className="text-xl font-semibold tracking-tight text-gray-900">
           {firstName} {surName}
         </h5>

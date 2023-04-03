@@ -12,15 +12,15 @@ const AnimeCard: FC<CardProps> = ({ card: { title, images } }) => {
   return (
     <div
       data-testid="card"
-      className="p-5 w-full flex flex-col max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-      <div className="w-full h-[300px] self-center rounded-t-lg overflow-hidden">
+      className="flex w-full max-w-sm flex-col rounded-lg border border-gray-200 bg-white p-5 shadow dark:border-gray-700 dark:bg-gray-800">
+      <div className="h-[300px] w-full self-center overflow-hidden rounded-t-lg">
         {loadingImg && (
-          <div className="flex items-center justify-around h-full bg-green-200 animate-pulse">
+          <div className="flex h-full animate-pulse items-center justify-around bg-green-200">
             <Loader className="h-1/3" />
           </div>
         )}
         <img
-          className={`bg-black mx-auto h-full object-contain ${loadingImg ? 'hidden' : 'block'}`}
+          className={`mx-auto h-full bg-black object-contain ${loadingImg ? 'hidden' : 'block'}`}
           onLoad={() => {
             setLoadingImg(false)
           }}

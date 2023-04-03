@@ -52,9 +52,9 @@ const CreationForm: FC<FormProps> = ({ addUser }) => {
   })
 
   return (
-    <form onSubmit={onSubmit} className="bg-green-100 p-4 rounded mt-1">
+    <form onSubmit={onSubmit} className="mt-1 rounded bg-green-100 p-4">
       <Popup onOk={() => setPopup(false)} msg={'User created!'} open={popup} />
-      <div className="grid md:grid-cols-2 gap-x-2 items-start mb-2">
+      <div className="mb-2 grid items-start gap-x-2 md:grid-cols-2">
         <MyInput
           {...register('firstName', validateOptions.firstName)}
           eMessage={errors.firstName?.message}

@@ -24,10 +24,10 @@ const Navigation: FC = () => {
 
   return (
     <nav className="border-b-2 border-emerald-600">
-      <div className="container flex flex-wrap items-center justify-between mx-auto">
-        <span className="self-center text-xl font-semibold whitespace-nowrap">{usePageTitle(pathname)}</span>
+      <div className="container mx-auto flex flex-wrap items-center justify-between">
+        <span className="self-center whitespace-nowrap text-xl font-semibold">{usePageTitle(pathname)}</span>
         <div className="w-auto">
-          <ul className="flex p-4 rounded-lg text-sm font-medium">
+          <ul className="flex rounded-lg p-4 text-sm font-medium">
             {navbarLinks.map((link, idx) => (
               <li key={idx}>
                 <NavLink className={getLinkClass} to={link.route}>

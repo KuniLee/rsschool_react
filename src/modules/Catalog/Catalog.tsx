@@ -28,9 +28,9 @@ const Catalog: React.FC = () => {
     <>
       <Search onSearch={(value) => setSearch(value)} />
       {isCardsLoading ? (
-        <Loader className="h-12 w-12 mx-auto my-4" />
+        <Loader className="mx-auto my-4 h-12 w-12" />
       ) : (
-        <div className="my-4 grid grid-cols-1 justify-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2 gap-y-4">
+        <div className="my-4 grid grid-cols-1 justify-items-center gap-x-2 gap-y-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {cards.map((card) => (
             <AnimeCard key={card.mal_id} card={card} />
           ))}
