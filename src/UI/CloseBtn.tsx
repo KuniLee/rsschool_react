@@ -1,13 +1,14 @@
 import { ComponentPropsWithoutRef, FC } from 'react'
 import cx from 'classnames'
 
-export const CloseBtn: FC<ComponentPropsWithoutRef<'button'>> = ({ className }) => {
+export const CloseBtn: FC<ComponentPropsWithoutRef<'button'>> = (props) => {
   return (
     <button
       type="button"
+      {...props}
       className={cx(
         'inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:text-gray-500',
-        className
+        props.className
       )}>
       <span className="sr-only"> Close menu </span>
       <svg

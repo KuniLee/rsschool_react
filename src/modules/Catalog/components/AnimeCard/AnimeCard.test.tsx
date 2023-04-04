@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest'
 //import { render, screen } from '@testing-library/react'
-//import AnimeCard from '@/modules/Catalog/components/AnimeCard/AnimeCard'
+//import AnimeDetails from '@/modules/Catalog/components/AnimeDetails/AnimeDetails'
 
 describe('Test Cards Component:', () => {
   it('render card', function () {
@@ -12,7 +12,7 @@ describe('Test Cards Component:', () => {
     //     id: 1,
     //     price: 500,
     //   }
-    //   render(<AnimeCard card={product} />)
+    //   render(<AnimeDetails card={product} />)
     //   expect(screen.getByAltText(/product image/i)).toBeInTheDocument()
     //   expect(screen.getByRole('heading', { level: 5 })).toHaveTextContent(product.name)
     //   expect(screen.getByText(new RegExp(`${product.rating.rate.toString()}`, 'i'))).toBeInTheDocument()

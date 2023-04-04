@@ -1,6 +1,7 @@
 import React, { Component, ComponentPropsWithoutRef } from 'react'
+import cx from 'classnames'
 
-type RatingProps = ComponentPropsWithoutRef<'div'> & {
+type RatingProps = ComponentPropsWithoutRef<'span'> & {
   rate: number
 }
 
@@ -9,12 +10,12 @@ class Rating extends Component<RatingProps> {
     const stars = []
     const roundedRate = Math.round(rate)
 
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 10; i++) {
       stars.push(
         <svg
           key={i}
           aria-hidden="true"
-          className={`h-5 w-5 ${roundedRate >= i ? 'text-yellow-400' : 'text-gray-300'}`}
+          className={`h-3 w-3 md:h-5 md:w-5 ${roundedRate >= i ? 'text-yellow-400' : 'text-gray-300'}`}
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg">
@@ -32,12 +33,10 @@ class Rating extends Component<RatingProps> {
     const { rate } = this.props
 
     return (
-      <div className={'flex items-center' + ' ' + className}>
+      <span className={cx('inline-flex items-center', className)}>
         {this.drawStars(rate)}
-        <span className="ml-3 mr-2 rounded bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-800 dark:bg-blue-200 dark:text-blue-800">
-          {rate}
-        </span>
-      </div>
+        <span className="ml-2 rounded bg-blue-100 px-1 text-xs font-semibold text-blue-500">{rate}</span>
+      </span>
     )
   }
 }
