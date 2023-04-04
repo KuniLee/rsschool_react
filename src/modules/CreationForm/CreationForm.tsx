@@ -53,7 +53,9 @@ const CreationForm: FC<FormProps> = ({ addUser }) => {
 
   return (
     <form onSubmit={onSubmit} className="mt-2 rounded bg-gray-700 p-4">
-      <Popup onOk={() => setPopup(false)} msg={'User created!'} open={popup} />
+      <Popup onClose={() => setPopup(false)} open={popup}>
+        <p className="mb-2">User created!</p>
+      </Popup>
       <div className="mb-2 grid items-start gap-x-2 md:grid-cols-2">
         <Input
           {...register('firstName', validateOptions.firstName)}

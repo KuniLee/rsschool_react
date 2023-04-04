@@ -1,15 +1,14 @@
-import React, { FC, useRef } from 'react'
+import React, { FC, PropsWithChildren, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
-import MyButton from '@/UI/MyButton'
 import { createPortal } from 'react-dom'
+import CloseBtn from '@/UI/CloseBtn'
 
-type PopupProps = {
+type PopupProps = PropsWithChildren<{
   open: boolean
-  msg: string
-  onOk: () => void
-}
+  onClose: () => void
+}>
 
-const Popup: FC<PopupProps> = ({ msg, onOk, open }) => {
+const Popup: FC<PopupProps> = ({ children, onClose, open }) => {
   const nodeRef = useRef<HTMLDivElement>(null)
 
   return createPortal(
@@ -19,20 +18,15 @@ const Popup: FC<PopupProps> = ({ msg, onOk, open }) => {
       in={open}
       classNames={{ enterActive: '!z-50 opacity-100', enterDone: '!z-50 opacity-100', exitActive: '!z-50' }}>
       <div
-        onClick={() => onOk()}
+        onClick={() => onClose()}
         ref={nodeRef}
-        className={`fixed left-0 right-0 top-0 -z-10 flex h-screen w-screen items-center justify-center opacity-0 backdrop-blur-sm transition-opacity duration-500`}>
+        className={`fixed inset-0 -z-10 flex h-screen w-screen items-center justify-center opacity-0 
+        backdrop-blur-sm transition-opacity duration-500`}>
         <div
           onClick={(e) => e.stopPropagation()}
-          className="flex max-w-[300px] flex-col justify-center rounded-lg border-4 border-green-600 bg-green-100 p-4">
-          <p className="mb-2">{msg}</p>
-          <MyButton
-            onClick={(event) => {
-              event.preventDefault()
-              onOk()
-            }}>
-            Ок
-          </MyButton>
+          className="relative box-border flex max-w-[300px] flex-col justify-center rounded-lg border-4 border-gray-200 bg-gray-600 p-4">
+          {children}
+          <CloseBtn onClick={() => onClose()} className={'absolute right-[-40px] top-[-40px]'} />
         </div>
       </div>
     </CSSTransition>,
