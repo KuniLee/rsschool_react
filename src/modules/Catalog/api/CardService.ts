@@ -1,12 +1,20 @@
 import axios, { AxiosResponse } from 'axios'
 import { AnimeInfo } from '../types'
 
-type APIResponse = {
+export type PaginationData = {
+  current_page: number
+  has_next_page: number
+  items: { count: number; total: number; per_page: number }
+  last_visible_page: number
+}
+
+export type APIResponse = {
+  pagination: PaginationData
   data: Array<AnimeInfo>
 }
 
 export default class PostService {
-  static async getAnimeWithSearch(search: string, limit = 10, page = 1): Promise<AxiosResponse<APIResponse>> {
+  static async getAnimeWithSearch(search: string, limit = 10, page = 2): Promise<AxiosResponse<APIResponse>> {
     return await axios.get('https://api.jikan.moe/v4/anime', {
       params: { limit, page: page, q: search },
     })

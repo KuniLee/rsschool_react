@@ -7,7 +7,6 @@ type Props = {
 }
 
 const AnimeDetails: FC<Props> = ({ card }) => {
-  console.log(card)
   const { title, rating, score, synopsis } = card
 
   return (

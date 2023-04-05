@@ -7,20 +7,25 @@ import Loader from '@components/Loader/Loader'
 import Popup from '@components/Popup'
 import AnimeDetails from './components/AnimeInfo/AnimeDetails'
 import { AnimeInfo } from '@/modules/Catalog/types'
+import { usePagination } from '@/modules/Catalog/hooks/usePagination'
 
 const Catalog: React.FC = () => {
   const [search, setSearch] = useState(localStorage.searchInput || '')
   const [cards, setCards] = useState<AnimeInfo[]>([])
   const [popup, setPopup] = useState(false)
   const [currentCard, setCurrentCard] = useState<AnimeInfo>()
+  const [page, pageCount, setPageData] = usePagination()
 
   const [fetchCards, isCardsLoading, cardsError] = useFetching(
-    useCallback(async (search: string, limit: number, page: number) => {
-      const response = await PostService.getAnimeWithSearch(search, limit, page)
+    useCallback(
+      async (search: string, limit: number, page: number) => {
+        const response = await PostService.getAnimeWithSearch(search, limit, page)
 
-      setCards(response.data.data)
-      // setTotalPages(getPageCount(response.headers['x-total-count'] as number, limit as number))
-    }, [])
+        setCards(response.data.data)
+        setPageData(response.data.pagination)
+      },
+      [setPageData]
+    )
   )
 
   const openCard = (card: AnimeInfo) => {
