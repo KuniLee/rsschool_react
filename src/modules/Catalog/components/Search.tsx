@@ -12,15 +12,16 @@ const Search: FC<SearchProps> = ({ onSearch }) => {
   useEffect(() => {
     const input = ref.current
 
-    if (input) input.value = localStorage.searchInput || ''
-
-    return () => {
-      localStorage.searchInput = input?.value || ''
-    }
+    if (input) ref.current.value = localStorage.searchInput || ''
   }, [])
 
+  const submit = (value: string) => {
+    onSearch(value)
+    localStorage.searchInput = value
+  }
+
   const onKeyDown: KeyboardEventHandler = (ev) => {
-    if (ev.key === 'Enter') onSearch(ref.current?.value || '')
+    if (ev.key === 'Enter') submit(ref.current?.value || '')
   }
 
   return (
@@ -36,7 +37,7 @@ const Search: FC<SearchProps> = ({ onSearch }) => {
           type="text"
           placeholder="Search something.."
         />
-        <MyButton className="h-full rounded-l-none" onClick={() => onSearch(ref.current?.value || '')}>
+        <MyButton className="h-full rounded-l-none" onClick={() => submit(ref.current?.value || '')}>
           Go
         </MyButton>
       </div>
