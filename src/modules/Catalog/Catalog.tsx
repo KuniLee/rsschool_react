@@ -7,8 +7,8 @@ import Loader from '@components/Loader/Loader'
 import Popup from '@components/Popup'
 import AnimeDetails from './components/AnimeInfo/AnimeDetails'
 import { AnimeInfo } from '@/modules/Catalog/types'
-import { usePagination } from '@/modules/Catalog/hooks/usePagination'
-import Pagination from '@components/Pagination/Pagination'
+import { usePagination } from '@components/Pagination'
+import Pagination from '@components/Pagination'
 
 const Catalog: React.FC = () => {
   const [search, setSearch] = useState(localStorage.searchInput || '')
@@ -22,8 +22,11 @@ const Catalog: React.FC = () => {
       async (search: string, limit: number, page: number) => {
         const response = await PostService.getAnimeWithSearch(search, limit, page)
 
-        setCards(response.data.data)
-        setPageData(response.data.pagination)
+        const cards = response.data.data
+        const { current_page, last_visible_page } = response.data.pagination
+
+        setCards(cards)
+        setPageData(current_page, last_visible_page)
       },
       [setPageData]
     )
@@ -47,13 +50,15 @@ const Catalog: React.FC = () => {
       {isCardsLoading ? (
         <Loader className="mx-auto my-4 h-12 w-12" />
       ) : (
-        <div className="my-4 grid grid-cols-1 justify-items-center gap-x-2 gap-y-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {cards.map((card) => (
-            <AnimeCard openCard={openCard} key={card.mal_id} card={card} />
-          ))}
-        </div>
+        <>
+          <div className="my-4 grid grid-cols-1 justify-items-center gap-x-2 gap-y-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {cards.map((card) => (
+              <AnimeCard openCard={openCard} key={card.mal_id} card={card} />
+            ))}
+          </div>
+          {cards.length ? <Pagination pageCount={pageCount} page={page} /> : <p>no cards</p>}
+        </>
       )}
-      <Pagination></Pagination>
     </>
   )
 }

@@ -1,13 +1,18 @@
-import { FC } from 'react'
+import { FC, useMemo } from 'react'
 import { ReactComponent as DArrow } from './assets/doubleArrow.svg'
 import { ReactComponent as Arrow } from './assets/arrow.svg'
+import renderButtons from '@components/Pagination/helpers/renderButtons'
 
 type PaginationProps = {
   page: number
-  countPage: number
+  pageCount: number
 }
 
-const Pagination: FC<PaginationProps> = ({ page, countPage }) => {
+const Pagination: FC<PaginationProps> = ({ page, pageCount }) => {
+  const buttons = useMemo(() => {
+    return renderButtons(page, pageCount)
+  }, [pageCount, page])
+
   return (
     <div className="flex items-center text-gray-300">
       <span className="rounded p-2 hover:bg-blue-800">
@@ -16,22 +21,7 @@ const Pagination: FC<PaginationProps> = ({ page, countPage }) => {
       <span className="rounded p-2 hover:bg-blue-800">
         <Arrow />
       </span>
-      {/*<a href="#" className="rounded px-4 py-2 hover:bg-blue-800">*/}
-      {/*  {' '}*/}
-      {/*  1{' '}*/}
-      {/*</a>*/}
-      {/*<a href="#" className="rounded bg-blue-700 px-4 py-2 font-medium">*/}
-      {/*  2*/}
-      {/*</a>*/}
-      {/*<a href="#" className="rounded px-4 py-2 hover:bg-blue-800">*/}
-      {/*  {' '}*/}
-      {/*  3{' '}*/}
-      {/*</a>*/}
-      {/*<span className="rounded px-4 py-2">...</span>*/}
-      {/*<a href="#" className="rounded px-4 py-2 hover:bg-blue-800">*/}
-      {/*  {' '}*/}
-      {/*  9{' '}*/}
-      {/*</a>*/}
+      {buttons}
       <span className="rotate-180 rounded p-2 hover:bg-blue-800">
         <Arrow />
       </span>
