@@ -8,6 +8,7 @@ import Popup from '@components/Popup'
 import AnimeDetails from './components/AnimeInfo/AnimeDetails'
 import { AnimeInfo } from '@/modules/Catalog/types'
 import { usePagination } from '@/modules/Catalog/hooks/usePagination'
+import Pagination from '@components/Pagination/Pagination'
 
 const Catalog: React.FC = () => {
   const [search, setSearch] = useState(localStorage.searchInput || '')
@@ -52,6 +53,7 @@ const Catalog: React.FC = () => {
           ))}
         </div>
       )}
+      <Pagination></Pagination>
     </>
   )
 }
