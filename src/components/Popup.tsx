@@ -1,7 +1,8 @@
-import React, { FC, PropsWithChildren, useEffect, useRef } from 'react'
+import React, { FC, PropsWithChildren, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import { createPortal } from 'react-dom'
 import CloseBtn from '@/UI/CloseBtn'
+import useScroll from '@/hooks/useScroll'
 
 type PopupProps = PropsWithChildren<{
   open: boolean
@@ -11,10 +12,7 @@ type PopupProps = PropsWithChildren<{
 const Popup: FC<PopupProps> = ({ children, onClose, open }) => {
   const nodeRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (open) document.body.style.overflow = 'hidden'
-    else document.body.style.overflow = ''
-  }, [open])
+  useScroll(open)
 
   return createPortal(
     <CSSTransition
