@@ -1,6 +1,11 @@
-import { useCallback, useState } from 'react'
+import { Dispatch, SetStateAction, useCallback, useState } from 'react'
 
-export const usePagination = (): [number, number, (currentPage: number, lastVisiblePage: number) => void] => {
+export const usePagination = (): [
+  number,
+  number,
+  Dispatch<SetStateAction<number>>,
+  (currentPage: number, lastVisiblePage: number) => void
+] => {
   const [page, setPage] = useState(1)
   const [pageCount, setPageCount] = useState(1)
 
@@ -13,5 +18,5 @@ export const usePagination = (): [number, number, (currentPage: number, lastVisi
     setPageData(currentPage, lastVisiblePage)
   }, [])
 
-  return [page, pageCount, memoSetPage]
+  return [page, pageCount, setPage, memoSetPage]
 }

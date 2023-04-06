@@ -15,12 +15,12 @@ const Catalog: React.FC = () => {
   const [cards, setCards] = useState<AnimeInfo[]>([])
   const [popup, setPopup] = useState(false)
   const [currentCard, setCurrentCard] = useState<AnimeInfo>()
-  const [page, pageCount, setPageData] = usePagination()
+  const [page, pageCount, setPage, setPageData] = usePagination()
 
   const [fetchCards, isCardsLoading, cardsError] = useFetching(
     useCallback(
-      async (search: string, limit: number, page: number) => {
-        const response = await PostService.getAnimeWithSearch(search, limit, page)
+      async (search: string, page: number, limit: number) => {
+        const response = await PostService.getAnimeWithSearch(search, page, limit)
 
         const cards = response.data.data
         const { current_page, last_visible_page } = response.data.pagination
@@ -37,16 +37,21 @@ const Catalog: React.FC = () => {
     setPopup(true)
   }
 
+  const makeNewSearch = (value: string) => {
+    setPage(1)
+    setSearch(value)
+  }
+
   useEffect(() => {
-    fetchCards(search)
-  }, [search, fetchCards])
+    fetchCards(search, page)
+  }, [search, fetchCards, page])
 
   return (
     <>
       <Popup onClose={() => setPopup(false)} open={popup}>
         {currentCard && <AnimeDetails card={currentCard} />}
       </Popup>
-      <Search onSearch={(value) => setSearch(value)} />
+      <Search onSearch={makeNewSearch} />
       {isCardsLoading ? (
         <Loader className="mx-auto my-4 h-12 w-12" />
       ) : (
@@ -56,7 +61,7 @@ const Catalog: React.FC = () => {
               <AnimeCard openCard={openCard} key={card.mal_id} card={card} />
             ))}
           </div>
-          {cards.length ? <Pagination pageCount={pageCount} page={page} /> : <p>no cards</p>}
+          {cards.length ? <Pagination onChangePage={setPage} pageCount={pageCount} page={page} /> : <p>no cards</p>}
         </>
       )}
     </>
