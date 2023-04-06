@@ -9,6 +9,7 @@ import AnimeDetails from './components/AnimeInfo/AnimeDetails'
 import { AnimeInfo } from '@/modules/Catalog/types'
 import { usePagination } from '@components/Pagination'
 import Pagination from '@components/Pagination'
+import Alert from '@/UI/Alert'
 
 const Catalog: React.FC = () => {
   const [search, setSearch] = useState(localStorage.searchInput || '')
@@ -52,7 +53,9 @@ const Catalog: React.FC = () => {
         {currentCard && <AnimeDetails card={currentCard} />}
       </Popup>
       <Search onSearch={makeNewSearch} />
-      {isCardsLoading ? (
+      {cardsError ? (
+        <Alert type="danger" data={{ title: 'Error', text: cardsError }} />
+      ) : isCardsLoading ? (
         <Loader className="mx-auto my-4 h-12 w-12" />
       ) : (
         <>
