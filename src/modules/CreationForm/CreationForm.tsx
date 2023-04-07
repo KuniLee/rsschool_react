@@ -52,7 +52,7 @@ const CreationForm: FC<FormProps> = ({ addUser }) => {
   })
 
   return (
-    <form onSubmit={onSubmit} className="mt-2 rounded bg-gray-700 p-4">
+    <form data-testid="form" onSubmit={onSubmit} className="mt-2 rounded bg-gray-700 p-4">
       <Popup onClose={() => setPopup(false)} open={popup}>
         <p className="mb-2">User created!</p>
       </Popup>
