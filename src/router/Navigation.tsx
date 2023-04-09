@@ -10,9 +10,9 @@ const navbarLinks = [
 ]
 
 const LinkClasses = {
-  base: 'block px-2 md:px-4 rounded p-0',
-  active: 'bg-transparent text-green-700',
-  nonActive: 'text-gray-700 p-0 hover:bg-transparent border-0 hover:text-green-700',
+  base: 'block font-semibold text-lg px-2 md:px-4 rounded p-0',
+  active: 'bg-transparent text-blue-400',
+  nonActive: ' text-gray-200 p-0 hover:bg-transparent border-0 hover:text-blue-400',
 }
 
 function getLinkClass({ isActive }: { isActive: boolean }) {
@@ -21,12 +21,13 @@ function getLinkClass({ isActive }: { isActive: boolean }) {
 
 const Navigation: FC = () => {
   const { pathname } = useLocation()
+
   return (
-    <nav className="border-b-2 border-emerald-600">
-      <div className="container flex flex-wrap items-center justify-between mx-auto">
-        <span className="self-center text-xl font-semibold whitespace-nowrap">{usePageTitle(pathname)}</span>
+    <nav className="border-b-2 border-blue-800">
+      <div className="container mx-auto flex flex-wrap items-center justify-between">
+        <span className="self-center whitespace-nowrap text-xl font-semibold">{usePageTitle(pathname)}</span>
         <div className="w-auto">
-          <ul className="flex p-4 rounded-lg text-sm font-medium">
+          <ul className="flex rounded-lg p-4 text-sm font-medium">
             {navbarLinks.map((link, idx) => (
               <li key={idx}>
                 <NavLink className={getLinkClass} to={link.route}>

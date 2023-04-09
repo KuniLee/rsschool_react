@@ -12,8 +12,10 @@ describe('CreationForm', () => {
     expect(screen.getByRole('combobox', { name: /country/i })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /Create/i })).not.toBeDisabled()
   })
+
   it('Testing validation', async () => {
     const user = userEvent.setup()
+
     render(<CreationForm addUser={() => undefined} />)
     await user.type(screen.getByRole('textbox', { name: /firstname/i }), '1')
     await user.type(screen.getByRole('textbox', { name: /surname/i }), '1')
@@ -31,8 +33,10 @@ describe('CreationForm', () => {
     await user.click(screen.getByRole('button', { name: /Create/i }))
     expect(screen.queryByText(/Latin letters and numbers/i)).toBeNull()
   })
+
   it('Testing validation with the wrong image', async () => {
     const testImage = [new File(['hello'], 'hello.svg', { type: 'image/svg' })]
+
     render(<CreationForm addUser={() => undefined} />)
     await userEvent.upload(screen.getByLabelText(/avatar/i), testImage, { applyAccept: false })
     await userEvent.click(screen.getByRole('button', { name: /Create/i }))
@@ -52,10 +56,12 @@ describe('User create', () => {
       notifications: false,
       avatar: 'data:image/png;base64,aGVsbG8=',
     }
+
     Date.now = vi.fn(() => testUser.id)
     const testImage = [new File(['hello'], 'hello.png', { type: 'image/png' })]
     const user = userEvent.setup()
     const addUser = vi.fn()
+
     render(<CreationForm addUser={addUser} />)
     await user.type(screen.getByRole('textbox', { name: /firstname/i }), testUser.firstName)
     await user.type(screen.getByRole('textbox', { name: /surname/i }), testUser.surName)
@@ -67,6 +73,7 @@ describe('User create', () => {
     await user.click(screen.getByRole('button', { name: /Create/i }))
     await waitFor(() => {
       const argument = addUser.mock.calls[0][0]
+
       expect(argument).toEqual(testUser)
     })
   })

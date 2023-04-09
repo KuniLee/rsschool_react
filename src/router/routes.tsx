@@ -21,6 +21,6 @@ export const routes: Route[] = [
   { path: ERoutes.About, element: <About /> },
   { path: ERoutes.Main, element: <MainPage /> },
   { path: ERoutes.Form, element: <FormPage /> },
-  { path: ERoutes.Root, element: <Navigate to={ERoutes.Form} replace={true} /> },
+  { path: ERoutes.Root, element: <Navigate to={ERoutes.Main} replace={true} /> },
   { path: '*', element: <NotFound /> },
 ]

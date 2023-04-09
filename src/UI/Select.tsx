@@ -7,26 +7,27 @@ type MySelectProps = ComponentPropsWithoutRef<'select'> & {
   defaultName: string
 }
 
-class MySelect extends Component<MySelectProps> {
+class Select extends Component<MySelectProps> {
   id = `select-${this.props.defaultName}`
 
   render() {
     const { children, innerref, defaultName, eMessage, options, ...props } = this.props
+
     return (
       <div className="relative pb-5">
         {children && (
-          <label htmlFor={this.id} className="block mb-1 text-sm font-medium text-gray-900">
+          <label htmlFor={this.id} className="mb-1 block text-sm font-medium">
             {children}
           </label>
         )}
         <select
           defaultValue="default"
           id={this.id}
-          className={`border text-sm rounded-lg block w-full p-2.5
+          className={`block w-full rounded-lg border p-2.5 text-sm
           ${
             eMessage
-              ? 'border-red-500 text-red-900 bg-red-50'
-              : 'bg-gray-50 text-gray-900 focus:ring-green-500 focus:border-green-500 border-gray-300'
+              ? 'border-red-500 bg-red-50 text-red-900'
+              : 'border-gray-300 bg-gray-50 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
           }`}
           ref={innerref}
           {...props}>
@@ -39,12 +40,12 @@ class MySelect extends Component<MySelectProps> {
             </option>
           ))}
         </select>
-        {eMessage && <p className="absolute bottom-0 text-sm text-red-600 dark:text-red-500">{eMessage}</p>}
+        {eMessage && <p className="absolute bottom-0 text-sm text-red-600">{eMessage}</p>}
       </div>
     )
   }
 }
 
 export default React.forwardRef<HTMLSelectElement, Omit<MySelectProps, 'innerref'>>((props, ref) => (
-  <MySelect innerref={ref} {...props} />
+  <Select innerref={ref} {...props} />
 ))

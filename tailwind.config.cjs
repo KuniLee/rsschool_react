@@ -1,30 +1,32 @@
-/** @type {import('tailwindcss').Config} */
+/** @type {import("tailwindcss").Config} */
 module.exports = {
-  darkMode: 'class',
+  darkMode: "class",
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx,svg}"
   ],
   theme: {
     container: {
-      padding: '1rem',
-      center: true,
+      padding: "1rem",
+      center: true
     },
-    extend: {   },
+    extend: {
+      fontFamily: { "sans": ["Nunito","sans-serif"] }
+    }
   },
   plugins: [
-    function ({ addComponents }) {
+    function({ addComponents }) {
       addComponents({
-        '.container': {
-          maxWidth: '100%',
-          '@screen xl': {
-            maxWidth: '1280px',
+        ".container": {
+          maxWidth: "100%",
+          "@screen xl": {
+            maxWidth: "1280px"
           },
-          '@screen 2xl': {
-            maxWidth: '1280px',
-          },
-        },
-      })
-    },
-  ],
-}
+          "@screen 2xl": {
+            maxWidth: "1280px"
+          }
+        }
+      });
+    }
+  ]
+};

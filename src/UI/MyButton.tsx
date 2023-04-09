@@ -1,7 +1,8 @@
 import React, { ComponentPropsWithoutRef, Component } from 'react'
 
 const ButtonStyles =
-  'text-white bg-green-500 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium disabled:cursor-not-allowed disabled:bg-green-300 rounded-lg text-sm px-4 py-2 '
+  'text-white bg-blue-500 hover:bg-blue-800 ' +
+  'font-medium disabled:cursor-not-allowed disabled:bg-blue-300 rounded-lg px-4 py-2 '
 
 class MyButton extends Component<ComponentPropsWithoutRef<'button'>> {
   render() {

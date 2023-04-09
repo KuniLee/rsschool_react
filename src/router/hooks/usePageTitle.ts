@@ -10,5 +10,6 @@ const pageNames: Record<ERoutes, string> = {
 
 export const usePageTitle = (pathname: string) => {
   const currentPageTitle = Object.keys(pageNames).find((key) => matchPath({ path: key }, pathname)) as ERoutes
+
   return currentPageTitle ? pageNames[currentPageTitle] : 'Not Found'
 }

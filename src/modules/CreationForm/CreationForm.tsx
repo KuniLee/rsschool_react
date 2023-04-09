@@ -1,17 +1,17 @@
 import React, { FC, useState } from 'react'
 
-import MyInput from '@/UI/MyInput'
+import Input from '@/UI/Input'
 import MyButton from '@/UI/MyButton'
-import MyFileInput from '@/UI/MyFileInput'
+import MyFileInput from '@/UI/FileInput'
 import { useForm } from 'react-hook-form'
 import validateOptions from './helpers/validateOptions'
 import countries from './constants/countries'
-import MySelect from '@/UI/MySelect'
+import MySelect from '@/UI/Select'
 import type { Genders } from './types'
 import MsgBox from '@/UI/MsgBox'
 import { genders } from './types'
-import MyRadio from '@/UI/MyRadio'
-import MyCheckbox from '@/UI/MyCheckbox'
+import MyRadio from '@/UI/Radio'
+import Checkbox from '@/UI/Checkbox'
 import createUser from './helpers/createUser'
 import Popup from '@components/Popup'
 
@@ -37,6 +37,7 @@ type FormProps = {
 
 const CreationForm: FC<FormProps> = ({ addUser }) => {
   const [popup, setPopup] = useState(false)
+
   const {
     register,
     handleSubmit,
@@ -51,23 +52,25 @@ const CreationForm: FC<FormProps> = ({ addUser }) => {
   })
 
   return (
-    <form onSubmit={onSubmit} className="bg-green-100 p-4 rounded mt-1">
-      <Popup onOk={() => setPopup(false)} msg={'User created!'} open={popup} />
-      <div className="grid md:grid-cols-2 gap-x-2 items-start mb-2">
-        <MyInput
+    <form data-testid="form" onSubmit={onSubmit} className="mt-2 rounded bg-gray-700 p-4">
+      <Popup onClose={() => setPopup(false)} open={popup}>
+        <p className="mb-2">User created!</p>
+      </Popup>
+      <div className="mb-2 grid items-start gap-x-2 md:grid-cols-2">
+        <Input
           {...register('firstName', validateOptions.firstName)}
           eMessage={errors.firstName?.message}
           placeholder="Insert firstname..."
           type="text">
           Firstname
-        </MyInput>
-        <MyInput
+        </Input>
+        <Input
           {...register('surName', validateOptions.surName)}
           eMessage={errors.surName?.message}
           placeholder="Insert surname..."
           type="text">
           Surname
-        </MyInput>
+        </Input>
         <MyFileInput
           {...register('avatar', validateOptions.avatar)}
           desc="PNG or JPG. (MAX 5Mb)"
@@ -75,9 +78,9 @@ const CreationForm: FC<FormProps> = ({ addUser }) => {
           eMessage={errors.avatar?.message}>
           Avatar
         </MyFileInput>
-        <MyInput {...register('date', validateOptions.date)} eMessage={errors.date?.message} type="date">
+        <Input {...register('date', validateOptions.date)} eMessage={errors.date?.message} type="date">
           Date of Birth
-        </MyInput>
+        </Input>
         <MySelect
           {...register('country', validateOptions.country)}
           eMessage={errors.country?.message}
@@ -92,9 +95,9 @@ const CreationForm: FC<FormProps> = ({ addUser }) => {
             </MyRadio>
           ))}
         </MsgBox>
-        <MyCheckbox {...register('notifications')}>I want to get notifications</MyCheckbox>
+        <Checkbox {...register('notifications')}>I want to get notifications</Checkbox>
         <MsgBox eMessage={errors.agreement?.message}>
-          <MyCheckbox {...register('agreement', validateOptions.agreement)}>Agree with license agreement</MyCheckbox>
+          <Checkbox {...register('agreement', validateOptions.agreement)}>Agree with license agreement</Checkbox>
         </MsgBox>
       </div>
       <MyButton className="justify-self-start">Create</MyButton>
