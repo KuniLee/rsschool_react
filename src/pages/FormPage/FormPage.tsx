@@ -1,22 +1,11 @@
-import React, { FC, useState } from 'react'
-import CreationForm, { IUser } from '@/modules/CreationForm'
-import UserCard from './components/Cards/UserCard'
+import React from 'react'
+import UserForm, { UserList } from '@/modules/UserForm'
 
-const FormPage: FC = () => {
-  const [users, setUsers] = useState<IUser[]>([])
-
-  const addUser = (user: IUser) => {
-    setUsers((s) => [...s, user])
-  }
-
+const FormPage = () => {
   return (
     <>
-      <CreationForm addUser={addUser} />
-      <div className="my-4 grid grid-cols-1 justify-items-center gap-x-2 gap-y-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {users.map((user) => (
-          <UserCard key={user.id} user={user} />
-        ))}
-      </div>
+      <UserForm />
+      <UserList />
     </>
   )
 }

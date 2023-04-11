@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import countries from '@/modules/CreationForm/constants/countries'
+import countries from '@/modules/UserForm/constants/countries'
 import noImage from '@assets//noImage.png'
-import { IUser } from '@/modules/CreationForm'
+import { IUser } from '@/modules/UserForm'
 
 export type UserCardProps = {
   user: IUser

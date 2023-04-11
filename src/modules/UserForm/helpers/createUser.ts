@@ -1,4 +1,4 @@
-import type { FormData, IUser } from '../CreationForm'
+import { IUser, FormData } from '../store/usersSlice'
 
 export default async function (data: FormData): Promise<IUser> {
   const newUser: IUser = {

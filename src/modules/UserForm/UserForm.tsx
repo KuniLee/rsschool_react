@@ -7,36 +7,19 @@ import { useForm } from 'react-hook-form'
 import validateOptions from './helpers/validateOptions'
 import countries from './constants/countries'
 import MySelect from '@/UI/Select'
-import type { Genders } from './types'
 import MsgBox from '@/UI/MsgBox'
 import { genders } from './types'
 import MyRadio from '@/UI/Radio'
 import Checkbox from '@/UI/Checkbox'
-import createUser from './helpers/createUser'
 import Popup from '@components/Popup'
+import { useAppDispatch } from '@/hooks/redux'
+import { addUser } from '@/modules/UserForm/store/usersSlice'
+import createUser from '@/modules/UserForm/helpers/createUser'
+import type { FormData } from './store/usersSlice'
 
-export type FormData = {
-  firstName: string
-  surName: string
-  avatar: FileList
-  date: Date
-  country: string
-  sex: Genders
-  notifications: boolean
-  agreement: boolean
-}
-
-export type IUser = Omit<FormData, 'avatar' | 'agreement'> & {
-  avatar: string
-  id: number
-}
-
-type FormProps = {
-  addUser: (user: IUser) => void
-}
-
-const CreationForm: FC<FormProps> = ({ addUser }) => {
+const UserForm: FC = () => {
   const [popup, setPopup] = useState(false)
+  const dispatch = useAppDispatch()
 
   const {
     register,
@@ -46,7 +29,7 @@ const CreationForm: FC<FormProps> = ({ addUser }) => {
   } = useForm<FormData>({ reValidateMode: 'onSubmit' })
 
   const onSubmit = handleSubmit(async (data) => {
-    addUser(await createUser(data))
+    dispatch(addUser(await createUser(data)))
     setPopup(true)
     reset()
   })
@@ -105,4 +88,4 @@ const CreationForm: FC<FormProps> = ({ addUser }) => {
   )
 }
 
-export default CreationForm
+export default UserForm
