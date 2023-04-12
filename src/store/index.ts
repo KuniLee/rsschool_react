@@ -2,9 +2,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import type { PreloadedState } from '@reduxjs/toolkit'
 import usersReducer from '@/modules/UserForm/store/usersSlice'
 import { jikanApi } from '@/modules/Catalog/store/jikan.api'
+import catalogReducer from '@/modules/Catalog/store/catalogSlice'
 
 const rootReducer = combineReducers({
   users: usersReducer,
+  catalog: catalogReducer,
   [jikanApi.reducerPath]: jikanApi.reducer,
 })
 

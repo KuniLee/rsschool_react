@@ -1,37 +1,34 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import AnimeCard from './components/AnimeCard/AnimeCard'
 import Search from './components/Search'
-import { useFetching } from './hooks/useFetching'
-import PostService from './api/CardService'
 import Loader from '@components/Loader/Loader'
 import Popup from '@components/Popup'
 import AnimeDetails from './components/AnimeInfo/AnimeDetails'
 import { AnimeInfo } from '@/modules/Catalog/models'
-import { usePagination } from '@components/Pagination'
 import Pagination from '@components/Pagination'
 import Alert from '@/UI/Alert'
+import { useGetAnimeSearchQuery } from './store/jikan.api'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { setPage, setSearch } from './store/catalogSlice'
 
 const Catalog: React.FC = () => {
-  const [search, setSearch] = useState(localStorage.searchInput || '')
-  const [cards, setCards] = useState<AnimeInfo[]>([])
+  const dispatch = useAppDispatch()
+  const { page, search } = useAppSelector((state) => state.catalog)
+
+  const { cards, pageCount, isError, isFetching } = useGetAnimeSearchQuery([search, page], {
+    selectFromResult: ({ data, ...props }) => ({
+      cards: data?.data || [],
+      pageCount: data?.pagination.last_visible_page || 0,
+      ...props,
+    }),
+  })
+
   const [popup, setPopup] = useState(false)
   const [currentCard, setCurrentCard] = useState<AnimeInfo>()
-  const [page, pageCount, setPage, setPageData] = usePagination()
 
-  const [fetchCards, isCardsLoading, cardsError] = useFetching(
-    useCallback(
-      async (search: string, page: number, limit: number) => {
-        const response = await PostService.getAnimeWithSearch(search, page, limit)
-
-        const cards = response.data.data
-        const { current_page, last_visible_page } = response.data.pagination
-
-        setCards(cards)
-        setPageData(current_page, last_visible_page)
-      },
-      [setPageData]
-    )
-  )
+  const changePage = (value: number) => {
+    dispatch(setPage(value))
+  }
 
   const openCard = (card: AnimeInfo) => {
     setCurrentCard(card)
@@ -39,23 +36,18 @@ const Catalog: React.FC = () => {
   }
 
   const makeNewSearch = (value: string) => {
-    setPage(1)
-    setSearch(value)
+    dispatch(setSearch(value))
   }
-
-  useEffect(() => {
-    fetchCards(search, page)
-  }, [search, fetchCards, page])
 
   return (
     <>
       <Popup onClose={() => setPopup(false)} open={popup}>
         {currentCard && <AnimeDetails card={currentCard} />}
       </Popup>
-      <Search onSearch={makeNewSearch} />
-      {cardsError ? (
-        <Alert type="danger" data={{ title: 'Error', text: cardsError }} />
-      ) : isCardsLoading ? (
+      <Search search={search} onSearch={makeNewSearch} />
+      {isError ? (
+        <Alert type="danger" data={{ title: 'Error', text: 'Server Error' }} />
+      ) : isFetching ? (
         <Loader className="mx-auto my-4 h-12 w-12" />
       ) : (
         <>
@@ -64,7 +56,7 @@ const Catalog: React.FC = () => {
               <AnimeCard openCard={openCard} key={card.mal_id} card={card} />
             ))}
           </div>
-          {cards.length ? <Pagination onChangePage={setPage} pageCount={pageCount} page={page} /> : <p>no cards</p>}
+          {cards.length ? <Pagination onChangePage={changePage} pageCount={pageCount} page={page} /> : <p>no cards</p>}
         </>
       )}
     </>

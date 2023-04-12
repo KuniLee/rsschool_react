@@ -3,21 +3,21 @@ import { ReactComponent as Logo } from '@assets/icons/search.svg'
 import MyButton from '@/UI/MyButton'
 
 type SearchProps = {
+  search: string
   onSearch: (value: string) => void
 }
 
-const Search: FC<SearchProps> = ({ onSearch }) => {
+const Search: FC<SearchProps> = ({ onSearch, search }) => {
   const ref = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const input = ref.current
 
-    if (input) ref.current.value = localStorage.searchInput || ''
-  }, [])
+    if (input) ref.current.value = search
+  }, [search])
 
   const submit = (value: string) => {
     onSearch(value)
-    localStorage.searchInput = value
   }
 
   const onKeyDown: KeyboardEventHandler = (ev) => {
@@ -31,8 +31,8 @@ const Search: FC<SearchProps> = ({ onSearch }) => {
           <Logo className="h-6 w-6"></Logo>
         </div>
         <input
-          onKeyDown={onKeyDown}
           ref={ref}
+          onKeyDown={onKeyDown}
           className="peer h-full w-full bg-inherit pr-2 text-gray-200 outline-none"
           type="text"
           placeholder="Search something.."
