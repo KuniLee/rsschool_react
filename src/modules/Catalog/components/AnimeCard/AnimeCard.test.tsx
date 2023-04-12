@@ -1,7 +1,7 @@
 import { describe, it } from 'vitest'
 import AnimeCard from '@/modules/Catalog/components/AnimeCard/AnimeCard'
 import { fireEvent, render, screen } from '@testing-library/react'
-import { AnimeInfo } from '@/modules/Catalog/types'
+import { AnimeInfo } from '../../models'
 
 describe('Cards Component:', () => {
   it('should be rendered...', function () {

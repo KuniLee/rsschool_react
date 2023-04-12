@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
-import { AnimeInfo } from '../types'
+import { AnimeInfo } from '../models'
 
 export type PaginationData = {
   current_page: number
