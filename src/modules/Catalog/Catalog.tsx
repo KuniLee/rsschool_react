@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import AnimeCard from './components/AnimeCard/AnimeCard'
 import Search from './components/Search'
 import Loader from '@components/Loader/Loader'
@@ -11,7 +11,7 @@ import { useGetAnimeSearchQuery } from './store/jikan.api'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
 import { setPage, setSearch } from './store/catalogSlice'
 
-const Catalog: React.FC = () => {
+const Catalog: FC = () => {
   const dispatch = useAppDispatch()
   const { page, search } = useAppSelector((state) => state.catalog)
 
