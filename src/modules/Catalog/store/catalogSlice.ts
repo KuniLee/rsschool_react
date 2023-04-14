@@ -7,7 +7,7 @@ interface CatalogState {
 
 const initialState: CatalogState = {
   page: 1,
-  search: localStorage.searchInput || '',
+  search: '',
 }
 
 export const catalogSlice = createSlice({
@@ -19,7 +19,6 @@ export const catalogSlice = createSlice({
     },
     setSearch: (state, { payload }: PayloadAction<string>) => {
       state.page = 1
-      localStorage.searchInput = payload
       state.search = payload
     },
   },
