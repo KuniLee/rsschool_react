@@ -5,7 +5,7 @@ export type FormData = {
   firstName: string
   surName: string
   avatar: FileList
-  date: Date
+  date: number
   country: string
   sex: Genders
   notifications: boolean

@@ -47,19 +47,13 @@ describe('UserForm', () => {
   })
 })
 
-const mockedDispatch = vi.fn()
-
-vi.mock('@/hooks/redux', () => ({
-  useAppDispatch: () => mockedDispatch,
-}))
-
 describe('User create', () => {
   it('User creating testing with image', async () => {
     const testUser: IUser = {
       id: 11111,
       firstName: 'Name',
       surName: 'Surname',
-      date: new Date('2000-01-01'),
+      date: new Date('2000-01-01').getTime(),
       sex: 'male',
       country: 'RU',
       notifications: false,
@@ -70,7 +64,8 @@ describe('User create', () => {
     const testImage = [new File(['hello'], 'hello.png', { type: 'image/png' })]
     const user = userEvent.setup()
 
-    renderWithProviders(<UserForm />)
+    const { store } = renderWithProviders(<UserForm />)
+
     await user.type(screen.getByRole('textbox', { name: /firstname/i }), testUser.firstName)
     await user.type(screen.getByRole('textbox', { name: /surname/i }), testUser.surName)
     fireEvent.change(screen.getByLabelText(/date of birth/i), { target: { value: '2000-01-01' } })
@@ -80,9 +75,7 @@ describe('User create', () => {
     await user.click(screen.getByLabelText(/Agree with license/i))
     await user.click(screen.getByRole('button', { name: /Create/i }))
     await waitFor(() => {
-      const argument = mockedDispatch.mock.calls[0][0].payload
-
-      expect(argument).toEqual(testUser)
+      expect(store?.getState().users.users[0]).toEqual(testUser)
     })
   })
 })

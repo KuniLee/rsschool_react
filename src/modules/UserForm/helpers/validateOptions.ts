@@ -26,12 +26,12 @@ const validateOptions: Partial<Record<keyof FormData, RegisterOptions>> = {
   },
   date: {
     required: 'Set the date',
-    valueAsDate: true,
     validate: {
-      beforeNow: (date: Date) => {
-        return date > new Date() ? "Date of Birth cannot be more than today's date" : true
+      beforeNow: (date: number) => {
+        return new Date(date) > new Date() ? "Date of Birth cannot be more than today's date" : true
       },
     },
+    setValueAs: (date: string) => Date.parse(date),
   },
   country: {
     validate: {
