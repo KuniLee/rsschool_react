@@ -18,3 +18,15 @@ type AnimeImages = {
   large_image_url: string
   small_image_url: string
 }
+
+export type PaginationData = {
+  current_page: number
+  has_next_page: number
+  items: { count: number; total: number; per_page: number }
+  last_visible_page: number
+}
+
+export type APIResponse<T> = {
+  pagination: PaginationData
+  data: Array<T>
+}

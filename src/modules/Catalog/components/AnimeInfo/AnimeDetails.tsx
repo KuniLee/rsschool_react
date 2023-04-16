@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { AnimeInfo } from '../../types'
+import { AnimeInfo } from '../../models'
 import Rating from '@/UI/Rating'
 
 type Props = {

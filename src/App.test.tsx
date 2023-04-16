@@ -5,12 +5,13 @@ import { MemoryRouter, BrowserRouter } from 'react-router-dom'
 import userEvent from '@testing-library/user-event'
 
 describe('App', () => {
-  it('should render app app', () => {
+  it('should render app app', async () => {
     render(
       <BrowserRouter>
         <App />
       </BrowserRouter>
     )
+
     expect(screen.getByTestId('main')).toBeInTheDocument()
   })
 
@@ -24,15 +25,13 @@ describe('App', () => {
   })
 
   it('should going to about page', async () => {
-    const user = userEvent.setup()
-
     render(
       <MemoryRouter>
         <App />
       </MemoryRouter>
     )
     expect(screen.getByRole('link', { name: 'About Us' })).toHaveClass('text-gray-200')
-    await user.click(screen.getByRole('link', { name: 'About Us' }))
+    await userEvent.click(screen.getByRole('link', { name: 'About Us' }))
     expect(screen.getByRole('link', { name: 'About Us' })).toHaveClass('text-blue-400')
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/about/i)
   })

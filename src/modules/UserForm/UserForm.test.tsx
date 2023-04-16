@@ -1,11 +1,14 @@
 import { vi, describe, it } from 'vitest'
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import CreationForm, { IUser } from './CreationForm'
+import UserForm from './UserForm'
+import React from 'react'
+import { IUser } from '@/modules/UserForm/store/usersSlice'
+import { renderWithProviders } from '@/utils/test-utils'
 
-describe('CreationForm', () => {
+describe('UserForm', () => {
   it('Test render form', () => {
-    render(<CreationForm addUser={() => undefined} />)
+    renderWithProviders(<UserForm />)
     expect(screen.getByRole('textbox', { name: /firstname/i })).toBeInTheDocument()
     expect(screen.getByRole('textbox', { name: /surname/i })).toBeInTheDocument()
     expect(screen.getByLabelText(/date of birth/i)).toBeInTheDocument()
@@ -16,7 +19,7 @@ describe('CreationForm', () => {
   it('Testing validation', async () => {
     const user = userEvent.setup()
 
-    render(<CreationForm addUser={() => undefined} />)
+    renderWithProviders(<UserForm />)
     await user.type(screen.getByRole('textbox', { name: /firstname/i }), '1')
     await user.type(screen.getByRole('textbox', { name: /surname/i }), '1')
     await user.click(screen.getByRole('button', { name: /Create/i }))
@@ -37,7 +40,7 @@ describe('CreationForm', () => {
   it('Testing validation with the wrong image', async () => {
     const testImage = [new File(['hello'], 'hello.svg', { type: 'image/svg' })]
 
-    render(<CreationForm addUser={() => undefined} />)
+    renderWithProviders(<UserForm />)
     await userEvent.upload(screen.getByLabelText(/avatar/i), testImage, { applyAccept: false })
     await userEvent.click(screen.getByRole('button', { name: /Create/i }))
     expect(screen.getByText(/The file should be an image/i)).toBeInTheDocument()
@@ -50,7 +53,7 @@ describe('User create', () => {
       id: 11111,
       firstName: 'Name',
       surName: 'Surname',
-      date: new Date('2000-01-01'),
+      date: new Date('2000-01-01').getTime(),
       sex: 'male',
       country: 'RU',
       notifications: false,
@@ -60,9 +63,9 @@ describe('User create', () => {
     Date.now = vi.fn(() => testUser.id)
     const testImage = [new File(['hello'], 'hello.png', { type: 'image/png' })]
     const user = userEvent.setup()
-    const addUser = vi.fn()
 
-    render(<CreationForm addUser={addUser} />)
+    const { store } = renderWithProviders(<UserForm />)
+
     await user.type(screen.getByRole('textbox', { name: /firstname/i }), testUser.firstName)
     await user.type(screen.getByRole('textbox', { name: /surname/i }), testUser.surName)
     fireEvent.change(screen.getByLabelText(/date of birth/i), { target: { value: '2000-01-01' } })
@@ -72,9 +75,7 @@ describe('User create', () => {
     await user.click(screen.getByLabelText(/Agree with license/i))
     await user.click(screen.getByRole('button', { name: /Create/i }))
     await waitFor(() => {
-      const argument = addUser.mock.calls[0][0]
-
-      expect(argument).toEqual(testUser)
+      expect(store?.getState().users.users[0]).toEqual(testUser)
     })
   })
 })

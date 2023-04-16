@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react'
-import { AnimeInfo } from '../../types'
+import { AnimeInfo } from '../../models'
 import Loader from '@components/Loader/Loader'
 
 export type CardProps = {

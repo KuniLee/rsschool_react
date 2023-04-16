@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import countries from '@/modules/CreationForm/constants/countries'
-import noImage from '@assets//noImage.png'
-import { IUser } from '@/modules/CreationForm'
+import countries from '@/modules/UserForm/constants/countries'
+import noImage from '@assets/noImage.png'
+import { IUser } from '@/modules/UserForm'
 
 export type UserCardProps = {
   user: IUser
@@ -20,7 +20,7 @@ class UserCard extends Component<UserCardProps> {
           {firstName} {surName}
         </h5>
         <ul className="text-sm text-gray-900">
-          <li>Date of Birth: {date.toDateString()}</li>
+          <li>Date of Birth: {new Date(date).toDateString()}</li>
           <li>Sex: {sex}</li>
           <li>Country: {countries.find((el) => el.code === country)?.name}</li>
           <li>Notifications: {String(notifications)}</li>
