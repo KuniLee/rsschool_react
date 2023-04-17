@@ -8,7 +8,6 @@ const base = process.env.BASE || '/'
 
 // Cached production assets
 const templateHtml = isProduction ? await fs.readFile('./dist/client/index.html', 'utf-8') : ''
-//const ssrManifest = isProduction ? await fs.readFile('./dist/client/ssr-manifest.json', 'utf-8') : undefined
 
 // Create http server
 const app = express()
@@ -40,6 +39,7 @@ app.use('*', async (req, res) => {
 
     let template
     let render
+    let parts
 
     if (!isProduction) {
       // Always read fresh template in development
@@ -48,15 +48,27 @@ app.use('*', async (req, res) => {
       render = (await vite.ssrLoadModule('/src/entry-server.tsx')).render
     } else {
       template = templateHtml
+
       render = (await import('./dist/server/entry-server.js')).render
     }
+    parts = template.split('<!--app-html-->')
+
+    res.statusCode = 200
+    res.setHeader('Content-type', 'text/html')
+    res.write(parts[0])
 
     // eslint-disable-next-line testing-library/render-result-naming-convention
-    const rendered = await render(url)
-
-    const html = template.replace(`<!--app-html-->`, rendered ?? '')
-
-    res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+    const stream = render(url, {
+      onShellReady() {
+        stream.pipe(res)
+      },
+      onAllReady() {
+        res.end(parts[1])
+      },
+      onError(err) {
+        console.error(err)
+      },
+    })
   } catch (e) {
     vite?.ssrFixStacktrace(e)
     console.log(e.stack)

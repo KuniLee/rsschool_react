@@ -8,7 +8,7 @@ import '@assets/fonts/Nunito-Italic-VariableFont_wght.ttf'
 
 ReactDOM.hydrateRoot(
   document.getElementById('app') as HTMLElement,
-  <BrowserRouter basename={import.meta.env.BASE_URL}>
+  <BrowserRouter>
     <App />
   </BrowserRouter>
 )

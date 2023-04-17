@@ -1,14 +1,16 @@
 import React from 'react'
-import ReactDOMServer from 'react-dom/server'
 import App from './App'
+import './index.css'
 import { StaticRouter } from 'react-router-dom/server'
 import '@assets/fonts/Nunito-VariableFont_wght.ttf'
 import '@assets/fonts/Nunito-Italic-VariableFont_wght.ttf'
+import { renderToPipeableStream, RenderToPipeableStreamOptions } from 'react-dom/server'
 
-export function render(url: string) {
-  return ReactDOMServer.renderToString(
-    <StaticRouter location={url} basename={import.meta.env.BASE_URL}>
+export function render(url: string, opts: RenderToPipeableStreamOptions) {
+  return renderToPipeableStream(
+    <StaticRouter location={url}>
       <App />
-    </StaticRouter>
+    </StaticRouter>,
+    opts
   )
 }
