@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises'
 import express from 'express'
+import { ViteDevServer } from 'vite'
 
 // Constants
 const isProduction = process.env.NODE_ENV === 'production'
@@ -13,7 +14,7 @@ const templateHtml = isProduction ? await fs.readFile('./dist/client/index.html'
 const app = express()
 
 // Add Vite or respective production middlewares
-let vite
+let vite: ViteDevServer
 
 if (!isProduction) {
   const { createServer } = await import('vite')
@@ -39,7 +40,6 @@ app.use('*', async (req, res) => {
 
     let template
     let render
-    let parts
 
     if (!isProduction) {
       // Always read fresh template in development
@@ -49,9 +49,11 @@ app.use('*', async (req, res) => {
     } else {
       template = templateHtml
 
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       render = (await import('./dist/server/entry-server.js')).render
     }
-    parts = template.split('<!--app-html-->')
+    const parts = template.split('<!--app-html-->')
 
     res.statusCode = 200
     res.setHeader('Content-type', 'text/html')
@@ -65,11 +67,12 @@ app.use('*', async (req, res) => {
       onAllReady() {
         res.end(parts[1])
       },
-      onError(err) {
+      onError(err: Error) {
         console.error(err)
       },
     })
   } catch (e) {
+    if (!(e instanceof Error)) return
     vite?.ssrFixStacktrace(e)
     console.log(e.stack)
     res.status(500).end(e.stack)
