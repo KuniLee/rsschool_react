@@ -3,7 +3,8 @@ module.exports = {
     "browser": true,
     "es2021": true,
     "jest": true,
-    "node": true
+    "node": true,
+    "cypress/globals": true
   },
   "root": true,
   "extends": [
@@ -13,12 +14,15 @@ module.exports = {
     "prettier",
     "plugin:react-hooks/recommended",
     "plugin:prettier/recommended",
-    "plugin:testing-library/react"
   ],
   "overrides": [{
-    files: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
+    files: ["**/?(*.)+(spec|test).[jt]s?(x)"],
     extends: ["plugin:testing-library/react"]
-  }
+  },
+    {
+      files: ["**/?(*.)+.cy.[jt]s"],
+      extends: ["plugin:cypress/recommended"]
+    }
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -29,6 +33,7 @@ module.exports = {
     "sourceType": "module"
   },
   "plugins": [
+    "cypress",
     "react",
     "@typescript-eslint",
     "prettier",
@@ -63,7 +68,13 @@ module.exports = {
       { blankLine: "always", prev: "iife", next: "iife" },
       { blankLine: "always", prev: ["const", "let", "var"], next: "*"},
       { blankLine: "any",    prev: ["const", "let", "var"], next: ["singleline-const", "singleline-let", "singleline-var"]}
-    ]
+    ],
+    "cypress/no-assigning-return-values": "error",
+    "cypress/no-unnecessary-waiting": "error",
+    "cypress/assertion-before-screenshot": "warn",
+    "cypress/no-force": "warn",
+    "cypress/no-async-tests": "error",
+    "cypress/no-pause": "error",
   },
   "settings": {
     "react": {

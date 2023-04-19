@@ -20,6 +20,7 @@ const Popup: FC<PopupProps> = ({ children, onClose, open }) => {
       in={open}
       classNames={{ enterActive: '!z-50 opacity-100', enterDone: '!z-50 opacity-100', exitActive: '!z-50' }}>
       <div
+        data-testid="popup"
         onClick={() => onClose()}
         ref={nodeRef}
         className={`fixed inset-0 -z-10 flex h-screen w-screen items-center justify-center opacity-0
