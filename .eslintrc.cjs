@@ -69,12 +69,6 @@ module.exports = {
       { blankLine: "always", prev: ["const", "let", "var"], next: "*"},
       { blankLine: "any",    prev: ["const", "let", "var"], next: ["singleline-const", "singleline-let", "singleline-var"]}
     ],
-    "cypress/no-assigning-return-values": "error",
-    "cypress/no-unnecessary-waiting": "error",
-    "cypress/assertion-before-screenshot": "warn",
-    "cypress/no-force": "warn",
-    "cypress/no-async-tests": "error",
-    "cypress/no-pause": "error",
   },
   "settings": {
     "react": {

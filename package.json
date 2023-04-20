@@ -11,7 +11,7 @@
     "preview": " cross-env NODE_ENV=production ts-node server.ts",
     "lint": "eslint --fix --ext .ts,.tsx .",
     "test": "vitest",
-    "cy:open": "cypress open",
+    "cy:open": "start-server-and-test dev http://localhost:5173 'cypress open'",
     "cy:run": "cypress run --browser chrome && nyc report --reporter=text-summary",
     "test:cy": "start-server-and-test dev http://localhost:5173 cy:run",
     "coverage": "vitest run --coverage",
