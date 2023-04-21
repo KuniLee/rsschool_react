@@ -1,7 +1,8 @@
 import React, { ComponentPropsWithoutRef, forwardRef, useId } from 'react'
 
-type MyInputProps = ComponentPropsWithoutRef<'input'> & {
+type MyInputProps = Omit<ComponentPropsWithoutRef<'input'>, 'children'> & {
   eMessage?: string
+  children: string
 }
 
 export const Input = forwardRef<HTMLInputElement, MyInputProps>(({ children, eMessage, ...props }, ref) => {
