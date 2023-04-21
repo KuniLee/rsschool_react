@@ -1,5 +1,5 @@
-import { NavLink, useLocation } from 'react-router-dom'
-import React, { FC } from 'react'
+import { matchPath, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import React, { FC, useEffect } from 'react'
 import { usePageTitle } from './hooks/usePageTitle'
 import { ERoutes } from './routes'
 
@@ -21,6 +21,13 @@ function getLinkClass({ isActive }: { isActive: boolean }) {
 
 const Navigation: FC = () => {
   const { pathname } = useLocation()
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (matchPath({ path: ERoutes.Root }, pathname)) navigate(ERoutes.Main)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <nav className="border-b-2 border-blue-800">
