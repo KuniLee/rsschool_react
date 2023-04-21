@@ -44,12 +44,7 @@ describe('Catalog component', () => {
   it('should show a request error message...', async () => {
     server.use(
       rest.get('https://api.jikan.moe/v4/anime', (req, res, ctx) => {
-        return res(
-          ctx.status(400),
-          ctx.json({
-            errorMessage: `Server Error`,
-          })
-        )
+        return res(ctx.status(500))
       })
     )
     renderWithProviders(<Catalog />)
@@ -86,7 +81,7 @@ describe('Catalog component', () => {
     await userEvent.type(screen.getByPlaceholderText('Search something..'), 'anime search string')
     await userEvent.click(screen.getByRole('button', { name: /go/i }))
     await waitFor(() => {
-      expect(searchParams).toBe('?q=anime+search+string&limit=12&page=1')
+      expect(searchParams).toBe('?q=anime%20search%20string&limit=12&page=1')
     })
   })
 

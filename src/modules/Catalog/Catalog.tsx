@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import AnimeCard from './components/AnimeCard/AnimeCard'
 import Search from './components/Search'
 import Loader from '@components/Loader/Loader'
@@ -7,21 +7,16 @@ import AnimeDetails from './components/AnimeInfo/AnimeDetails'
 import { AnimeInfo } from '@/modules/Catalog/models'
 import Pagination from '@components/Pagination'
 import Alert from '@/UI/Alert'
-import { useGetAnimeSearchQuery } from './store/jikan.api'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { setPage, setSearch } from './store/catalogSlice'
+import { fetchAnimeCards, setPage, setSearch } from './store/catalogSlice'
 
 const Catalog: FC = () => {
   const dispatch = useAppDispatch()
-  const { page, search } = useAppSelector((state) => state.catalog)
+  const { page, search, pageCount, isLoading, error, cards } = useAppSelector((state) => state.catalog)
 
-  const { cards, pageCount, isError, isFetching } = useGetAnimeSearchQuery([search, page], {
-    selectFromResult: ({ data, ...props }) => ({
-      cards: data?.data || [],
-      pageCount: data?.pagination.last_visible_page || 0,
-      ...props,
-    }),
-  })
+  useEffect(() => {
+    dispatch(fetchAnimeCards({ page, search }))
+  }, [page, search, dispatch])
 
   const [popup, setPopup] = useState(false)
   const [currentCard, setCurrentCard] = useState<AnimeInfo>()
@@ -45,9 +40,9 @@ const Catalog: FC = () => {
         {currentCard && <AnimeDetails card={currentCard} />}
       </Popup>
       <Search search={search} onSearch={makeNewSearch} />
-      {isError ? (
-        <Alert type="danger" data={{ title: 'Error', text: 'Server Error' }} />
-      ) : isFetching ? (
+      {error.length ? (
+        <Alert type="danger" data={{ title: 'Error', text: error }} />
+      ) : isLoading ? (
         <Loader className="mx-auto my-4 h-12 w-12" />
       ) : (
         <>
