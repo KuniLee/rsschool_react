@@ -7,9 +7,12 @@ import '@assets/fonts/Nunito-Italic-VariableFont_wght.ttf'
 import { renderToPipeableStream, RenderToPipeableStreamOptions } from 'react-dom/server'
 import { Provider } from 'react-redux'
 import { setupStore } from '@/store'
+import { fetchAnimeCards } from '@/modules/Catalog/store/catalogSlice'
 
 export async function render(url: string, opts: RenderToPipeableStreamOptions) {
   const store = setupStore()
+
+  await store.dispatch(fetchAnimeCards({ page: 1, search: '' }))
 
   // eslint-disable-next-line testing-library/render-result-naming-convention
   const pipe = renderToPipeableStream(

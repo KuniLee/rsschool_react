@@ -3,7 +3,7 @@ import { screen, waitFor } from '@testing-library/react'
 import Catalog from '@/modules/Catalog'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import { responseData } from './mockData'
+import { responseData, preloadedState } from './mockData'
 import { renderWithProviders } from '@/utils/test-utils'
 import userEvent from '@testing-library/user-event'
 
@@ -47,7 +47,8 @@ describe('Catalog component', () => {
         return res(ctx.status(500))
       })
     )
-    renderWithProviders(<Catalog />)
+    renderWithProviders(<Catalog />, { preloadedState })
+    await userEvent.click(screen.getByText('2'))
     expect(screen.getByPlaceholderText('Search something..')).toBeInTheDocument()
     expect(await screen.findByText(/Server Error/i)).toBeInTheDocument()
   })
@@ -58,7 +59,8 @@ describe('Catalog component', () => {
         return res(ctx.json(responseData), ctx.delay(50))
       })
     )
-    renderWithProviders(<Catalog />)
+    renderWithProviders(<Catalog />, { preloadedState })
+    await userEvent.click(screen.getByText('2'))
     const cards = await screen.findAllByTestId('card')
 
     expect(cards.length).toBe(2)
@@ -74,9 +76,10 @@ describe('Catalog component', () => {
         return res(ctx.json(responseData), ctx.delay(50))
       })
     )
-    renderWithProviders(<Catalog />)
+    renderWithProviders(<Catalog />, { preloadedState })
+    await userEvent.click(screen.getByText('2'))
     await waitFor(() => {
-      expect(searchParams).toBe('?q=&limit=12&page=1')
+      expect(searchParams).toBe('?q=&limit=12&page=2')
     })
     await userEvent.type(screen.getByPlaceholderText('Search something..'), 'anime search string')
     await userEvent.click(screen.getByRole('button', { name: /go/i }))
@@ -99,7 +102,7 @@ describe('Catalog component', () => {
       })
     )
 
-    renderWithProviders(<Catalog />)
+    renderWithProviders(<Catalog />, { preloadedState })
     expect(await screen.findByText('1')).toHaveClass('bg-blue-700')
     await userEvent.click(screen.getByText('2'))
 
@@ -107,12 +110,7 @@ describe('Catalog component', () => {
   })
 
   it('should open card...', async () => {
-    server.use(
-      rest.get('https://api.jikan.moe/v4/anime', (req, res, ctx) => {
-        return res(ctx.json(responseData), ctx.delay(50))
-      })
-    )
-    renderWithProviders(<Catalog />)
+    renderWithProviders(<Catalog />, { preloadedState })
     await userEvent.click(await screen.findByRole('heading', { name: responseData.data[0].title }))
     expect(screen.getByText(new RegExp(responseData.data[0].synopsis.slice(0, 30), 'i'))).toBeInTheDocument()
   })

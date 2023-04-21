@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { AnimeInfo } from '@/modules/Catalog'
 import { APIResponse } from '../models'
 
@@ -41,33 +41,28 @@ export const fetchAnimeCards = createAsyncThunk<
 export const catalogSlice = createSlice({
   name: 'catalog',
   initialState,
-  reducers: {
-    setPage: (state, action: PayloadAction<number>) => {
-      state.page = action.payload
-    },
-    setSearch: (state, { payload }: PayloadAction<string>) => {
-      state.page = 1
-      state.search = payload
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchAnimeCards.fulfilled, (state, action) => {
-      state.cards = action.payload.data
-      state.pageCount = action.payload.pagination.last_visible_page
-      state.isLoading = false
-      state.error = ''
-    })
-    builder.addCase(fetchAnimeCards.pending, (state) => {
-      state.isLoading = true
-      state.error = ''
-    })
-    builder.addCase(fetchAnimeCards.rejected, (state, action) => {
-      state.isLoading = false
-      state.error = action.payload || 'Error'
-    })
+    builder
+      .addCase(fetchAnimeCards.fulfilled, (state, action) => {
+        state.search = action.meta.arg.search
+        state.cards = action.payload.data
+        state.pageCount = action.payload.pagination.last_visible_page
+        state.isLoading = false
+        state.error = ''
+        state.page = action.payload.pagination.current_page
+      })
+      .addCase(fetchAnimeCards.pending, (state) => {
+        state.isLoading = true
+        state.error = ''
+      })
+      .addCase(fetchAnimeCards.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload || 'Error'
+      })
   },
 })
 
-export const { setPage, setSearch } = catalogSlice.actions
+//export const { setSearch } = catalogSlice.actions
 
 export default catalogSlice.reducer

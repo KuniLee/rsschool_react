@@ -67,12 +67,12 @@ app.use('*', async (req, res) => {
       onAllReady() {
         const preloadedState = store.getState()
 
-        // parts[1] = parts[1].replace(
-        //   `<!--preloaded-state-->`,
-        //   `<script>
-        //    window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
-        // </script>`
-        // )
+        parts[1] = parts[1].replace(
+          `<!--preloaded-state-->`,
+          `<script>
+           window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
+        </script>`
+        )
         res.end(parts[1])
       },
       onError(err: Error) {

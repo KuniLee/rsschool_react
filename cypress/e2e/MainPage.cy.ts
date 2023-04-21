@@ -9,7 +9,13 @@ describe('The main page', () => {
   it('should save input value...', () => {
     cy.get('input[type="text"]').type('Value').type('{enter}')
     cy.get('a').contains(/form/i).click().wait(100)
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq('/form')
+    })
     cy.get('a').contains(/main/i).click()
+    cy.location().should((loc) => {
+      expect(loc.pathname).to.eq('/main')
+    })
     cy.get('input[type="text"]').should('have.value', 'Value')
   })
 
@@ -23,9 +29,6 @@ describe('The main page', () => {
   })
 
   it('should change pages...', () => {
-    cy.wait(500)
-    cy.intercept(/\/anime?q=&limit=12&page=1/)
-    cy.wait(500)
     // prettier-ignore
     cy.get('span')
       .contains('1')

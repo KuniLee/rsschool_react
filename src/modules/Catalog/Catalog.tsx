@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useState } from 'react'
 import AnimeCard from './components/AnimeCard/AnimeCard'
 import Search from './components/Search'
 import Loader from '@components/Loader/Loader'
@@ -8,21 +8,17 @@ import { AnimeInfo } from '@/modules/Catalog/models'
 import Pagination from '@components/Pagination'
 import Alert from '@/UI/Alert'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { fetchAnimeCards, setPage, setSearch } from './store/catalogSlice'
+import { fetchAnimeCards } from './store/catalogSlice'
 
 const Catalog: FC = () => {
   const dispatch = useAppDispatch()
   const { page, search, pageCount, isLoading, error, cards } = useAppSelector((state) => state.catalog)
 
-  useEffect(() => {
-    dispatch(fetchAnimeCards({ page, search }))
-  }, [page, search, dispatch])
-
   const [popup, setPopup] = useState(false)
   const [currentCard, setCurrentCard] = useState<AnimeInfo>()
 
-  const changePage = (value: number) => {
-    dispatch(setPage(value))
+  const changePage = (page: number) => {
+    dispatch(fetchAnimeCards({ page, search }))
   }
 
   const openCard = (card: AnimeInfo) => {
@@ -30,8 +26,8 @@ const Catalog: FC = () => {
     setPopup(true)
   }
 
-  const makeNewSearch = (value: string) => {
-    dispatch(setSearch(value))
+  const makeNewSearch = (search: string) => {
+    dispatch(fetchAnimeCards({ page: 1, search }))
   }
 
   return (
