@@ -4,7 +4,11 @@ React project for RS School
 ```shell
 npm install
 ```
-## Starting
+## Start Development
+```shell
+npm run dev 
+```
+## Start Production
 ```shell
 npm run build 
 npm run preview
@@ -13,4 +17,6 @@ npm run preview
 ```shell
 npm run test
 npm run lint
+#e2e tests:
+npm run test:cy
 ```

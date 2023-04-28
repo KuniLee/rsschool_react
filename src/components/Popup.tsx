@@ -1,6 +1,5 @@
 import React, { FC, PropsWithChildren, useRef } from 'react'
 import { CSSTransition } from 'react-transition-group'
-import { createPortal } from 'react-dom'
 import CloseBtn from '@/UI/CloseBtn'
 import useScroll from '@/hooks/useScroll'
 
@@ -14,16 +13,17 @@ const Popup: FC<PopupProps> = ({ children, onClose, open }) => {
 
   useScroll(open)
 
-  return createPortal(
+  return (
     <CSSTransition
       timeout={300}
       nodeRef={nodeRef}
       in={open}
       classNames={{ enterActive: '!z-50 opacity-100', enterDone: '!z-50 opacity-100', exitActive: '!z-50' }}>
       <div
+        data-testid="popup"
         onClick={() => onClose()}
         ref={nodeRef}
-        className={`fixed inset-0 -z-10 flex h-screen w-screen items-center justify-center opacity-0 
+        className={`fixed inset-0 -z-10 flex h-screen w-screen items-center justify-center opacity-0
         backdrop-blur-sm transition-opacity duration-300`}>
         <div
           onClick={(e) => e.stopPropagation()}
@@ -32,8 +32,7 @@ const Popup: FC<PopupProps> = ({ children, onClose, open }) => {
           <CloseBtn onClick={() => onClose()} className={'absolute right-[-40px] top-[-40px]'} />
         </div>
       </div>
-    </CSSTransition>,
-    document.body
+    </CSSTransition>
   )
 }
 

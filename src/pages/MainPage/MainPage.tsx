@@ -1,7 +1,7 @@
-import React from 'react'
+import { FC } from 'react'
 import Catalog from '@/modules/Catalog'
 
-const MainPage: React.FC = () => {
+const MainPage: FC = () => {
   return (
     <div className="py-4">
       <Catalog />

@@ -1,12 +1,13 @@
 import { describe, it } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import App from '@/App'
 import { MemoryRouter, BrowserRouter } from 'react-router-dom'
 import userEvent from '@testing-library/user-event'
+import { renderWithProviders } from '@/utils/test-utils'
 
 describe('App', () => {
   it('should render app app', async () => {
-    render(
+    renderWithProviders(
       <BrowserRouter>
         <App />
       </BrowserRouter>
@@ -16,7 +17,7 @@ describe('App', () => {
   })
 
   it('should not found if invalid path', () => {
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['/this-path-is-incorrect']}>
         <App />
       </MemoryRouter>
@@ -25,7 +26,7 @@ describe('App', () => {
   })
 
   it('should going to about page', async () => {
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <App />
       </MemoryRouter>
@@ -37,7 +38,7 @@ describe('App', () => {
   })
 
   it('should render main page', () => {
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['/main']}>
         <App />
       </MemoryRouter>
@@ -46,7 +47,7 @@ describe('App', () => {
   })
 
   it('should render form page', () => {
-    render(
+    renderWithProviders(
       <MemoryRouter initialEntries={['/form']}>
         <App />
       </MemoryRouter>

@@ -7,27 +7,18 @@ import AnimeDetails from './components/AnimeInfo/AnimeDetails'
 import { AnimeInfo } from '@/modules/Catalog/models'
 import Pagination from '@components/Pagination'
 import Alert from '@/UI/Alert'
-import { useGetAnimeSearchQuery } from './store/jikan.api'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { setPage, setSearch } from './store/catalogSlice'
+import { fetchAnimeCards } from './store/catalogSlice'
 
 const Catalog: FC = () => {
   const dispatch = useAppDispatch()
-  const { page, search } = useAppSelector((state) => state.catalog)
-
-  const { cards, pageCount, isError, isFetching } = useGetAnimeSearchQuery([search, page], {
-    selectFromResult: ({ data, ...props }) => ({
-      cards: data?.data || [],
-      pageCount: data?.pagination.last_visible_page || 0,
-      ...props,
-    }),
-  })
+  const { page, search, pageCount, isLoading, error, cards } = useAppSelector((state) => state.catalog)
 
   const [popup, setPopup] = useState(false)
   const [currentCard, setCurrentCard] = useState<AnimeInfo>()
 
-  const changePage = (value: number) => {
-    dispatch(setPage(value))
+  const changePage = (page: number) => {
+    dispatch(fetchAnimeCards({ page, search }))
   }
 
   const openCard = (card: AnimeInfo) => {
@@ -35,8 +26,8 @@ const Catalog: FC = () => {
     setPopup(true)
   }
 
-  const makeNewSearch = (value: string) => {
-    dispatch(setSearch(value))
+  const makeNewSearch = (search: string) => {
+    dispatch(fetchAnimeCards({ page: 1, search }))
   }
 
   return (
@@ -45,9 +36,9 @@ const Catalog: FC = () => {
         {currentCard && <AnimeDetails card={currentCard} />}
       </Popup>
       <Search search={search} onSearch={makeNewSearch} />
-      {isError ? (
-        <Alert type="danger" data={{ title: 'Error', text: 'Server Error' }} />
-      ) : isFetching ? (
+      {error.length ? (
+        <Alert type="danger" data={{ title: 'Error', text: error }} />
+      ) : isLoading ? (
         <Loader className="mx-auto my-4 h-12 w-12" />
       ) : (
         <>

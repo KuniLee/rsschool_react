@@ -1,4 +1,9 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import * as toolkitRaw from '@reduxjs/toolkit'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
+const { createSlice } = ((toolkitRaw as never).default ?? toolkitRaw) as typeof toolkitRaw
+
+import type { PayloadAction } from '@reduxjs/toolkit'
 import { Genders } from '@/modules/UserForm/types'
 
 export type FormData = {

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { AnimeInfo } from '../../models'
 import Loader from '@components/Loader/Loader'
 
@@ -9,6 +9,11 @@ export type CardProps = {
 
 const AnimeCard: FC<CardProps> = ({ card, openCard }) => {
   const [loadingImg, setLoadingImg] = useState(true)
+  const ref = useRef<HTMLImageElement>(null)
+
+  useEffect(() => {
+    if (ref.current?.complete) setLoadingImg(false)
+  }, [])
 
   return (
     <div
@@ -22,6 +27,7 @@ const AnimeCard: FC<CardProps> = ({ card, openCard }) => {
           </div>
         )}
         <img
+          ref={ref}
           className={`mx-auto h-full object-contain ${loadingImg ? 'hidden' : 'block'}`}
           onLoad={() => {
             setLoadingImg(false)
