@@ -1,4 +1,8 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import * as toolkitRaw from '@reduxjs/toolkit'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
+const { combineReducers, configureStore } = ((toolkitRaw as never).default ?? toolkitRaw) as typeof toolkitRaw
+
 import type { PreloadedState } from '@reduxjs/toolkit'
 import usersReducer from '@/modules/UserForm/store/usersSlice'
 import catalogReducer from '@/modules/Catalog/store/catalogSlice'

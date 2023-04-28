@@ -1,4 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import * as toolkitRaw from '@reduxjs/toolkit'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-ignore
+const { createAsyncThunk, createSlice } = ((toolkitRaw as never).default ?? toolkitRaw) as typeof toolkitRaw
+
 import { AnimeInfo } from '@/modules/Catalog'
 import { APIResponse } from '../models'
 
@@ -62,7 +66,5 @@ export const catalogSlice = createSlice({
       })
   },
 })
-
-//export const { setSearch } = catalogSlice.actions
 
 export default catalogSlice.reducer

@@ -8,8 +8,6 @@ import '@assets/fonts/Nunito-Italic-VariableFont_wght.ttf'
 import { Provider } from 'react-redux'
 import { RootState, setupStore } from '@/store'
 
-console.log(window.__PRELOADED_STATE__)
-
 const store = setupStore((window as typeof window & { __PRELOADED_STATE__: RootState }).__PRELOADED_STATE__)
 
 Reflect.deleteProperty(window, '__PRELOADED_STATE__')
